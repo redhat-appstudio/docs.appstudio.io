@@ -1,0 +1,115 @@
+= Persister component
+
+The Persister component contributes to the system's stability and optimal performance by collecting all the necessary _PipelineRun_ information and pushing it to an external storage.
+
+The Persister component provides:
+
+* A long-term storage for _PipelineRun_ metadata
+
+* A way to store _PipelineRun_ metadata in that storage
+
+* An API (Persistence API) to inquire the stored metadata
+
+== How does it work?
+
+The Persister component continuously monitors the _PipelineRun_. When it detects that the system has finished running a _PipelineRun_, it retrieves the metadata and stores it in an external database. 
+// Additionally, it marks that _PipelineRun_ for removal, allowing the Pruner component to remove it from the cluster.
+
+== What all data is stored?
+
+The Persister component preserves the following:
+
+* TaskRuns
+* _TaskRun_ logs
+* Inputs, like parameters
+* Outputs, like results
+* Pipeline definition
+* _PipelineRun_ execution
+// * Workspace data, for example, the files created by the PipelineRun on the workspace
+
+== How to access the Tekton Results?
+To access the Tekton Results by using CLI, you need to create a configuration file that has all the necessary information, for example, where to connect and how to authenticate. 
+
+*Procedures*
+
+. Create a ~/.config/tkn/results.yaml file with following structure:
+
++
+[source, ASCIIDOC]
+----
+address: [ADDRESS]:[PORT] <1>
+service_account: [Specified ServiceAccount] <2>
+    - namespace: [Namespace] <3>
+    - name: [Name] <4>
+token: [TOKEN] <5>
+ssl: <6>
+    - roots_file_path: ~/.config/tkn/results.crt <7>
+    - server_name_override: [HOST] <8>
+---- 
+
++
+<1> The address where the API is running. It should include the port number as well, for example: localhost:50051.
+
++
+<2> When specified, the CLI will first fetch a bearer token for the specified ServiceAccount and then attach it to Result API requests.
+
++
+<3> The ServiceAccount namespace.
+
++
+<4> The ServiceAccount name.
+
++
+<5> The ServiceAccount token that the system uses to authenticate with the cluster. To get it for current user run the `oc whoami --show-token` command. This takes priority over service_account.
+
++
+<6> The SSL connection options.
+
++
+<7> Path to file where the certificate is available.
+
++
+<8> Optional: Set this option in case the server name is different from the address. For example, if you use oc port-forward to expose the API locally, you must set this option.
+
++
+*Example*
+
++
+----
+address: results.dogfooding.tekton.dev:443
+token: abcd1234
+ssl:
+    roots_file_path: path/to/file
+    server_name_override: example.com
+service_account:
+    namespace: default
+    name: result-reader
+----
+
+
+. Run any of the following commands based on your requirement:
+
++
+[cols="1,1"]
+|===
+|To |Run the following command 
+
+|List all the records in the default namespace
+a|`tkn results records list "default/results"`
+
+
+|List all the results in the default namespace
+|`tkn results list default`
+
+|List all the records of _TaskRuns_ with a particular Task name, for example, "hello"
+|`tkn results records list "default/results/-" --filter "data_type == \"tekton.dev/v1beta1.TaskRun\" && data.status.taskSpec.steps[0].name == \"hello\""`
+
+|List all the failed _TaskRuns_
+|`tkn results records list "default/results/-" --filter "data_type == \"tekton.dev/v1beta1.TaskRun\" && data.status.conditions.all(c, c.type==\"Succeeded\" && c.status==\"False\")"`
+
+|===
+
+
+== Additional resources
+
+* xref:concepts/pipelines/index.adoc[Pipeline services]

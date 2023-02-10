@@ -1,0 +1,30 @@
+= Overview of {ProductName} release services 
+
+== How {ProductName} release services help you
+
+{ProductName} has four components one of which is the release service. The {ProductName} release service helps the Site Reliability Engineering (SRE) administrators to manage a `managed workspace`. Inside the managed workspace, {ProductName} release service relies on the `release strategy` to define the `release pipeline` that first validates the `application snapshot`, the content of your application, against the `enterprise contract` and then releases that content.
+
+== Managed workspaces 
+
+If you want your application deployed into the custody of a supporting team like an SRE team, that team creates a managed workspace based on your original development workspace.
+
+The SREs use the `release link` to define the relationship between the original and managed workspace. The release link includes three pieces of data:
+
+. Application name 
+. Remote workspace name
+. The release strategy 
+
+With this data, the release link connects the workspaces to ensure consistency and delegates the releases between them to maintain maximum productivity. 
+
+== Release strategy and release pipeline 
+
+Inside the managed workspace, the SREs rely on the release strategy to deploy your application. The `release custom resource` provides the application snapshot and the release link. The application snapshot includes everything that you want deployed in your application, and the release link defines where the application is deployed and what strategy is being followed. The release strategy contains the release pipeline. The pipeline defines the process to validate the snapshot against the enterprise contract to meet security standards and to release your content.
+
+== Additional resources 
+
+To learn about other {ProductName} components that help you with your containerized development needs, see:
+
+* Application testing 
+* Release strategy 
+* Enterprise contract 
+* Pipelines

@@ -1,0 +1,32 @@
+= Configuring RenovateBot (CLI)
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+xref:concepts/RenovateBot/index.adoc[RenovateBot] has many link:https://docs.renovatebot.com/configuration-options[configuration options]. This guide gives an example of how to configure your RenovateBot with the `reviewers` configuration option. The `reviewers` option automatically adds a user or user group to the reviewer field when RenovateBot creates a pull request.
+
+.*Prerequisites*
+
+* You have Tekton support enabled in RenovateBot.
+
+
+.*Procedures*
+
+. Navigate to the `renovate.json` file in the repo that references your Tekton bundles.
+. Open the `renovate.json` file by using any IDE that is compatible with `.json` files.
+. Underneath the `tekton` property, enter the following text:
+
++
+
+`{ “reviewers”: [ “<username>” OR “<Email address>” ] }`
+
++
+.. You can assign a GitHub team as the reviewer by adding the following:
+
++
+
+`{ “reviewers”: [ “team:<teamname>” ] }`
+
++
+
+. Save the file. Your configuration is now updated.

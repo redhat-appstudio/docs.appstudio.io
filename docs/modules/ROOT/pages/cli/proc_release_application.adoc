@@ -1,0 +1,185 @@
+= Releasing an application
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+Two teams work together to release an application:
+
+* *Development team* - The team that develops and supports the application in a pre-production environment.
+
+* *Managed environment team* - The team that supports the production instance of that application.
+
+image::managed_environment.png[alt=Managed Environment]
+
+[1] When an application is ready for release, the Development team contacts the Managed Environment team; for example, their organization's SRE team, requesting access to the Managed environment for the first production release.
+
+[2] The Managed environment team creates the managed environment and responds to the development team with the managed environment's configuration details. The Managed environment inherits some details of the development team’s workspace. However, the development team has limited access to the production environment, which is a part of the managed environment.
+
+[3] The development team creates a matching configuration in their environment that is same as that of the Managed environment and attempts to release the application to production.
+
+[4] The Managed environment team validates the initial release and configures a traffic gateway, which allows external traffic to the application.
+
+== Tasks that the Development and Managed environment teams complete
+
+To release an application to a managed environment:
+
+. The development team creates a xref:cli/proc_release_application.adoc#_creating_a_releaseplan_object[`ReleasePlan`] object in the developer workspace. The `ReleasePlan` object includes a reference to the application that the development team wants to release, along with the namespace and workspace where the application is suppose to release.
+
+. The Managed environment team creates a xref:cli/proc_release_application.adoc#_creating_a_releasestrategy_object[`ReleaseStrategy`] object to ensure that the release of an application meets link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/ec-policies/index.html[enterprise contract].
+
+. The Managed environment team creates a xref:cli/proc_release_application.adoc#_creating_a_releaseplanadmission_object[`ReleasePlanAdmission`] object in the managed workspace.
+
++
+The `ReleasePlanAdmission` indicates that the Managed environment team has approved the `ReleasePlan` for an application. The `ReleasePlanAdmission` also refers to the `ReleaseStrategy`, which ensures that the application's release meets security standards.
+
++
+NOTE: The `ReleasePlan` and `ReleasePlanAdmission` is an agreement between the development and the Managed environment teams. This agreement indicates that the Managed environment team accepts the release of an application into the managed workspace and intends to support it.
+
+== Creating a `ReleasePlan` object
+
+.*Prerequisites*
+* You have an existing Development and Managed workspace.
+* Ensure you have installed kustomize, kubectl, and Go.
+* Ensure you have downloaded your docker config json file from Quay and placed it in the <HOME>/docker.config directory.
+
+.*Procedures*
+
+. In the development workspace, create a release_plan.yaml object by running:
+
++
+[source,kubernetes]
+----
+oc apply -f releaseplan.yaml -n dev
+----
+
++
+*Example `release_plan.yaml` object*
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan <1>
+metadata:
+ labels:
+   release.appstudio.openshift.io/auto-release: 'true'
+ name: sre-production <2>
+ namespace: dev-workspace <3>
+spec:
+ application: demo-app <4>
+ displayName: SRE Production <5>
+ target:
+   namespace: managed-workspace <6>
+----
+
++
+<1> The name of the resource that you are creating.
+<2> The name of the release plan.
+<3> The development team's workspace.
+<4> The name of the application that you want to deploy to the managed workspace.
+<5> The <description>
+<6> The workspace to which the system deploys the application. This workspace is created by the Managed environment team (for example, your organization's SRE team)
+
+.*Verification*
+
+. Browse the application you are creating.
+. Select the *Overview* tab to visualize the Application workflow. If you have successfully added a Managed environment, the system displays it at the end of the Application workflow.
+
+== Creating a `ReleaseStrategy` object
+
+.*Prerequisites*
+
+* You have an existing Development and Managed workspace.
+* An existing `ReleasePlan` object.
+
+.*Procedures*
+
+. Create a release_strategy.yaml object by running:
+
++
+[source,kubernetes]
+----
+oc apply -f releasestrategy.yaml -n managed
+----
+
++
+*Example `release_strategy.yaml`  object*
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleaseStrategy <.>
+metadata:
+  name: strategy <.>
+  namespace: managed-environment <.>
+spec:
+  pipeline: release <.>
+  bundle: quay.io/{ProductName}-release/release-pipeline:main <.>
+  policy: policy <.>
+  serviceAccount: service-account <.>
+----
+
++
+<.> The name of the resource the Environment team creates.
+<.> The name of the release strategy.
+<.> The name of the managed environment to which the system deploys an application.
+<.> The name of the pipeline that the system uses when releasing an application to a managed environment.
+<.> The link to the release pipeline bundle.
+<.> The enterprise contract policy against which the system validates an application before releasing it to production.
+<.> The name of the link:https://github.com/scoheb/{ProductName}-demos/blob/main/m7/release/managed-workspace/service_account.yaml[`serviceAccount`] resource in the Managed workspace. This `serviceAccount` resource has link:https://kubernetes.io/docs/concepts/configuration/secret/#secret-types[secrets] that link:https://tekton.dev/vault/pipelines-v0.15.2/auth/[Tekton] uses to provide authentication to different tasks in the pipeline.
+
+== Creating a `ReleasePlanAdmission` object
+
+.*Prerequisites*
+
+* You have an existing Development and Managed workspace.
+* An existing `ReleasePlan` object.
+* An existing `ReleaseStrategy` object.
+
+
+.*Procedures*
+
+. Create a release_plan_admission.yaml object by running:
+
++
+[source,kubernetes]
+----
+oc apply -f releaseplanadmission.yaml -n managed
+----
+
++
+NOTE: The  release_plan_admission.yaml represents the reciprocal link to the release_plan.yaml objects created by the development team.
+
++
+*Example `release_plan_admission.yaml` object*
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission <1>
+metadata:
+ name: sre-production <2>
+ namespace: -n managed <3>
+spec:
+ application: demo-app <4>
+ environment: sre-production <5>
+ origin:
+   workspace: <user-workspace> <6>
+   namespace: <dev-workspace> <7>
+ releaseStrategy: <release-strategy> <8>
+----
+
++
+<1> The name of the resource created by the Environment team.
+<2> The name of the release plan.
+<3> The Managed environment team's workspace.
+<4> The name of the application that you want to deploy to the managed workspace.
+<5> The <description>
+<6> The workspace from which the application updates are allowed to be received in the Managed workspace.
+<7> The workspace on which the application updates are received. This workspace is created by the Development team.
+<8> The release strategy.
+
+// How integration controller uses the release plan and will creates a release object ... ships of the content
+// Alternatively you can add optional instructions to create a release manually.

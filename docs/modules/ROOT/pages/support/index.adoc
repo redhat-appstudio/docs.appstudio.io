@@ -1,0 +1,9 @@
+= Support for {ProductName}
+
+To get support you can:
+
+* Email us - link:mailto:stonesoup@redhat.com[Stone Soup mailing list].
+
+* Contact with us in our Google Group link:https://groups.google.com/g/stonesoup[Google group: Stone soup]
+
+* File a Jira ticket in the link:https://issues.redhat.com/projects/STONE[STONE project].

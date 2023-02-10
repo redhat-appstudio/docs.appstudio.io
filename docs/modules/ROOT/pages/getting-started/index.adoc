@@ -1,0 +1,50 @@
+= {ProductName} getting started guide
+CP Development Team <cp-devel@redhat.com>
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Scope
+Learn how a project team can onboard a product to {ProductName}. 
+
+== Onboarding to {ProductName}
+
+{ProductName} meets the needs of different Red Hat products. It uses many Red Hat services needed for building and releasing products to an appropriate environment.
+
+*Prerequisites*
+
+* Administrator creates a tenant workspace on KCP by using CLI (for example, Red Hat).
+
+* The administrator then invites a developer to this workspace.
+
+*Procedures*
+
+Complete the following steps to onboard a project to {ProductName}:
+
+. Create an application
+.. Add components
+.. Configure components
+.. Configure link:https://placeholder[build pipeline] for the components
+
++
+NOTE: Your components are not fully configured until you browse to GitHub and merge a PR for each component to create its build pipeline. You can also make a GitHub commit and return to your applications page to check the status of your commit.
+
+.. Add integration test pipeline to test all the components
+
++
+NOTE: For your application, you can define one or more integration tests. For more information, see https://placeholer[Integration tests]
+
+.. Select or create an environment to run all the components
+
++
++
+NOTE: Site Reliability Engineering (SRE) administrators create a `static` or `managed environment`. For more information, see https://placeholder[Release services].
+
+
+.. Optional: Review the status of the first build
+.. Optional: Customize build pipeline
+
+== Additional Resources
+* link:https://placeholder[Build pipeline customization]
+* link:https://placeholder[Build pipeline visualization]

@@ -1,0 +1,58 @@
+= RenovateBot
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+RenovateBot is a service that detects dependencies in your build pipeline and creates updates for those dependencies. 
+
+Your build pipeline is composed of Tekton xref:glossary/index.adoc[tasks]. These Tekton tasks come from Tekton bundles which are Open Container Initiative (OCI) artifacts. Your build pipeline references the Tekton bundles. 
+
+RenovateBot monitors Tekton bundle references, and ensures that they are up to date. When new versions of the Tekton bundles are available, RenovateBot creates a pull request with the updated references. This gives you time to review, change, and incorporate the new Tekton bundles.
+
+== Configuration
+
+You configure RenovateBot through its configuration file, `renovate.json`. The following is a sample `renovate.json` file: 
+
+Sample:
+
+----
+{
+
+
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+
+    "timezone": "America/New_York",
+
+
+    "schedule": ["before 10pm"],
+
+
+    "tekton": {
+
+
+    "fileMatch": ["\\.yaml$", "\\.yml$"],<1>
+
+
+    "pinDigests": true <2>
+
+
+    }
+
+
+}
+----
+
+Notice the following Tekton items in `renovate.json`: 
+
+<1> `link:https://docs.renovatebot.com/configuration-options/#filematch[fileMatch]`: An array type. RenovateBot parses each string in fileMatch, then extracts matching filenames from a repository. In this sample, fileMatch directs RenovateBot to extract all .yaml and .yml files in your repository. 
+
+<2> `link:https://docs.renovatebot.com/configuration-options/#pindigests[pinDigests]`: A boolean type. When enabled, RenovateBot pins any Docker images or GitHub Actions by means of their SHA256 digest so that they are immutable.
+
+You can also update `renovate.json` with link:https://docs.renovatebot.com/configuration-options/#[many different options]. 
+
+== Additional information
+
+See an example in the xref:how-to-guides/configuring_renovatebot.adoc[Configuring RenovateBot] guide.
+
+

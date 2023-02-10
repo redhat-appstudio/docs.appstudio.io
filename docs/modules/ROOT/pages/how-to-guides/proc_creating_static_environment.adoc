@@ -1,0 +1,38 @@
+= Creating Static environments
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+You can create Static environments within your current workspace and use them to internally deploy and test your applications. 
+
+.*Prerequisites*
+
+* You have successfully signed in to {ProductName}.
+
+
+.*Procedures*
+
+. On the console, select *Settings* menu.
+. Select the type of environment you want to create (for example, Static environment), and select *Next*.
+. In the *Environment name* field, enter the name of the environment you want to create (for example, Development-environment).
+. From the *Deployment strategy* drop-down list, select an appropriate deployment strategy (for example, *Automatic* or *Manual*).
+
++
+NOTE: The deployment strategy handles any changes you make to your code. If you select Manual, you must manually promote new component updates to the environment. However, if you choose Automatic, new component updates are automatically deployed to the environment. Additionally, you can change the deployment strategy when promoting new component updates.
+
+. From the *Order in continuous delivery* drop-down list, select an appropriate default continuous delivery order for your application. 
+
+. From the *Environment type* drop-down list, select an appropriate environment type.
+
++
+NOTE: This order determines the progression of environments to which your application is deployed after passing all the integration tests, starting at 0.
+
+. From the *Location* drop-down list, select an appropriate location to which you want to deploy and test your application. 
+
+. Select *Create environment*.
+
+.Verification
+When you successfully create an environment, the system displays it in the:
+
+* *Settings > Environments* section
+* *Applications > Environment* tab

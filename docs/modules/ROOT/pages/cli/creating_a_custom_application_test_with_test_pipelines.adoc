@@ -1,0 +1,132 @@
+= Creating a Custom Application Test with Test Pipelines
+
+== How integration services use Tekton test pipelines and test scenarios
+
+To create a custom application test, you must create a Tekton test pipeline. The test pipeline consists of a single definition that could be executed as two logically distinct pipeline runs by the Integration Service. The Integration Service executes the test pipeline and tests the application. The Integration Service has two different stages:
+
+* Component stage: when you build a single component image, the Integration Service tests the application using only that components updated to use the newly built image.
+* Composite stage: when you build multiple components at the same time, the Integration Service tests the application, using multiple components updated to use the newly built images.
+
+A new custom resource (CR) called `IntegrationTestScenario` describes separate PipelineRuns that run by the snapshot controller. Each IntegrationTestScenario includes information regarding the executed Tekton pipeline:
+
+* The Tekton bundle image
+* The pipeline name and paramaters
+* The environment details
+
+Use the IntegrationTestScenario to:
+
+* Specify where the pipeline will be applied
+* Define if the test scenario runs in the component stage, the composite stage, or both
+
+The ephemeral environment is the copy of an existing environment that the Integration Service created for a specific integration pipeline run. When the Integration Service creates an ephemeral environment, it creates the following actions:
+
+. The Integration Service creates the, `ApplicationSnapshotEnvironmentBinding` that links the `ApplicationSnapshot` with the `Environment`.
+. The GitOps service deploys the Snapshot on the new Environment
+. The Integration Service links the credentials for the `Environment` to the `Integration Tekton pipeline run`.
+. The Integration Service starts the test run.
+
+To create a custom application test, go to:
+
+. Creating a Tekton bundle image
+. Creating an individual Tekton task
+. Creating an integration test scenario
+
+== Creating an individual Tekton task
+
+An individual Tekton task contains the results that the Integration Service reads.
+
+.Procedure
+
+. In your framework, build your Tekton task containing the standardized {ProductName} Tekton task output ({ProductName}_TEST_OUTPUT) which is saved as the result of the Task:
++
+----
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: test-output
+spec:
+  results:
+    - name: {ProductName}_TEST_OUTPUT
+      description: Test output
+  params:
+    - default: "SUCCESS"
+      name: RESULT
+      description: Test result to be generated
+  steps:
+    - image: quay.io/redhat-appstudio/{ProductName}-test:stable
+      script: |
+        {ProductName}_TEST_OUTPUT=$(jq -rc --arg date $(date +%s) --arg RESULT $(params.RESULT) --null-input \
+          '{result: $RESULT, timestamp: $date, failures: 0, successes: 0}')
+        echo "${{ProductName}_TEST_OUTPUT}" | tee $(results.{ProductName}_TEST_OUTPUT.path)
+----
++
+. Store the output in the Task’s workspace under the name convention, `test_name_output.json`.
+. Push the Tekton bundle image into your designated repository:
++
+----
+tkn bundle push quay.io/YOUR_REPO_HERE/test-bundle:test-output -f tasks/tekton_task.yaml
+----
++
+
+
+== Creating a Tekton bundle image
+
+Create a Tekton bundle image to package a pipeline. In order to make a Tekton bundle, the Tekton tasks must point to Tekton bundle images. After you package the pipeline, the Integration Service can run it as a bundle. Both the Build and Release Service utilize bundles.
+
+.Procedure
+
+. Build the Tekton pipeline definition yaml into the Tekton bundle image:
++
+----
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: component-pipeline-pass
+spec:
+  tasks:
+    - name: task-success
+      taskRef:
+        name: test-output
+        bundle: quay.io/redhat-appstudio/example-tekton-bundle:test-output
+      params:
+        - name: RESULT
+          value: SUCCESS
+    - name: task-success-2
+      taskRef:
+        name: test-output
+        bundle: quay.io/redhat-appstudio/example-tekton-bundle:test-output
+      params:
+        - name: RESULT
+          value: SUCCESS
+    - name: task-skipped
+      taskRef:
+        name: test-output
+        bundle: quay.io/redhat-appstudio/example-tekton-bundle:test-output
+      params:
+        - name: RESULT
+          value: SKIPPED
+----
++
+. Push the Tekton bundle image into your designated repository:
++
+----
+tkn bundle push quay.io/YOUR_REPO_HERE/test-bundle:build-pipeline-pass -f pipelines/build_pipeline_pass.yaml
+----
++
+
+
+== Creating an integration test scenario
+
+Create an IntegrationTestScenario so that the Integration Service can test your application components.
+
+.Procedure
+
+. Define the test scenario by specifying the following:
+* Name for the test scenario
+* Tekton bundle image for the test scenario
+* Name of the pipeline located in the Tekton bundle image
+. *Optional:* define the test scenario by specifying the following:
+* If the test scenario is optional or mandatory
+* The contexts for the test scenario, such as: component, composite, or both
+. Define the environment by specifying the following:
+* The name of the environment that creates an ephemeral testing environment

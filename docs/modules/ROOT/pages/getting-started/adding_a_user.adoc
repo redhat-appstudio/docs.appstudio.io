@@ -1,0 +1,9 @@
+= {ProductName} Getting Started Guide
+CP Development Team <cp-devel@redhat.com>
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Scope
+The goal of this guide is to describe how to add users to a Workspace in {ProductName}.

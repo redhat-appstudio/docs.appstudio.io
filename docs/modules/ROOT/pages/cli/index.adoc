@@ -1,0 +1,10 @@
+= Command-line interface (CLI)
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Overview
+See all the tasks that you can complete in {ProductName} by using the CLI.
+
+xref:cli/proc_release_application.adoc[Creating managed environements]:: Complete the steps to create managed environments.
+[]

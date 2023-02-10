@@ -1,0 +1,28 @@
+{
+  "name": "@hacbs-contract/website",
+  "version": "0.0.0",
+  "description": "Antora website for Contract",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://issues.redhat.com/browse/HACBS"
+  },
+  "homepage": "https://hacbs-contract.github.io/hacbs-contract.github.io/",
+  "devDependencies": {
+    "@hacbs-contract/ec-policies-antora-extension": "latest",
+    "@hacbs-contract/reference-antora-extension": "latest",
+    "antora": "^3.1.2"
+  },
+  "overrides": {
+    "glob-parent": "6.0.2"
+  },
+  "scripts": {
+    "build": "antora generate --clean --fetch antora-playbook.yml"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "dependencies": {
+    "@antora/collector-extension": "^1.0.0-alpha.3",
+    "@antora/lunr-extension": "^1.0.0-alpha.8"
+  }
+}

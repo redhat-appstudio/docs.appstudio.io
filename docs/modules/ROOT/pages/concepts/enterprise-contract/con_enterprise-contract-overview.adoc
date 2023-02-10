@@ -1,0 +1,27 @@
+= Overview of {ProductName} enterprise contract
+
+== How {ProductName} enterprise contract helps you
+
+The main goal of the enterprise contract (EC) is to prevent the release of SLSA non-compliant artifacts. Organizations can implement their policies by expressing them as criteria for valid artifacts within the EC. Developers then access the EC as an object inside the KCP workspace. As a developer, reference the EC to verify what must be true about your build and how to make your artifacts compliant with your organization's needs and policies. The EC evaluates the policy definitions against the collected provenance data, ensuring that the build process complies with the enterprise policy. Some examples of the EC policy rules include the following:
+
+* Verify a set of Tekton Tasks were executed. For example, the EC can assert that a Tekton Task which performs anti-virus checks was successfully executed.
+* Verify all used Tekton Tasks match an expected version and origin.
+* Verify built artifacts have been properly signed by an expected signature key.
+
+== How `Pipelines` and {ProductName} enterprise contract works
+
+The EC establishes a valid set of `Tekton Tasks` and `Tekton Pipelines` based on the customer, enterprise, and security needs and standards. Given that a `Tekton Pipeline` is composed of various `Tekton Tasks`, the EC leverages `Tekton Chains` to capture the details of a `Tekton Pipeline` execution in a signed SLSA Provenance attestation. Users simply run a `Tekton Pipeline` to build artifacts, like a container image, while `Tekton Chains` automatically generates the corresponding signed SLSA Provenance attestation. When applied, the EC verifies that the SLSA provenance attestation conforms to the configured EC policy.
+
+When the artifact produced is a container image, the signed SLSA Provenance attestation is stored alongside the container image in the same repository. In addition to the attestation, the container image  is also signed by `Tekton Chains`. This signature is also stored in the same location. The EC is responsible for ensuring the image signature and the signed SLSA Provenance attestation exist and are accurate.
+
+== Additional resources
+
+To learn more about {ProductName} EC, see:
+
+* xref:ec-policies::index.adoc[Enterprise Contract]
+
+To learn about other {ProductName} streams that help you with your containerized development needs, see:
+
+* Application testing
+* Release strategy
+* Pipelines

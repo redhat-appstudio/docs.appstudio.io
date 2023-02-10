@@ -1,0 +1,26 @@
+= Deleting an application from CLI
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+You can delete an application if you are either the owner or have admin access to it.
+
+WARNING: Deleting an application permanently deletes all the components and associated resources from the user interface and upstream repositories. You cannot undo this action.
+
+.*Prerequisites*
+
+* You have successfully signed in to {ProductName}.
+* You have at least one application.
+
+.*Procedures*
+
+. Delete an application by running:
+
++
+[source,command]
+----
+oc delete application/<the-application-name>
+----
+
+== Additional Resources
+For information about deleting an application from UI, review xref:how-to-guides/delete_application.adoc[Deleting an application from UI].

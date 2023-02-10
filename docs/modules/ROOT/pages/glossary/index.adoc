@@ -1,0 +1,106 @@
+= Glossary
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Build Pipeline customization 
+The ability to update and manage Build Pipelines for each component in an application. 
+
+== Cluster
+A Kubernetes deployment, which includes nodes that run containerized applications, and a control plane that manages the nodes.
+
+== Commit 
+A change to one or more files. In Stonesoup, commits that you make to a linked repository move through the pipeline and automatically get published.
+
+== Component 
+An image that Stonesoup builds from source code in a repository. One or more components that run together form an application.
+
+== Conftest 
+A utility for testing structured configuration data. Use Conftest to validate container information.
+
+== Enterprise contract (EC) 
+A set of release policies that you apply to your managed environment. Use the EC to prevent the release of Supply chain Levels for Software Artifacts (SLSA) that are non-compliant. 
+
+== Ephemeral environment
+A temporary environment that executes each integration scenario. The system creates these environments dynamically on demand and then removes them after completing the build pipeline.
+
+== Integration test 
+A pipeline that you set up in GitHub. As you add components, it tests each one individually, and then tests the application as a whole.
+
+== Integration testing: 
+A process that uses Tekton tasks to support the setup and execution of dynamic application tests against container images.
+
+== IntegrationTestScenario
+A parameter that the Integration Service uses to test the application components.
+
+== Java build service 
+A group of utilities that accelerates build times, locates dependencies in final images, and meets product security requirements by managing the construction of Java dependencies. 
+
+== Lifecycle run
+The processes that automatically occur after a merge or pull request is resolved. These processes may include build and integration tests, as well as TaskRuns. 
+
+== Managed environment 
+An application release target. A separate Managed Environment team, such as an Site Reliability Engineering (SRE) team, manages the environment, which exists in an external workspace.
+
+== Managed workspace 
+A workspace that mirrors some details of an already existing workspace. Supporting teams can create a managed workspace to grant limited permissions to development teams in the production environment. 
+
+== OSBS features 
+The layered image build service, or OSBS (derived from OpenShift Build Service), is a tool for building layered images. With OSBS features, you can build base RHEL images, layered images, and the builder image itself.
+
+== Persister
+A component that moves the Pipeline output, which is all of the relevant PipelineRun information, to an external storage that is outside the cluster’s etcd database, after the system completes PipelineRun.
+
+== Pipelines as Code
+A practice that defines pipelines with source code in Git. Pipelines as Code is also the name of a subsystem that executes those pipelines.
+
+== Pipeline results 
+Systems that retain the history and details of builds. 
+
+== PipelineRun
+A collection of TaskRuns that are arranged in a specific order of execution. A valid Pipeline is compliant with the customer’s enterprise contract.
+
+== Pipeline service 
+A managed service that securely runs Tekton Pipelines. It also stores the metadata and Pipeline logs that are related to an executed Pipeline in a separate database.
+
+== Product security test 
+A test that assesses the security of build inputs and outputs with vulnerability scanning, code scanning, image testing, and result reporting. It also identifies outdated images, applications, and build pipelines. 
+
+== Pruner
+A component that removes resources that are associated with the completed PipelineRuns. The system assigns resources, such as pods, to every PipelineRun. Without a pruner, these resources remain in the cluster indefinitely, even after the system completes the PipelineRun. 
+
+== Release pipeline 
+A pipeline that defines the process for validating snapshots against the enterprise contract. They also provide an array of release destinations other than GitOps deployments. 
+
+== Security testing 
+A process that determines if images meet security quality standards.
+
+== Signature and provenance
+Mechanisms that use Tekton chains to extract and store the metadata of the PipelineRuns, sign that metadata, and then store it in the image registry adjacent to the Component image.
+
+== Snapshot 
+A set of component and container images that specifies which components should be deployed with which container images. The system creates a snapshot when it finishes running a component's build pipeline. 
+
+== Static environment 
+A set of compute resources that you can use to develop, test, and stage your applications before you release them. You can share static environments across all applications in the workspace. 
+
+== Stonesoup 
+A platform to automate the process of building, testing, and deploying applications to the hybrid cloud. Stonesoup offers enterprise-grade security and customizable feature sets.   
+
+== Supply chain levels for software artifacts (SLSA) 
+A security framework that helps prevent tampering by securing the packages and infrastructure of customers’ projects.
+
+== Task 
+One or more steps that run container images. Each container image performs a piece of construction work.
+
+== TaskRun 
+A process that executes a Task on a cluster with inputs, outputs, and execution parameters. The system creates a TaskRun on its own or as a part of a PipelineRun for each task in a pipeline.
+
+== Tekton 
+Tekton is a Knative-based framework for CI/CD pipelines. Tekton is decoupled which means that you can use one pipeline to deploy to any Kubernetes cluster across multiple hybrid cloud providers. Tekton stores everything that is related to a pipeline in the cluster, so you can use the cluster across multiple pipelines.
+
+== Tekton chains 
+A mechanism to secure the software supply chain by recording events in a user-defined pipeline.
+
+== Workspace
+Storage volume that a Task requires at runtime to receive input or provide output.

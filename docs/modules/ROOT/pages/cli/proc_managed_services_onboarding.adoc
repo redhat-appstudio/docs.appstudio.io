@@ -1,0 +1,120 @@
+= Managed services team onboarding
+When an application is ready for release, the Development team contacts the Managed Environment team. For example, their organization's SRE team requested access to the Managed Environment for the first production release. 
+
+The Managed Environment team creates the following objects on the Managed workspace:
+
+* *ReleaseStrategy* - The `ReleaseStrategy` object, created by the Managed Environment team, specifies the release pipeline that the system uses to release an application in their environment, as well as which enterprise contract the system must first validate.
+
+* *ReleasePlanAdmission* - The Managed Environment team creates the ReleasePlanAdmission object in response to the `ReleasePlan` object created by the development team. It indicates that the Managed Environment team has approved the xref:cli/proc_release_application.adoc#_creating_a_releaseplan_object[`ReleasePlan`] object for an application. It also specifies a `ReleaseStrategy` to be used for that particular Application and, optionally, an Environment to which the application will be deployed.
+
+* *`copy-application.sh`* - The Managed Environment team runs the `copy-application.sh` script by defining the application name before releasing an application to production. The script copies the application and all of its components from the Development to the Managed workspace. As a result, when releasing an application to production, the Managed Environment team uses the application on its workspace rather than the one on the Developer workspace.
+Additionally, if the Development team adds a new component to the application on their workspace,  they must notify the Managed Environment team. So they can run the `copy-application.sh` script again to ensure that the managed workspace has the most recent version of the application.
+
+== The `ReleaseStrategy` object
+
+.*Prerequisites*
+
+* An existing Development and Managed workspace.
+
+* An existing `ReleasePlan` object.
+
+.*Procedures*
+
+* Create a release_strategy.yaml object by running:
+
++
+[source,]
+----
+oc apply -f releasestrategy.yaml -n managed
+----
+
++ 
+*Example release_strategy.yaml object*
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleaseStrategy <.>
+metadata:
+  name: strategy <.>
+  namespace: managed-environment <.>
+spec:
+  pipeline: release <.>
+  bundle:     quay.io/{ProductName}-release/release-pipeline:main <.>
+  policy: policy <.>
+----
+<.> The name of the resource that the Managed Environment team creates.
+<.> The name of the release strategy.
+<.> The name of the managed environment to which the system deploys an application.
+<.> The name of the pipeline that the system uses when releasing an application to a managed environment.
+<.> The URL to the release pipeline bundle.
+<.> The URL to the enterprise contract policy config file which  stores the policies and collections. The system validates the enterprise contract policies before releasing an application to production.
+
+== The ReleasePlanAdmission object
+
+.*Prerequisites*
+* An existing Development and Managed workspace.
+
+* An existing `ReleasePlan` object in the Development workspace.
+
+* An existing `ReleaseStrategy` object.
+
+.*Procedures*
+
+
+* Create a `release_plan_admission.yaml` object by running:
+
++
+[source,]
+----
+oc apply -f releaseplanadmission.yaml -n managed
+----
+
++
+NOTE: The `release_plan_admission.yaml` represents the reciprocal link to the release_plan.yaml objects created by the development team.
+
++
+*Example `release_plan_admission.yaml` object*
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission <.>
+metadata:
+ name: sre-production <.>
+ namespace: managed <.>
+spec:
+ application: demo-app <.>
+ environment: sre-production <.>
+ origin: <dev-workspace> <.>
+releaseStrategy: <release-strategy> <.>
+----
+<.> The name of the resource that the Managed Environment team creates.
+<.> The name of the release plan.
+<.> The Managed Environment team’s workspace.
+<.> The name of the application that you want to deploy to the managed workspace.
+<.> The workspace from which the application updates are allowed to be received in the Managed workspace.
+<.> The workspace on which the application updates are received. This workspace is created by the Development team.
+<.> The release strategy that you defined in the `ReleaseStrategy` object.
+
+ 
+== The `copy-application.sh` script
+
+.*Prerequisites*
+
+* An existing Development and Managed workspace.
+
+.*Procedures*
+
+* Run the following command to copy the application from the development workspace to the managed workspace:
+
++
+[source,]
+----
+./copy-application.sh -a <location_of_the_application>
+----
+
++
+NOTE: Run `./{ProductName}copy.sh --help` to review all the help options of the script.

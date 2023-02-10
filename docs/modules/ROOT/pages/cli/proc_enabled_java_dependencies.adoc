@@ -1,0 +1,79 @@
+== Configuring Java builds with enabled dependencies rebuild
+
+Java applications download all of their dependencies as pre-compiled binaries from repositories such as Maven Central. While these pre-compiled binaries are convenient, they do not assure the origin of the dependency, and you cannot ensure that the binary artifact matches the open source code. Therefore, Java is different from languages like golang, which use source code-based dependencies.
+
+The JVM build service addressed this concern by allowing you to rebuild your application dependencies from the source automatically. Subsequently, you can assure the origin of your dependencies.
+
+.*Workflow*
+
+* The system builds your application by using community dependencies.
+
+* The JVM Build Service analyzes your application and determines the dependencies that the system needs to be rebuilt.
+
+* It generates ArtifactBuild objects to represent each artifact in your application before determining from which repository and tag the system has derives these artifacts.
+
+* The system analyzes the repository, and uses the results to find a build strategy (which can involve trial and error, for example, if the system cannot find the JDK version to use it will use them all in a specific order)
+
+* The system attempts to build all the dependencies and stores them in a persistent storage, for example, an S3-based Artifact Store.
+
+* When the system has completed all its builds you can rebuild your application.
+
+* If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
+
+.*Procedure*
+
+. Browse to your repository and create a file, for example, `secret.yaml`.
+
+. In the secret.yaml file, create a *Secret* resource with the following data:
+
++
+[source,yaml]
+----
+apiVersion: v1
+kind: Secret <1>
+metadata:
+ name: jvm-build-secrets
+ namespace: test-jvm-namespace
+stringData:
+ registry.token: QUAY_TOKEN <2>
+----
+<1> The name of the resource that you are creating.
+<2> The authentication token URL.
+
+. Create a file, for example, `config.yaml`.
+
+. In the `config.yaml` file, create a *ConfigMap* resource with the following data:
+
++
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+name: jvm-build-config
+namespace: test-jvm-namespace
+data:
+enable-rebuilds: "true" <1>
+registry.host: quay.io <2>
+registry.port: 443
+registry.owner: OrgID <3>
+registry.repository: artifact-deployments
+registry.insecure: false
+maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/"
+maven-repository-301-jitpack: "https://jitpack.io"
+maven-repository-302-confluent: "https://packages.confluent.io/maven"
+maven-repository-303-gradle: "https://repo.gradle.org/artifactory/libs-releases"
+maven-repository-304-eclipselink: "https://download.eclipse.org/rt/eclipselink/maven.repo"
+maven-repository-305-redhat: "https://maven.repository.redhat.com/ga"
+maven-repository-306-gradleplugins: "https://plugins.gradle.org/m2"
+maven-repository-307-jsweet: "https://repository.jsweet.org/artifactory/libs-release-local"
+----
+<1> To enable and configure the rebuild dependencies function you need to add enable-rebuilds: "true" to the `jvm-build-config` ConfigMap.
+<2> The URL of the repositories that holds the images of your rebuild dependencies.
+<3> The organization ID.
+
+== Additional resources
+
+* For information about Java build service components, see xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components].
+
+* For more information, see xref:concepts/java-build-service/java-build-service.adoc[Java build service].

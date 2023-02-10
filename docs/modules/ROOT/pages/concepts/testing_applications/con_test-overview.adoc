@@ -1,0 +1,48 @@
+= Overview of {ProductName} test components
+
+== How {ProductName} testing helps you
+
+{ProductName} has four components, one of which is the test component. The test component works throughout the pipeline process to ensure your application and its components comply with basic tests, like sanity, security, or tests you add to the application. The test component ensures all application components work in congruence with integration testing. Furthermore, administrator defined Enterprise Contract (EC) uses the test component to ensure your application complies with organizational and legal standards. For both component and integration testing, you can create your own tests to ensure your application meets your standards and needs.
+
+== Test types
+
+=== Component tests
+
+There are currently 3 types of image tests in {ProductName}.
+
+* Sanity Tests
+* Product Security Tests
+* Custom Tests.
+
+By default, {ProductName} performs Sanity and Product Security tests. You specifically create the Custom tests for your application.
+
+==== Sanity tests
+
+Sanity Tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The sanity tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Sanity Tests can be link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/developers/testing_applications/sanity_tests.html[found here].
+
+==== Product Security tests
+
+Product Security tests in {ProductName} ensure a product is secure and keep your image, application, and build pipeline up to date. Product Security tests include:
+
+* Vulnerability scanning
+* Code scanning
+* Image testing
+* Result reporting
+
+These tests can be made mandatory as part of the link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/architecture/con_enterprise-contract-overview.html[Enterprise Contract]
+
+==== Custom tests
+
+Custom tests in {ProductName} are tests that are created and implemented by users and administrators. You can add tests to your environment as needed. Custom tests are written as tekton tasks and implemented into your pipeline. For full instructions on creating and importing tests, please see our guide <guidename>.
+
+=== Integration service tests
+
+Integration tests occur after each component included in the build has passed testing. Integration testing ensures that all build components are able to work together at the same time. Images of all the application components are compiled into an application snapshot. The application snapshot is then tested against user defined test scenarios, which refer to a link:https://tekton.dev/docs/pipelines/tekton-bundle-contracts/[Tekton bundle]. All images created are stored in a Quay.io repository. If all integration tests pass, a ReleaseLink is created. The ReleaseLink will notify the release service that the application is ready to be promoted to the next environment.
+
+== Additional resources
+
+To learn about other {ProductName} components that help you with your containerized development needs, see:
+
+* Release Strategy
+* Enterprise Contract
+* Pipeline Services

@@ -1,0 +1,9 @@
+= {ProductName}
+CP Development Team <cp-devel@redhat.com>
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Scope
+The goal of this guide is to describe how to add tests for your application in {ProductName}.

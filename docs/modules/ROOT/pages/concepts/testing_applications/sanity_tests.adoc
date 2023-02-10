@@ -1,0 +1,83 @@
+= Sanity Tests
+CP Development Team <cp-devel@redhat.com>
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Scope
+This document covers the sanity tests contained in {ProductName} that are executed as part of the {ProductName} component build pipeline. The sanity tests for {ProductName} automatically test all application images to ensure they are up to date, correctly formatted, and protect them from security vulnerabilities.
+
+== Sanity Tests
+The {ProductName} component build pipeline supports several types of tests, including sanity tests. The sanity tests used in {ProductName} are executed in the form of https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is https://www.conftest.dev/[conftest]. Currently implemented sanity tests are listed below. Only sanity tests which are currently implemented are listed in this section.
+
+=== Label Checks
+
+==== Required Label Checks
+|===
+|Test Name |Label Name |Description |Failure Message
+
+|com_redhat_component_label_required |com.redhat.component|Bugzilla component name where bugs against this container should be reported by users |The Required 'com.redhat.component' label is missing!
+|name_label_required |name |Name of the image or container |The required 'name' label is missing!
+|version_label_required |version |Version of the image |The required 'version' label is missing!
+|description_label_required |description |Detailed description of the image |The required 'description' label is missing!
+|io_k8s_description_label_required |io.k8s.description |Description of the container in Kubernetes |The required 'io.k8s.description' label is missing!
+|vcs_ref_label_required |vcs-ref |A reference within the version control used by the container source. Generally one of git, hg, svn, bzr, cvs |The required 'vcs-ref' label is missing!
+|architecture_label_required |architecture |Architecture the software in the image should target. Default is Fedora OS architecture |The 'architecture' label is missing!
+|com_redhat_build_host_label_required |com.redhat.build-host |The build host used to create an image for internal use and auditability, similar to the use in RPM |
+|vendor_label_required |vendor |Name of the vendor |The required 'vendor' label is missing!
+|release_label_required |release |Release number for this version |The 'release' label is missing!
+|url_label_required |url |A URL where the user can find more information about the image | The required 'url' label is missing!
+|build_date_label_required |build-date |Date/Time image was built as RFC 3339 date-time |The required 'build-date' label is missing!
+|distribution_scope_label_required |distribution_scope | Scope of the intended distribution of the image |The required 'distribution-scope' label is missing!
+
+|===
+
+==== Deprecated Label Checks
+|===
+|Test Name |Label Name |Description |Failure Message
+
+|install_label_deprecated |INSTALL |The 'INSTALL' label is deprecated, replace with 'install' |The INSTALL label is deprecated!
+|architecture_label_deprecated |Architecture | The 'Architecture' label is deprecated, replace with 'architecture' |The Architecture label is deprecated!
+|bzcomponent_label_deprecated | BZComponent |the BZComponent label is deprecated, prelace with 'com.redhat.component' |The BZComponent label is deprecated!
+|name_label_deprecated |Name |The 'Name' label is deprecated, replace with 'name' |The Name label is deprecated!
+|release_label_deprecated |Release |The 'Release' label is deprecated, replace with 'release' |The Release label is deprecated!
+|uninstall_label_deprecated |UNINSTALL |The 'UNINSTALL' label is deprecated, replace with 'uninstall' |The UNINSTALL label is deprecated!
+|version_label_deprecated |Version |The 'Version' label is deprecated, replace with 'version' |The Version label is deprecated!
+|run_label_deprecated |RUN |The 'RUN' label is deprecated, replace with 'run' |The RUN label is deprecated!
+
+|===
+
+==== Inherited Label Checks
+|===
+|Test Name |Label Name |Description |Failure Message
+
+|summary_label_inherited |summary |If the label is inherited from the base image but not specified in the Dockerfile, it will contain an incorrect value for the built image |The 'summary' label should not be inherited from the base image
+|description_label_inherited |description |If the label is inherited from the base image but not specified in the Dockerfile, it will contain an incorrect value for the built image |The 'description' label should not be inherited from the base image
+|io_description_label_inherited |io.k8s.description |If the label is inherited from the base image but not specified in the Dockerfile, it will contain an incorrect value for the built image |The 'io.k8s.description' label should not be inherited from the base image
+|io_k8s_display_name_label_inherited |io.k8s.diplay-name |If the label is inherited from the base image but not specified in the Dockerfile, it will contain an incorrect value for the built image |The 'io.k8s.display-name' label should not be inherited from the base image
+|io_openshift_tags_label_inherited |io.openshift.tags |If the label is inherited from the base image but not specified in the Dockerfile, it will contain an incorrect value for the built image |The 'io.openshift.tags' should not be inherited from the base image
+
+|===
+
+==== Optional Label Checks
+|===
+|Test Name |Label Name |Description |Failure Message
+
+|Maintainer_label_required |maintainer |The name and email of the maintainer. Should contain 'Red Hat' or '@redhat.com' |The 'maintainer' label should be defined
+|summary_label_required |summary |A short description of the image |The 'summary' label should be defined
+|===
+
+=== Deprecated Image Checks
+|===
+|Test Name |Label Name |Description |Failure Message
+
+|image_repository_deprecated |N/A |Deprecated images are no longer maintained and will accumulate security issues without releasing a fixed version | The container image should not be built from a repository which is marked as 'Deprecated' in COMET
+|===
+
+=== Unsigned RPM Check
+|===
+|Test Name |Label Name |Description |Failure Message
+
+|image_unsigned_rpms |N/A |Providing packages signed with the secure Red Hat signing server indicates that the package was subject to all appropriate policies and procedures |All RPMs found on the image must be signed. Found following unsigned rpms(nvra):
+|===

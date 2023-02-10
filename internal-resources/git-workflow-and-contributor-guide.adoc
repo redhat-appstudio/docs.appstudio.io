@@ -1,0 +1,1523 @@
+= Stonesoup contributor guide
+
+== Overview
+
+This document describes the tasks needed to contribute to stonesoup documentation.
+
+IMPORTANT: If at *ANY TIME* you feel lost or don't know what to do, start asking questions on the _#forum-hac-docs_ slack channel.
+
+* Before you begin, you need to perform the following one time process to xref:install_and_configure_git[install and configure Git]
+
+* Once you have configured *Git* and set up your repositories, use this xref:documentation_update_process[documentation update process] to make changes to the stonesoup documentation.
+
+* You must follow our xref:merge_request_workflow[documented merge request workflow] when you submit your merge request.
+
+* This document contains xref:advanced_git_operations[advanced Git operations] such as how to xref:deleting_branches[delete branches], how to xref:access_unmerged_commits[work with unmerged commits], and how to xref:sync_origin_main_with_upstream[synchronize your origin main with upstream]. It also contains a section on xref:git_troubleshooting_tips[Git troubleshooting tips].
+
+[[install_and_configure_git]]
+== Install Antora
+stonesoup documentation uses Antora as a publishing tool. To contribute to the project you must first install https://docs.antora.org/antora/latest/install/install-antora/[Antora].
+
+== Install and Configure Git
+
+[[install_git]]
+===  Install Git
+
+The Git client allows you to access the `stonesoup-documentation` GitLab repository from a command line in your local file system.
+
+. https://help.github.com/articles/set-up-git/[Set up Git] to allow command line access to the repositories.
+. Set up https://gitlab.cee.redhat.com/help/ssh/README.md[authentication] to GitLab.
+
+IMPORTANT: If you are suddenly prompted for a password when you attempt to access GitLab, it is possible that you have overwritten your SSH public key. Once you have set up your SSH public key and authenticated to GitLab, be careful not to overwrite it. If you generate a new public SSH key for another product and overwrite this one, you will lose your authentication to GitLab! If this happens, you must add your new SSH public key to GitLab.
+
+=== Fork the Upstream Repository
+
+Fork the `stonesoup-documentation` upstream repository to create a copy under your own GitLab ID. This allows you to work on multiple features and push changes to branches in your own GitLab instance so you don't have to worry about losing work. When you are ready, you can request the changes to be merged back into the upstream repository.
+
+. Open a browser and navigate to the https://gitlab.cee.redhat.com/red-hat-stone-soup/stonesoup-documentation.
+. Select the https://gitlab.cee.redhat.com/red-hat-stone-soup/stonesoup-documentation/-/forks/new[Fork] icon.
+
++
+image::images/fork.png[alt=Fork]
+
+. Choose your user account for the location of the forked repository. This creates your own copy of the repository under your own GitLab ID.
+
+=== Clone Your Forked Repository
+
+Clone your forked repository to bring your GitLab repository files to your local machine. Your forked repository is now the `origin` repository for your local files.
+
+. Open a terminal and navigate to the directory where you want to create the new repository folder.
+. Type the following command.
++
+[source,bash,options="nowrap"]
+----
+$ git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git
+----
+. Navigate to the newly created `stonesoup-documentation` folder.
++
+[source,bash,options="nowrap"]
+----
+$ cd stonesoup-documentation/
+----
+
+For more information about http://doc.gitlab.com/ee/workflow/forking_workflow.html[forking] and http://doc.gitlab.com/ce/gitlab-basics/command-line-commands.html#clone-your-project[cloning], consult the official http://doc.gitlab.com/ce/[Gitlab documentation].
+
+=== Add the Upstream as a Remote Repository
+
+Once you have your fork checked out and cloned locally, add the git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git repository as a remote:
+
+. List the current list of remote repositories:
++
+[source,bash]
+----
+$ git remote -v
+origin git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git (fetch)
+origin git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git (push)
+----
+
+. Add the upstream as a remote repository and fetch its contents. This allows you to check out and work with the latest source code.
++
+[source,bash]
+----
+$ git remote add -f upstream  git@gitlab.cee.redhat.com:red-hat-stonesoup-documentation/stonesoup-documentation.git
+----
+
+. Verify the new remote was added:
++
+[source,bash]
+----
+$ git remote -v
+origin git@gitlab.cee.redhat.com:<username>>/stonesoup-documentation.git (fetch)
+origin git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git (push)
+upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git (fetch)
+upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git (push)
+----
+. If the upstream repository is moved, you can change the upstream URL using the following command.
++
+[source,bash]
+----
+$ git remote set-url upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git
+----
+. Use the following commands any time you need to fetch the latest source code locally.
++
+[source,bash]
+----
+$ git fetch upstream
+$ git rebase upstream/main
+----
+[[documentation_update_process]]
+== Documentation Update Process
+
+You should now have a clone of your forked repository on your local machine and added the upstream repository as a remote.
+
+Updates to the documentation should be based on JIRAs that request bug fixes, enhancements, or new features. For more information about how JIRAs affect the documentation process, see https://placeholder.adoc[The stonesoup JIRA Workflow].
+
+The basic documentation process is as follows:
+
+* xref:check_out_a_topic_branch_from_the_upstream_repository[Check out a topic branch] from the upstream repository.
+* Make your changes and xref:make_your_changes_and_add_them_to_git[add them to Git].
+* xref:test_your_changes[Test Your Changes] to make sure they do not break the build and to verify that the updates render as you expect.
+* xref:commit_your_changes_and_push_them_to_your_own_repository[Commit your changes and push] them to your own repository.
+* Verify your changes and xref:verify_your_changes_and_open_a_merge_request_to_upstream[open a merge request] to upstream.
+* xref:modify_a_merge_request[Fix issues] noted in your merge request.
+
+
+You may want to need to do some more xref:advanced_git_operations[advanced Git operations], such as delete branches, access unmerged commits, or sync up your GitLab repository main branch with the official upstream repository. There is also a list of xref:useful_git_commands[useful Git commands]. Feel free to add to this list.
+
+[[check_out_a_topic_branch_from_the_upstream_repository]]
+=== Check Out a Topic Branch from the Upstream Repository
+
+. _Fetch_ the latest from the upstream repository to make sure you are working with the latest code base.
++
+[source,bash]
+----
+$ git fetch upstream
+$ git rebase upstream/main
+----
+. Determine the branch or branches in which the fix needs to be applied.
++
+NOTE: If a fix applies to both {BranchPreviousRelease} and {BranchCurrentRelease}, you must have a separate JIRA for {BranchPreviousRelease} and one for {BranchCurrentRelease}. This is for QE verification purposes. See the link:https://placeholder.com[JIRA handling instructions] for how to clone a JIRA for a fix that applies to both {BranchPreviousRelease} and {BranchCurrentRelease}.
+
+* If the fix should be applied to the both the current {BranchCurrentRelease} release and previous {BranchPreviousRelease} release, you should check out your branch from `upstream/{BranchCurrentmain}`.
+* If the fix should be applied only to the current {BranchCurrentRelease} release, check out the branch from `upstream/{BranchCurrentmain}`.
+* If the fix should be applied only to the previous {BranchPreviousRelease} release, check out the branch from `upstream/{BranchPreviousmain}`.
++
+
+. Check out a topic branch from the correct branch in the upstream repository.
+
++
+[cols="25%,75%", options="header"]
+|===
+|Branch Needing the Fix
+|Branch to Check Out From
+
+|{BranchCurrentRelease} and {BranchPreviousRelease}
+|git checkout -b TOPIC_BRANCH_NAME upstream/{BranchCurrentmain}
+
+|{BranchCurrentRelease} only
+|git checkout -b TOPIC_BRANCH_NAME upstream/{BranchCurrentmain}
+
+|{BranchPreviousRelease} only
+|git checkout -b TOPIC_BRANCH_NAME upstream/{BranchPreviousmain}
+|===
+
++
+[NOTE]
+You can check out multiple topic branches and work on multiple features at one time, with no impact on each other, but you may have to stash or commit your changes before you switch branches.
+
+[[make_your_changes_and_add_them_to_git]]
+=== Make Your Changes and Add Them to Git
+
+. When you have completed your changes, xref:build_the_documentation[build the book locally] to make sure there are no errors or warnings and that the HTML renders successfully. Since a topic may be used in multiple books or multiple releases, be sure to build all of the books if you change a shared topic!
+
+. When you are sure the book builds and renders successfully, check the status of your topic branch. The status command tells you the topic branch you are on and lets you know which files have been changed or removed. It also lists any new untracked files you may want to add.
++
+[source,bash]
+----
+$ git status
+----
++
+You should see something like the following:
++
+[source,bash]
+----
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   internal-resources/contributor-guide.adoc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	internal-resources/some-new-test-guide.adoc
+----
+. Follow the instructions to add changes, add files, or unstage changes.
++
+[source,bash]
+----
+$ git add internal-resources/contributor-guide.adoc
+$ git add internal-resources/some-new-test-guide.adoc
+----
+
+[[test_your_changes]]
+=== Test Your Changes
+
+. xref:build_the_documentation[Build the documentation] to test your changes.
+
++
+NOTE: When building the local output, ensure to check the Build Warnings and Errors in the terminal, and make the appropriate fixes to the source.
+
+. Be sure to review your changes in the built book to be sure the formatting and text renders as you expect.
+
+[[commit_your_changes_and_push_them_to_your_own_repository]]
+=== Commit Your Changes and Push Them to Your Own Repository
+
+. _Commit_ your changes to your local file system.
++
+[source,bash]
+----
+$ git commit -m "stonesoup-####: commit message"
+----
+[IMPORTANT]
+ If there is a JIRA associated with this fix, be sure to prefix the commit message with the JIRA number. This makes it easy to trace back why a change was made to the topic.
+
+. Use Git `status` to verify all your changes are commited.
++
+[source,bash]
+----
+$ git status
+----
++
+You should see this result:
++
+[source,bash]
+----
+nothing to commit, working directory clean
+----
+. Use Git `log` to verify you only have the one commit in the log. If you have made multiple commits for this issue, be sure to xref:squash_multiple_commits_into_one[squash your commits into one] before you push your changes or issue your merge request.
++
+[source,bash]
+----
+$ git log
+----
+. _Push_ your changes to your forked repository (origin).
++
+[source,bash]
+----
+$ git push origin HEAD
+----
++
+[NOTE]
+This is the equivalent the command `git push origin TOPIC_BRANCH_NAME`. HEAD points to the top of the current branch so you do not need to remember or type the topic branch name.
+
+[[verify_your_changes_and_open_a_merge_request_to_upstream]]
+=== Verify Your Changes and Open a Merge Request to Upstream
+
+After you push your changes to your forked repository (origin), you should verify the changes are correct and then request they be merged back into the appropriate branch or branches in the upstream repository.
+
+Using the GitLab Web interface:
+
+. Navigate to your forked repository, for example, https://gitlab.cee.redhat.com/<username>/stonesoup-documentation.
+. Select the *Merge Requests* tab near the top of the page.
+. Select the *New Merge Request* button on the right side.
+. Select the source branch, which is the new branch you just pushed to origin, for example, _myBugFix_.
+. Determine and select the destination branch or branches.
+* If the fix should be applied to the both the current {BranchCurrentRelease} release and previous {BranchPreviousRelease} release, you should choose to merge to  `upstream/{BranchCurrentmain}`.
+* If the fix should be applied only to the current {BranchCurrentRelease} release, you should choose to merge to  `upstream/{BranchCurrentmain}`.
+* If the fix should be applied only to the previous {BranchPreviousRelease} release, you should choose to merge to  `upstream/{BranchPreviousmain}`.
++
+[cols="30%,30%,40%", options="header"]
+|===
+|Branch Needing the Fix
+|Target Merge Branch
+|Label to Set
+
+|{BranchCurrentRelease} and {BranchPreviousRelease}
+|{BranchCurrentmain}
+|{BranchPreviousRelease} and {BranchCurrentRelease}
+
+|{BranchCurrentRelease} only
+|{BranchCurrentmain}
+|{BranchCurrentRelease}
+
+|{BranchPreviousRelease} only
+|{BranchPreviousmain}
+|{BranchPreviousRelease}
+|===
+
+. Select *Compare Branches*
+.. Select the *Commits* tab and verify that there is only one commit and it is the one you made.
+.. Select the *Changes* tab to view the files and changes that were committed. Make sure only the changes you expect are in the commit. If you see a modified file in the commit that does NOT belong, see xref:remove_a_file_from_a_commit[Remove a File From a Commit] for instructions to remove it.
+.. Fill in the details about your merge request, assign it to an administrator or peer reviewer, and select _Submit new merge request_.
+.. Add the label or labels or the targeted release as described in the above table.
+.. If this request targets both releases, add a comment in the merge request to alert the administrator.
+
+For more details on creating a merge request, see the http://doc.gitlab.com/ce/gitlab-basics/add-merge-request.html[GitLab documentation].
+
+[[copy_the_doc_to_a_shared_server]]
+=== Send the doc link for SME or Peer review
+
+For complicated changes that include multiple topics and alter the table of contents for a book, it is helpful to share the test build link so that it can be easily reviewed by an SME.
+
+To share the test build link.
+
+. For an MR, when the system completes a _PipelineRun_ successfully, select the pipeline number. For example, pipeline #22222
++
+image::images/pipeline_number.png[alt=Pipeline Number]
+. Select the *Test* pipeline.
++
+image::images/test.png[]
+
+. In the Job artifacts section, select *Browse*.
+
++
+image::images/browse.png[]
+
+. In the Name column, select *public* > *index.html*.
+
+. Copy share the ink that the system displays in the You are being redirected away from GitLab section.
+
++
+image::images/share.png[]
+
+
+[[modify_a_merge_request]]
+=== Modify a Merge Request
+
+The administrator or others may make comments and request that you make fixes to your merge request before it is merged. Use the following procedure to make your updates for an existing merge request.
+
+. If you have already started making changes in a new branch, you must _stash_ or _commit_ your changes before you continue.
++
+To _stash_ your changes made in the NEW_BRANCH_NAME branch,  type:
++
+[source,bash]
+----
+$ git stash save
+----
++
+Make sure the changes are stashed and nothing shows as modified.
++
+[source,bash]
+----
+$ git status
+----
++
+Later, when you are done with the merged branch and want to return to other  branch, recover your changes using the following command.
++
+[source,bash]
+----
+$ git checkout NEW_BRANCH_NAME
+$ git stash pop
+----
+. Check out the branch that contains your changes and from which your issued the merge request.
++
+[source,bash]
+----
+$ git checkout MERGE_BRANCH_NAME
+----
+. Make the changes as noted in the merge comments. Follow the instructions above to add the files: xref:make_your_changes_and_add_them_to_git[Make Your Changes and Add Them to Git]
+
+. Commit your changes.
++
+[source,bash]
+----
+$ git push <-f> origin HEAD
+----
++
+[NOTE]
+If you squash commits, you must use the `-f` flag to force the push to your repository.
+
+. The merge request should now reflect your latest updates. You do NOT need to issue another merge request when you use the same branch.
+
+[[merge_request_workflow]]
+=== Merge Request Workflow
+
+This section describes the workflow you should follow when you submit a merge request to the upstream main branch.
+
+. Upon submitting a merge request:
+* Add the *Needs Peer Review* label and tag someone on the team to review the content.
+* Add a label for the target release for the fix, for example, *1.x.x*. If the fix must be applied to multiple branches, add a label for each and make sure there is a corresponding JIRA for each release where it needs to be applied.
+. If we are in a stage freeze prior to a portal push, you must also do the following.
+* If the fix is for a JIRA reopened by QE for this stage push, add the *Prod Push* label.
+* If the fix is not for a JIRA reopened from the stage push, prepend the JIRA title with "WIP:" or "[WIP]" and add the *WIP* label.
+
+. If the updates are a result of a JIRA, open the JIRA, select *Link Pull Request*, and paste the link to the GitLab merge request in the text box provided.
+. The reviewer should review the content and do one of the following.
+* If the content looks good, remove the *Needs Peer Review* label, add the *Ready to Merge* label, and comment that the code has been reviewed and looks good to merge.
+* If changes are required, leave the *Needs Peer Review* label in place, add the *Feedback Provided* label, and provide good comments about what needs to be changed.
+. If necessary, the writer receiving feedback should make any necessary changes, remove the *Feedback Provided* label to notify the reviewer that updates were made, and then tag the reviewer to review any updates.
++
+[IMPORTANT]
+====
+The writer requesting the merge should _NOT_ add the *Ready to Merge* label at this point. The updated content still needs review and it is up to the reviewer to decide when it is ready.
+====
++
+This process continues until the reviewer marks the merge request *Ready to Merge*.
+. When a merge request is in a *Ready to Merge* state, a GitLab administrator does final review.
+* If the content looks good, the administrator can merge the request.
+* If the administrator finds a problem, the *Feedback Provided* label is added and comments are provided about what needs to be changed.
+. After the request is merged to main, open the related JIRA, select *Pull Request Closed* or *Workflow* -> *Resolve Issue*, add a comment and the link where the modified content can be previewed on the QA preview server (https://access.qa.redhat.com/documentation).
+
+[[build_the_documentation]]
+== Build the Documentation
+To build your Antora book:
+
+. On your terminal run `npm install` and then `npm run build`.
+. Copy and paste the build link on any browser to review the output.
+
+[[advanced_git_operations]]
+== Advanced Git Operations
+
+[[rename_file_or_directory]]
+=== Rename a File or Directory
+
+At some point, you may want or need to rename a file or a directory that is already committed and merged to the upstream repository.
+
+* To rename a file, use the syntax `git mv OLD_FILE_NAME NEW_FILE_NAME`.
++
+[source,options="nowrap"]
+----
+$ git mv  migrate-entity-beans.adoc migrate-entity-beans-to-jpa.adoc
+----
++
+When you do a `git status`, you should see the following result.
++
+[source,options="nowrap"]
+----
+renamed: migrate-entity-beans.adoc -> migrate-entity-beans-to-jpa.adoc
+----
+
+* To rename a directory, use the syntax `git mv OLD_DIRECTORY_NAME NEW_DIRECTORY_NAME`
++
+[source,options="nowrap"]
+----
+$ git mv dev-guide-webservices dev-guide-web-services
+----
+When you do a `git status`, you should see a rename for every subdirectory and file within the renamed directory.
++
+[source,options="nowrap"]
+----
+renamed:    docs/dev-guide-webservices/buildGuide.sh -> docs/dev-guide-web-services/buildGuide.sh
+renamed:    docs/dev-guide-webservices/main-docinfo.xml -> docs/dev-guide-web-services/main-docinfo.xml
+renamed:    docs/dev-guide-webservices/main.adoc -> docs/dev-guide-web-services/main.adoc
+renamed:    docs/dev-guide-webservices/topics -> docs/dev-guide-web-services/topics
+----
+
+NOTE: If you modify a file that is included in a rename command, instead of "renamed:" you may instead see that the original file was deleted and the new file is added. This is okay and is just the way Git reports the change.
+
+[[always_rebase_instead_of_pull]]
+=== Always Rebase Instead of Pull
+
+[WARNING]
+====
+Never do a 'git pull' command!
+
+If at any point Git suggests you do a `git pull` to bring in upstream changes, DO NOT DO IT! This approach fetches and merges all upstream commits made after your checkout into your local branch and can make the commit history of the branch invalid.
+
+Instead, always use the following commands, which rewind and apply your changes on top of the latest upstream source:
+
+  $ git fetch upstream
+  $ git rebase upstream/main
+====
+
+[[rebase_upstream_changes_into_your_branch]]
+=== Rebase Upstream Changes into Your Branch
+
+
+If you work in a branch for a while, it is good practice to bring down the latest changes from the upstream repository and test them with your changes before you push to your repository and request a merge. This describes the process to do this.
+
+. Add and commit any changes you have made in your branch.
++
+[source,options="nowrap"]
+----
+$ git add file1.adoc
+$ git add file2.adoc
+$ git commit -m "Your commit message"
+----
+
+. Fetch the latest from source from the upstream repository and rebase.
++
+[source,options="nowrap"]
+----
+$ git fetch upstream
+$ git rebase upstream/main
+----
+. If the rebase is successful and there are no conflicts, you see a message similar to the following.
++
+[source,options="nowrap"]
+----
+First, rewinding head to replay your work on top of it...
+Applying: "Your commit message"
+----
++
+If you see "CONFLICT" messages and it fails to merge the changes, you must fix the conflicts and complete the rebase before you continue. See xref:fix_rebase_merge_conflicts[Fix Rebase Merge Conflicts] for instructions to resolve the conflicts.
+
+. At this point, it is a good idea to display the commit history.
++
+[source,options="nowrap"]
+----
+$ git log
+----
++
+The commit history should show your commit, followed by a commit history that matches the commit history in the upstream repository.
+
+. Push the rebased branch to your origin HEAD
++
+[source,options="nowrap"]
+----
+$ git push origin HEAD
+----
++
+If you pushed this branch to origin before you rebased, you must use the `-f` argument to force the new rebased changes into your branch:
++
+[source,options="nowrap"]
+----
+$ git push -f origin HEAD
+----
++
+Alternatively, you can push it to a branch with a different name, and then close the original merge request and issue a new request for the new branch name.
++
+[source,options="nowrap"]
+----
+$ git push origin HEAD:branch-name-rebased
+----
+
+. Using the GitLab Web interface, navigate to your forked repository, select *Create Merge Request* for this update, verify the changes look correct, and submit the new merge request.
+
+[[fix_rebase_merge_conflicts]]
+=== Fix Rebase Merge Conflicts
+
+
+[WARNING]
+====
+If at any point Git suggests you do a `git pull` to bring in upstream changes, DO NOT DO IT!  See xref:always_rebase_instead_of_pull[Always Rebase Instead of Pull] for details.
+====
+
+When you rebase your changes to the `upstream/main` branch, you may see error messages like the following:
+[source,options="nowrap"]
+----
+First, rewinding head to replay your work on top of it...
+Applying: Testing a change that should cause a conflict
+Using index info to reconstruct a base tree...
+M	docs/login-module-reference/main.adoc
+Falling back to patching base and 3-way merge...
+Auto-merging docs/login-module-reference/main.adoc
+CONFLICT (content): Merge conflict in docs/login-module-reference/main.adoc
+Failed to merge in the changes.
+Patch failed at 0001 Testing a change that should cause a conflict
+The copy of the patch that failed is found in:
+   /home/sgilda/GitRepos/stonesoup-docs-sandbox/.git/rebase-apply/patch
+
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+----
+Files with conflicts are noted with the message "CONFLICT (content): Merge conflict in". In the example above, you see the message `CONFLICT (content): Merge conflict in docs/login-module-reference/main.adoc`.
+
+You must manually edit and fix any conflicted files before you can continue.
+
+. Open any conflicted files in an editor.
+.. Any changes made in the upstream version of the file are preceded by `<<<<<<< HEAD` and followed by `=======`.
+.. Any changes made to the file in your commit follow the `=======` and end with `>>>>>>> COMMIT_MESSAGE`.
+. Assume, in this example, you find the following conflict in the file.
++
+[source,options="nowrap"]
+----
+End of previous table
+
+<<<<<<< HEAD
+=== PropertiesRolesMapingProvider
+=======
+==== PropertiesRolesMappingProvider
+>>>>>>> Testing a change that should cause a conflict
+*Code*: PropertiesRoles
+----
+* The change in the upstream/main branch was to adjust a heading up a level from `====` to `===`.
+* The change in the current commit was to fix a typo by changing `ProperitesRolesMapingProvider` to `PropertiesRolesMappingProvider`.
++
+In this case, neither line is correct. The correct fix for this conflict is to keep the level at `===` but fix the typo.
++
+[source,options="nowrap"]
+----
+=== PropertiesRolesMappingProvider
+----
+. Make the changes to the correct lines in the file. Be sure to remove the "<<<<<<< HEAD", "=======", and ">>>>>>> Commit message" delimiting lines and save the file.
+. Do a `git status`. You will see something like the following.
++
+[source,options="nowrap"]
+----
+$ git status
+rebase in progress; onto f80b096
+You are currently rebasing branch 'test-merge-conflict' on 'f80b096'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git reset HEAD <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   docs/login-module-reference/main.adoc
+
+no changes added to commit (use "git add" and/or "git commit -a")
+----
+. The conflicted file appears under "Unmerged paths:" with a directive to use "git add <file>" to mark resolution.
++
+[source,options="nowrap"]
+----
+$ git add docs/login-module-reference/main.adoc
+----
++
+The `git status` command will now show the file modified and staged for commit.
+. Now that the conflict is resolved you can tell Git to continue processing the rest of the rebase.
++
+[source,options="nowrap"]
+----
+$ git rebase --continue
+----
+. At this point, if you do a `git log`, the commit history should show your commit, followed by a commit history that matches the commit history in the upstream repository.
+
+If you started the rebase process, but do not wish to resolve the merge conflicts at this time, you can abort the rebase with the following command.
+
+[options="nowrap"]
+----
+$ git rebase --abort
+----
+
+[[add_new_changes_to_an_existing_commit]]
+=== Add New Changes to an Existing Open Commit
+
+If you need to update the content for an existing, open merge request based on the peer, SME, or Git administrator review process, you can make the changes, stage them, and tack them onto the existing commit using the `--amend` option. This is a convenient way to rewrite history and merge the staged updates into the existing commit. This allows you to avoid the process defined under xref:squash_multiple_commits_into_one[Squash Multiple Commits into One].
+
+First, define a global alias for the `--amend` command so that Git does not prompt you with the `vi` editor and ask you to edit the commit message. This is a one-time task.
+
+[source,options="nowrap"]
+----
+$ git config --global alias.commend 'commit --amend --no-edit'
+----
+
+Then, when you get feedback and need to update the existing commit, you only need to perform the following steps.
+
+. Use `git add` to stage the updated files.
+. Update your existing commit using the following command.
++
+[source,options="nowrap"]
+----
+$ git commend
+----
++
+Note that the `git log` shows only the one commit with the existing commit message, so there is no need to squash your changes.
+
+. Push the changes to your remote repository using the `-f` force option.
++
+[source,options="nowrap"]
+----
+$ git push -f origin HEAD
+----
+
+See _DZone / Java Zone_ https://dzone.com/articles/lesser-known-git-commands[Lesser Known Git Commands] for other tips.
+
+[[squash_multiple_commits_into_one]]
+=== Squash Multiple Commits into One
+
+If you have made multiple commits by the time you have completed a your changes, it is a good idea to first xref:rebase_upstream_changes_into_your_branch[rebase the latest upstream changes into your branch] and then "squash" your commits into one commit before you request a merge to the upstream repository.
+
+There are two ways to squash commits.
+
+* Use the xref:use_reset_soft["reset --soft"] command.
+* Use the xref:use_rebase_i["rebase -i"] command.
+
+Both methods require that you find the commit ID for the parent of your first commit. The parent is the commit immediately preceding your first commit, which may belong to a different user.
+
+Use the `git log` command to find your first commit. Then note the ID of the parent commit. In the following log example, the parent commit ID (of Zach's first commit) is `d6375cea527a3a37d88cff74be23d659e4bd8d90`.
+
+[source,options="nowrap"]
+----
+$ git log
+commit 44583fb668bf57f8be34a23ea82adb1195eda3c7
+Author: Zach Rhoads <<username>@redhat.com>
+Date:   Wed Nov 11 16:50:17 2015 +0100
+
+    Commit message 3
+
+commit bdcdca71cef85412e235b9e5c235afb01bfbb1fc
+Author: Zach Rhoads <<username>@redhat.com>
+Date:   Wed Nov 11 16:15:22 2015 +0100
+
+    Commit message 2
+
+commit 992a0691f77218179d0b64483b78d6f399e8e4f9    // Zach's first commit
+Author: Zach Rhoads <<username>@redhat.com>
+Date:   Wed Nov 11 14:59:12 2015 +0100
+
+    Commit message 1
+
+commit d6375cea527a3a37d88cff74be23d659e4bd8d90    // *** Parent commit ***
+Merge: ddc62dd 265c158
+Author: Sande Gilda <sgilda@redhat.com>
+Date:   Wed Nov 11 16:23:53 2015 +0530
+
+    Merge branch 'guide-updates' into 'main'
+
+    Update guides commit message.
+----
+
+
+[[use_reset_soft]]
+==== Squash Commits Using "reset --soft"
+
+See http://git-scm.com/2011/07/11/reset.html[Reset Demystified - The Role of  Reset] for more information.
+
+This command is okay to use for your own changes, but not use it when squashing commits of other contributors as it overwrites the committer ID with your own ID.
+
+. As described above, use the 'git log' command to find the commit ID for the parent of your first commit.
+. Issue the `reset --soft` command passing the parent commit ID as an argument.
++
+[source,options="nowrap"]
+----
+$ git reset --soft PARENT_COMMIT_ID
+----
+. You can run a `git status` to see the changes from all of your commits.
++
+[options="nowrap"]
+----
+$ git status
+----
+. Commit the changes.
++
+[source,options="nowrap"]
+----
+$ git commit -m "Final message for the squashed commit"
+----
+. Display the log to make sure the commit history is valid.
++
+[source,options="nowrap"]
+----
+commit 42fc12776d3edabc5fc9bc5e3df9e957bc16329c
+Author: Zach Rhoads <<username>@redhat.com>
+Date:   Tue Nov 10 23:55:27 2015 +0100
+
+    Final message for the squashed commit
+
+commit d6375cea527a3a37d88cff74be23d659e4bd8d90
+Merge: ddc62dd 265c158
+Author: Sande Gilda <sgilda@redhat.com>
+Date:   Wed Nov 11 16:23:53 2015 +0530
+
+Merge branch 'guide-updates' into 'main'
+
+Update guides commit message.
+----
+. Push the changes to your origin HEAD. If you previously pushed your changes to your own git, you need to use the '-f' argument when you push again:
++
+[source,options="nowrap"]
+----
+$ git push <-f> origin HEAD
+----
+
+[[use_rebase_i]]
+==== Use "rebase -i"
+
+This command is covered in detail here: https://git-scm.com/book/es-ni/v1/Git-Branching-Rebasing[Git Branching - Rebasing]
+
+This command preserves the ID of the original contributor in the commit history, so be sure to use this form when squashing the commits of other contributors.
+
+. As described above, use the 'git log' command to find the commit ID for the parent of your first commit.
+
+. Issue the rebase command passing the parent commit ID as an argument.
++
+[source,options="nowrap"]
+----
+$ git rebase -i PARENT_COMMIT_ID
+----
+. You see are presented with a "vi" terminal that lists the commits IDs prefixed by 'pick' along with instructions.
++
+[source,options="nowrap"]
+----
+pick b5310d4 Commit message 1
+pick 992a069 Commit message 2
+pick bdcdca7 commit message 3
+
+# Rebase d6375ce..bdcdca7 onto d6375ce
+#
+# Commands:
+#  ...
+----
+. Replace all but the first 'pick' with 'squash'. You must select the `Insert` key to enter edit mode.
++
+[source,options="nowrap"]
+----
+pick b5310d4 Commit message 1
+squash 992a069 Commit message 2
+squash bdcdca7 commit message 3
+
+# Rebase d6375ce..bdcdca7 onto d6375ce
+----
+. Select the `Escape` key to return to VI command mode and write the changes.
++
+[source,options="nowrap"]
+----
+:wq
+----
+. A new `vi` editor appears. Delete all but the first commit message, which you can modify to be more inclusive.
++
+[source,options="nowrap"]
+----
+Final message for the squashed commit
+----
+. Select the `Escape` key to return to VI command mode and write the changes.
++
+[source,options="nowrap"]
+----
+:wq
+----
+. Display the log to make sure the commit history is valid.
++
+[source,options="nowrap"]
+----
+commit 42fc12776d3edabc5fc9bc5e3df9e957bc16329c
+Author: Zach Rhoads <<username>@redhat.com>
+Date:   Tue Nov 10 23:55:27 2015 +0100
+
+    Final message for the squashed commit
+
+commit d6375cea527a3a37d88cff74be23d659e4bd8d90
+Merge: ddc62dd 265c158
+Author: Sande Gilda <sgilda@redhat.com>
+Date:   Wed Nov 11 16:23:53 2015 +0530
+
+Merge branch 'guide-updates' into 'main'
+
+Update guides commit message.
+----
+. Push the changes to your origin HEAD. If you previously pushed your changes to your own git, you need to use the '-f' argument when you push again:
++
+[source,options="nowrap"]
+----
+$ git push <-f> origin HEAD
+----
+
+[[remove_a_file_from_a_commit]]
+=== Remove a File From a Commit
+
+When you review your merge request, you may find you have mistakenly added a file to the commit that should not be there. You can remove it using the following commands.
+
+[source,options="nowrap"]
+----
+$ git reset --soft HEAD^
+$ git reset HEAD path/to/file/to/remove
+$ git commit -c ORIG_HEAD
+----
+
+If you have already pushed your changes to your repository, you must use the `-f` option when you push your changes again.
+
+[source,options="nowrap"]
+----
+$ git push -f origin HEAD
+----
+
+If you are not sure your new commit is correct and want to preserve the original branch, you can push the changes to a new branch instead.
+
+[source,options="nowrap"]
+----
+$ git push origin HEAD:new-branch-name
+----
+
+For more information, see: http://stackoverflow.com/questions/12481639/remove-files-from-git-commit
+
+[[access_unmerged_commits]]
+=== Create a Branch That Accesses Unmerged Commits
+
+Because we use the topic-based approach, in most cases we can work autonomously and not need changes made by others. But in some situations you may need changes you or a coworker has committed but not yet merged. One example of this is if another write creates and adds a lot of new topics to the `docs/topics` directory and issues a merge request. If you need to make update the `main.adoc` with those topics, you need access to those new topics to test how they render in the build.
+
+==== Access Your Own Unmerged Commits
+
+This is the process you should use if you need commits you have submitted in a merge request that is not yet merged.
+
+. Check out a new topic branch from upstream/main as you normally do.
++
+[source,options="nowrap"]
+----
+$ git fetch upstream
+$ git checkout -b NEW_TOPIC_BRANCH upstream/main
+----
+. Rebase to bring in the changes that are in your outstanding `origin/MERGE_REQUEST_BRANCH` branch.
++
+[source,options="nowrap"]
+----
+$ git rebase origin/MERGE_REQUEST_BRANCH
+   (you'll see the following response)
+   First, rewinding head to replay your work on top of it...
+   Fast-forwarded NEW_TOPIC_BRANCH to origin/MERGE_REQUEST_BRANCH
+----
+
+==== Access Another Writer's Unmerged Commits
+
+.This is the process you should use if you need commits another writer has submitted in a merge request that is not yet merged.
+
+. Check out a new topic branch from upstream/main as you normally do.
++
+[source,options="nowrap"]
+----
+$ git fetch upstream
+$ git checkout -b NEW_TOPIC_BRANCH upstream/main
+----
+. If you have not yet added that writer's remote repository, add it now.
++
+[source,options="nowrap"]
+----
+$ git remote add -f <username> git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git
+----
+. Rebase to bring in the changes that are in that user's outstanding `origin/MERGE_REQUEST_BRANCH` branch.
++
+[source,options="nowrap"]
+----
+$ git rebase <username>/MERGE_REQUEST_BRANCH
+   (you'll see the following response)
+   First, rewinding head to replay your work on top of it...
+   Fast-forwarded NEW_TOPIC_BRANCH to <username>/MERGE_REQUEST_BRANCH
+----
+
+==== Push the New Branch to Origin and Request a Merge.
+
+When you are finished, you can commit and push your changes to origin HEAD. It will show the 2 commits: the one from the rebase and the one from your own changes. You don't need to worry about that because the administrator will resolve them at merge time.
+
+If the commit is merged by the time you check in your changes and you do want to resolve it before you issue the merge request, follow this process.
+
+. Fetch the latest from upstream and rebase the branch to upstream/main.
++
+[source,options="nowrap"]
+----
+$ git fetch upstream
+$ git rebase upstream/main
+----
++
+[WARNING]
+====
+If at any point Git suggests you do a `git pull` to bring in upstream changes, DO NOT DO IT!  See xref:always_rebase_instead_of_pull[Always Rebase Instead of Pull] for details.
+====
+
+. You should see the following mesages
++
+[source,options="nowrap"]
+----
+First, rewinding head to replay your work on top of it...
+Applying: COMMIT_MESSAGE.
+----
+. Do a `git status` to make sure there are no conflicts. If there are conflicts, fix the files with conflicts and then add them using `git add`.
+. Push your changes to origin HEAD as you normally do.
+
+[[review_another_writers_unmerged_commits]]
+==== Review Another Writer's Unmerged Commits
+
+This is the process you should use if you need to review commits another writer has submitted in a merge request that is not yet merged.
+
+. If you have not yet added that writer's remote repository, add it now. The user's GitLab repository URL is displayed at the top of their repository page, for example, https://gitlab.cee.redhat.com/<username>/stonesoup-documentation
++
+[source,options="nowrap"]
+----
+$ git remote add -f <username> git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git
+----
+. If you had previously added the user's remote repository, you must now fetch the latest updates.
++
+[source,options="nowrap"]
+----
+$ git fetch <username>
+----
+
+. Check out a new topic branch from the user's branch with the commit you need to review.
++
+[source,options="nowrap"]
+----
+$ git checkout -b REVIEW_BRANCH <username>/MERGE_REQUEST_BRANCH
+----
+. Fetch the latest source from upstream and rebase to bring in those change to be sure nothing has changed that can cause a conflict.
++
+[source,options="nowrap"]
+----
+$ git fetch upstream
+$ git rebase upstream/main
+   (you'll see the following response)
+   First, rewinding head to replay your work on top of it...
+   Fast-forwarded REVIEW_BRANCH to upstream/main
+----
+. Build the guide as you normally do and review the changes.
+
+[[renaming_branches]]
+=== Renaming Branches
+
+If you need to work in a topic branch for a while but are not ready to issue a merge request, you may want to name your branch in a way to indicate that it is not ready to be merged. For example:
+
+[source,options="nowrap"]
+----
+$ git fetch upstream
+$ git checkout -b JBstonesoup-9999-WIP upstream/main
+----
+
+As you modify content, commit, and push to origin HEAD, reviewers can access your content in the `JBstonesoup-9999-WIP` branch of your remote repository. When you are finished and ready to merge, you can rename your local branch using the syntax `git branch -m CURRENT_BRANCH_NAME NEW_BRANCH_NAME`.
+
+[source,options="nowrap"]
+----
+$ git branch -m JBstonesoup-9999-WIP JBstonesoup-9999
+----
+
+When you push your changes to origin HEAD, your remote origin repository will now contain both the old branch and the new branch names.
+
+TIP: Renaming branches is also useful if you want to track large changes in stages or rework the content in a topic but want retain the old versions for later comparison.
+
+
+[[deleting_branches]]
+=== Deleting Branches
+
+Once your merge request has been merged into upstream and you no longer need a topic branch, you can delete the local branch and the corresponding remote origin repository branch. You also want to clean up the stale remote references.
+
+WARNING: Once a branch has been deleted, it cannot be restored. Be certain that you no longer need any changes on the branch before deleting it!
+
+==== Delete the Branch from Your Remote Origin Repository
+
+. Open a browser and access your repository URL, for example:
++
+https://gitlab.cee.redhat.com/<username>/stonesoup-documentation/
+
+. The top right side of the page displays links for `commits`, `branches`, and `tags`. Select the *branches* link.
+. You are presented with a page listing the branches in your repository. Find the branch you want to delete and select the red trash can icon to remove it. You are presented with a dialog asking "Removed branch cannot be restored. Are you sure?". Select *OK* if you are sure you want to delete the branch.
+
+==== Delete the Branch from Your Local File System
+
+NOTE: When you delete the branch from your remote origin repository, it does not delete the branch on your local files system. This is why the following steps are necessary.
+
+. Verify that you no longer need any of the changes on this topic branch.
++
+. You can not delete the branch you have currently checked out, so you must switch to a topic branch other than the one you are deleting.
++
+----
+$ git checkout main
+----
+. Delete the topic branch
++
+----
+$ git branch -d TOPIC_BRANCH
+----
++
+You may encounter the following error:
++
+----
+$ git branch -d TOPIC_BRANCH
+error: The branch 'TOPIC_BRANCH' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D TOPIC_BRANCH'.
+----
+.. If your merge request to upstream was recently accepted, you may first need to fetch upstream for git to realize the changes were merged.
++
+----
+$ git fetch upstream
+$ git branch -d TOPIC_BRANCH
+----
+.. This can also happen if other changes were committed to the upstream repository after you checked out your branch but before you submitted the merge request. In this case the administrator might have had to rebase your merge request before merging and it doesn't recognize that it was merged. Verify that your commit is in the upstream repository before you continue with the delete.
++
+----
+$ git branch -D TOPIC_BRANCH
+----
+.. If you want to discard changes in that branch, you can force the deletion regardless of merge status.
++
+----
+$ git branch -D TOPIC_BRANCH
+----
+. List all of your branches to verify that the branch has been deleted.
++
+----
+$ git branch
+  main
+  OTHER_BRANCH
+----
+
+[[remove_stale_references_to_remote_branches]]
+==== Remove Stale References to Remote Branches
+
+When you delete the branches, it does not delete the remote tracking information. You must manually remove any remote-tracking references that no longer exist on the remote repository. It is not necessary to do this every time you delete a branch, but it's a good practice to do this on a regular basis.
+
+You remove remote tracking references using the `git remote prune REMOTE_NAME` command.
+
+----
+$ git remote prune origin
+  x [deleted]         (none)     -> origin/TOPIC_BRANCH
+  Pruning origin
+  URL: git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git
+   * [pruned] origin/TOPIC_BRANCH
+----
+
+[NOTE]
+====
+If you regularly check out branches from repositories other than your own, you can use this command to clear obsolete tracking references to them as well.
+
+For example: `$ git remote prune <username>`
+====
+
+NOTE: See xref:cleaning_up_your_local[Cleaning Up Your Local Repository: The Easy Way] for a great tip on making this easy, as well as cleaning up local branches that have been merged into main.
+
+[[sync_origin_main_with_upstream]]
+=== Keeping Origin main in Sync with Upstream main
+
+While you should never work in the `main` branch, you may want to sync the `main` branch in your forked repository to mirror that of the `main` branch in the `upstream` repository. You can do that using either of the following procedures.
+
+==== Use the Rebase Method
+
+This method rebases any changes upstream into your main.
+
+. Check out the branch from origin you want to sync up (e.g. _main_)
++
+[source,bash]
+----
+$ git checkout -b sync-main origin/main
+----
+. _Fetch_ the latest from upstream
++
+[source,bash]
+----
+$ git fetch upstream
+----
+. _Rebase_ the latest from upstream onto your branch
++
+[source,bash]
+----
+$ git rebase upstream/main
+----
+. Resolve any conflicts.  If you have any questions, reach out to one of the admins.
+. _Push_ the updates to origin (your fork)
++
+[source,bash]
+----
+$ git push origin HEAD:main
+----
+
+==== Use the Reset Hard Method
+
+The method just replaces your `main` branch with the upstream `main`.
+
+WARNING: This method overwrites the main branch of your forked repository, so use it only if you do NOT have code you need to preserve.
+
+. Check out the main branch
++
+[source,bash]
+----
+$ git checkout main
+----
+. _Fetch_ the latest code from upstream.
++
+[source,bash]
+----
+$ git fetch upstream
+----
+. Reset it to the upstream `main`
++
+[source,bash]
+----
+$ git reset --hard upstream/main
+----
+. _Push_ the changes back to your forked repository (origin).
++
+[source,bash]
+----
+$ git push -f origin HEAD
+----
+
+[IMPORTANT]
+====
+You can use the 'git reset --hard upstream/main' command to reset your current branch contents to what is in the upstream main branch; however, be aware that you will lose any work that you have done in that branch.
+
+You can also use 'git reset --hard origin/__BRANCH_NAME__' to reset your local branch to the contents of a branch you have pushed to your remote origin repository.
+
+====
+
+
+[[useful_git_commands]]
+== Useful Git Commands
+
+[cols="1,1", options="header"]
+|===
+|Command
+|Description
+
+|git status
+|View the files that have changed but are not yet committed.
+
+|git log
+|View the commit log for the local branch
+
+|git log --oneline
+|View the commit log for the local branch, condensed to a single line.
+
+|git shortlog
+|View the commit log, grouping each commit by author and displaying the first line of each commit message. This is an easy way to see who’s been working on what. Pass the -n option to sort by the number of commits per author.
+
+|git log --no-merges
+|View the commit log, omitting the merge commits.
+
+|git log --after="2017-3-1"
+|View the commit log, filtered by date.
+
+|git log -3
+|View the 3 most recent commits.
+
+|git log --after="2017-3-1"
+|View the commit log, filtered by date.
+
+|git log --author="__GIT_USER_ID__"
+|View the commit log, filtered by author.
+
+|git diff _FILE_NAME_
+|View the changes made to a file.
+
+|git remote add -f REMOTE_NAME git@gitlab.cee.redhat.com:USERNAME/stonesoup-documentation
+|Add a remote repository for another user.
+
+|git branch -m CURRENT_BRANCH_NAME NEW_BRANCH_NAME
+|Rename a topic branch.
+|===
+
+[[git_troubleshooting_tips]]
+== Git Troubleshooting Tips
+
+* You see the warning "warning: refname 'upstream/main' is ambiguous." when you attempt to rebase to upstream/main.
++
+[options="nowrap"]
+----
+$ git rebase upstream/main
+$ git rebase upstream/main
+warning: refname 'upstream/main' is ambiguous.
+warning: refname 'upstream/main' is ambiguous.
+First, rewinding head to replay your work on top of it...
+----
+This usually means you accidently created a branch named `upstream/main`.
+This is easy to do if you omit the branch name on the _checkout_ command, for example: `git checkout -b upstream/main`. To verify this, type:
++
+[source,options="nowrap"]
+----
+$ git branch
+branch_01
+* current_branch
+main
+test_branch
+upstream/main
+----
+If you see "upstream/main" in the list of branches, simply remove it using:
++
+[source,options="nowrap"]
+----
+$ git branch -d upstream/main
+----
+
+[[git_tips_and_tricks]]
+== Git Tips and Tricks
+
+See https://git-scm.com/book/en/v1/Git-Basics-Tips-and-Tricks[Git Basics - Tips and Tricks] for complete details.
+
+[[git_commit_message]]
+=== Writing a Great Git Commit Message
+
+Other than our project requirements of preceding a commit message with the JIRA issue ID(s), some general tips for writing great git commit messages are summarized here: https://chris.beams.io/posts/git-commit/#seven-rules.
+
+[[git_editor_atom]]
+=== Using Visual Studio Code as Your Git Editor
+
+Using an editor for Git operations like commit messages and rebases can be very helpful. In addition to checking spelling, if you use Atom as your Git editor, many of the xref:git_commit_message[above tips for writing great commit messages] are hinted when writing a Git commit message. By default, Git uses Vi as the Git editor on Fedora.
+
+To use Atom as your Git editor:
+
+. Make the following one-time Git configuration change:
++
+[options="nowrap"]
+----
+git config --global core.editor "code --wait"
+----
+. When doing a Git operation that requires an editor, Git will open Atom to write the message. For a commit, omit the `-m` argument to have Git open Atom to write the commit message. For example:
++
+[options="nowrap"]
+----
+git commit
+----
++
+An Atom window will open for you to write your commit message. Note how Atom highlights if you do certain things, like having a subject line that is too long.
+. When you are finished writing the commit message, save the file and close the Atom window.
+
+[[git_branch_and_modification_display]]
+=== Display the Git Branch and Modifications
+
+You can enhance Git to make it easier and more useful. This section describes how to add the Git branch name to the command prompt so you are aware of the topic branch you are working with. It also marks the prompt with a trailing asterisk (*) when files have been modified since the _checkout_ command was issued so that is easy to know at a glance that changes were made to the branch.
+
+
+. Download the following scripts directly from the Git source code repository located at https://github.com/git/git/blob/main/contrib/completion/ and place them into the root of your home directory.
+.. `git-completion.bash`
+.. `git-prompt.sh`
+. Copy the following commands into your `.bashrc file`.
++
+[source,bash,options="nowrap"]
+----
+# Define a variable for the script file
+export GIT_COMPLETION_PATH="/home/USER_NAME/git-completion.bash"
+# Display the current branch in the prompt and mark with an '*' if files have been modified since the _checkout_ command.
+source /home/USER_NAME/git-prompt.sh
+if [ -f "$GIT_COMPLETION_PATH" ]; then
+  GIT_PS1_SHOWDIRTYSTATE=true
+  . "$GIT_COMPLETION_PATH"
+  ADD_PS1='$(__git_ps1)'
+fi
+if [[ ${EUID} == 0 ]] ; then
+  PS1="\[\033[01;31m\]\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \$\[\033[00m\] "
+else
+  PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[33m\]$ADD_PS1\[\033[34m\] \$\[\033[00m\] "
+fi
+----
+
+When you navigate to your local repository, your prompt should now contain the branch name in parenthesis along with an asterisk if any files have changed.
+
+For a turbo-boosted take on this, you may want to use  https://github.com/magicmonty/bash-git-prompt[bash-git-prompt] instead. See xref:lucas_bashrc[Lucas' `.bashrc` file] as an example.
+
+=== Git Bash Aliases (and Tab Completion!)
+
+Originally https://mojo.redhat.com/people/lcosti/blog/2015/10/06/easier-git-on-the-command-line-with-bash-aliases-and-tab-completion#comment-1017828[posted on Lucas' blog].
+
+Also see http://git-scm.com/book/en/v2/Git-Basics-Git-Aliases.
+
+What is a bash alias?
+
+_"A Bash alias is essentially nothing more than a keyboard shortcut, an abbreviation, a means of avoiding typing a long command sequence."_ [http://tldp.org/LDP/abs/html/aliases.html[src]]
+
+To add an alias to your bash profile so you can use it in your terminal, open your `~/.bashrc` file and add the alias definitions. Make sure that you open a new terminal after saving changes to your `~/.bashrc` file (any terminals already open won't get the changes).
+
+Some example git aliases are shown below:
+[source,bash,options="nowrap"]
+----
+# Git
+## Git shortcuts
+alias g='git'
+alias gfu='git fetch upstream'
+alias gc='git checkout'
+alias gs='git status'
+alias gd='git diff'
+alias gnewbranch='git checkout -b'
+alias gnb='git checkout -b'
+alias gcommam='git commit -am'
+alias gcomma='git commit -a'
+alias grmbranch='git branch -D'
+alias gbranches='git branch -a'
+----
+
+You can change the aliases to suit your style, or add any others you would like that aren't included above.
+
+However, one downside of using aliases is that you normally lose the ability to use native tab completion of the commands. For example, you can't go `gc <tab>` and get a list of branches in your repo, as you normally can with `git checkout <tab>`.
+
+To work around this issue, download the `git-completion.bash` file described in the  xref:git_branch_and_modification_display[Git Auto-Completion and Display Git Branch] section above.
+
+Then add the following to your `~/.bashrc` file:
+[source,bash,options="nowrap"]
+----
+# Git branch bash completion
+if [ -f ~/git-completion.bash ]; then
+  . ~/git-completion.bash
+
+  # Add git completion to aliases
+  __git_complete g __git_main
+  __git_complete gc _git_checkout
+  __git_complete gnb _git_checkout
+  __git_complete gnewbranch _git_checkout
+  __git_complete gm __git_merge
+  __git_complete grmbranch _git_branch
+fi
+----
+
+Note the paths to the previously saved file, and then also the mapping of the aliases to the auto-complete methods.
+
+For example, you can now type `gc <tab>` and get a list of branches in the repo.
+
+
+[[cleaning_up_your_local]]
+=== Cleaning Up Your Local Repository: The Easy Way
+
+Your local repository can easily get cluttered with a lot of old branches that have already been merged into a main branch, as well remote-tracking branches of origin and other remote branches that have been deleted.
+
+Using a bash function to execute a few commands can make keeping your local repository tidy very easy:
+
+[source,bash,options="nowrap"]
+----
+### This function prunes references to deleted remote branches and
+### deletes local branches that have been merged and/or deleted from the remotes.
+### It is intended to be run when on a main branch, and warns when it isn't.
+gclean (){
+  local BRANCH=`git rev-parse --abbrev-ref HEAD`
+  # Warning if not on a main* branch
+  if [[ $BRANCH != main* ]]
+  then
+    echo -e "\e[91m!! WARNING: It looks like you are not on a main branch !!\e[39m"
+    read -r -p "Are you sure you want to continue? [y/N] " response
+    if ! [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+    then
+      echo "Aborted. Nothing was changed."
+      return 1
+    fi
+  fi
+  echo "Simulating a clean on $BRANCH ..." \
+  && echo "===== 1/3: simulating pruning origin =====" \
+  && git remote prune origin --dry-run \
+  && echo "===== 2/3: simulating pruning upstream =====" \
+  && git remote prune upstream --dry-run \
+  && echo "===== 3/3: simulating cleaning local branches merged to $BRANCH =====" \
+  && git branch --merged $BRANCH | grep -v "$BRANCH$" \
+  && echo "=====" \
+  && echo "Simulation complete."
+  read -r -p "Do you want to proceed with the above clean? [y/N] " response
+  if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+  then
+    echo "Running a clean on $BRANCH ..."
+    echo "===== 1/3: pruning origin =====" \
+    && git remote prune origin \
+    && echo "===== 2/3: pruning upstream =====" \
+    && git remote prune upstream \
+    && echo "===== 3/3: cleaning local branches merged to $BRANCH =====" \
+    && git branch --merged $BRANCH | grep -v "$BRANCH$" | xargs git branch -d \
+    && echo "=====" \
+    && echo "Clean finished."
+  else
+    echo "Aborted. Nothing was changed."
+  fi
+}
+----
+
+The function is intended to be executed when on a `main` branch, for example `{BranchCurrentmain}` or `{BranchPreviousmain}`.
+
+It first runs a simulation that shows you what it will do (best to be safe!). Check what branches are going to be pruned or deleted, and respond `y` if you are ok to proceed with the clean.
+
+[WARNING]
+====
+Very early in release cycle, a local `main*` branch might appear in the list of branches to be deleted. This happens when that branch is on the same commit as the current branch where the function is being run from. For example, when `{BranchCurrentmain}` and `{BranchPreviousmain}` are both at the same commit.
+
+When this happens, it is best to not proceed with the clean, and to wait until the `main*` branches are different before attempting a clean.
+====
+
+The function executes a series of commands: the first commands prune remote-tracking branches for origin and upstream branches that have been deleted; the next deletes any local branches that have been merged into the upstream branch.
+
+[[lucas_bashrc]]
+=== Have a Look at Lucas' .bashrc File
+
+Lucas https://github.com/lucascosti/bashrc[has uploaded his `.bashrc` file to GitHub]. It contains many of the above tips and tricks. Feel free to copy or clone it, and make changes to suit your style.
+
+== AsciiDoc Text Editor Tips
+
+[discrete]
+=== Atom
+The https://atom.io[Atom] text editor was created by GitHub for editing all sorts of source files. Specifically, it supports asciidoc syntax highlighting and html preview. It also automatically detects if a file is part of a git repo and does highlighting based on its status (very nice for visually seeing what files have changed).
+
+For the most part, Atom can be used out of the box, but there are a few things that should be installed/configured.
+
+[discrete]
+==== Fixing auto whitespace cleanup
+Atom will automatically try to "fix" whitespace at the end of lines and files.  https://github.com/atom/whitespace/issues/10[Some people were not happy about this], including your lowly git admins.
+
+To disable this behavior:
+
+. Navigate to settings.
+. Select *Packages*.
+. Search for "whitespace", and select the *Disable* button for the whitespace package.
+
+[discrete]
+==== Installing asciidoc syntax highlighting
+A package has been created for doing syntax highlight of asciidoc files.
+
+To install this package:
+
+. Navigate to settings
+. Select *Install*
+. Search for "language-asciidoc" and select the *Install* icon of the *language-asciidoc* package
+
+[discrete]
+==== Installing asciidoctor preview
+
+To install this package:
+
+. Navigate to settings
+. Select *Install*
+. Search for "asciidoc-preview" and select the *Install* icon of the *asciidoc-preview* package
+
+[IMPORTANT]
+The _asciidoc-preview_ package is not the same as _asciidoctor-preview_. The _asciidoc-preview_ package is the official package from the AsciiDoctor project that is actively being maintained. _asciidoctor-preview_ is an unofficial package by a third-party developer.
+
+[[build_troubleshooting_tips]]
+== Documentation Build Errors and Troubleshooting Tips
+
+== Attributes
+*Standard document attributes to be used in our documentation*
+
+  attributes:
+    icons: font
+    numbered: ''
+    source-highlighter: highlightjs
+    url-guide: https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/
+
+*Product content attributes*
+
+    ProductName: stonesoup
+    ProductShortName: ''
+    ProductRelease: ''
+    ProductVersion: ''
+    ProductPreviousVersion: ''
+    ProductNextVersion: ''
+
+*Repository URLs*
+
+    repoURL1: ''
+    repoURL2: ''
+
+*Name of APIs and their URLs*
+
+    APIName1: ''
+    APIName2: ''
+
+*Knowledge base article links*
+
+    TBD
+
+*Links to other projects*
+
+    Placeholder: ''
+    Placeholder2: ''
+    Placeholder3: ''

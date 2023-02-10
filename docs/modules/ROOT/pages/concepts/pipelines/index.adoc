@@ -1,0 +1,74 @@
+= Introduction to Pipelines service
+
+Pipelines service is a managed service that allows users or services to securely run Tekton Pipelines on Kubernetes Control Plane (KCP). Additionally, it stores the metadata and Pipeline logs related to an executed Pipeline in a separate database.
+
+== Key features
+
+* Exposes a subset of Tekton API by using an integral generic and managed CI service.
+
+** Red Hat does not expose _TaskRun_ API.
+
+* Provides transparent multi-cluster and multi-tenancy by using KCP.
+
+* Provides generic constructs, for example, Tasks for building and executing Pipeline.
+
+* Scalable deployment processes by using standard Tekton constructs.
+
+* Offers core framework for running builds.
+
+== Architecture
+
+image::pipeline_service.png[alt=Pipeline service]
+
+
+== Components
+Pipelines service has many components responsible for various tasks, for example, pruning or logs. Main components of the Pipelines service are:
+
+* Pipeline as Code
+
+* Pipelines
+
+* Signature and Provenance
+
+* Pruner
+
+* Persister
+
+=== Pipeline as Code
+
+Pipelines service provides Pipeline as Code. Pipeline as code is a practice of defining pipelines through source code, such as Git. You can connect OpenShift Pipelines and a git repository using Pipeline as Code. As a result, the system can generate a PR and run Pipelines on the cluster.
+
+=== Pipelines
+
+The Pipelines are one of the most critical components of the system. They expose a subset of the tekton-pipeline API, which is responsible for maintaining and running all the Pipelines within the system.
+
+{ProductName} makes use of this ability.
+
+=== Signature and Provenance
+
+It uses link:https://tekton.dev/docs/chains/[Tekton chains] to extract metadata of the _PipelineRuns_, sign that metadata, and then store it in an external database (link:https://github.com/sigstore/rekor[Recor]). 
+
+NOTE: The Signature and Provenance component also stores metadata.
+
+=== Pruner
+The system assigns resources to every _PipelineRun_, for example, pods. These resources remain in the cluster indefinitely, even after the system completes the _PipelineRun_. The Pruner component is in charge of removing resources associated with the completed _PipelineRuns_.
+
+NOTE: Currently the system only prunes the _TasksRun_ and PVC (Persistent Volume Claims).
+
+=== Persister
+When the system completes a _PipelineRun_, the xref:concepts/pipelines/persister.adoc[Persister component] moves all the relevant _PipelineRun_ information to an external storage, that is, outside the cluster's *etcd* database.
+
+NOTE: The system only displays the five latest Pipeline runs. You can access the data of the older Pipeline runs from the archive.
+
+== How to use the Pipelines service
+You can use a Pipelines service in any of the following ways.
+
+*Git*:: A Git repository drives the pipeline definition and configuration. The Pipeline service receives Git events from the repository and executes the pipeline based on the definition and configurations in the Git repository.
+
+[]
+
+*Run*:: To execute your _PipelineRun_ and _TaskRun_ resources, provide them as embedded specs or bundles to the Pipeline service. The Pipeline service executes these resources, but you maintain control over the pipeline definitions.
+
+== Additional resources
+
+* xref:concepts/pipelines/persister.adoc[Persister component]

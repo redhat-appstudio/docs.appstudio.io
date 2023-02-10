@@ -1,0 +1,49 @@
+= Pipeline visualization
+CP Development Team <cp-devel@redhat.com>
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Scope
+Learn how the Pipeline builds show up in the web consoles in the {ProductName} application.
+
+== Web console Pipeline visualization
+Pipeline builds appear in the web console as any other build, but they are visually distinct. The system displays the Pipeline stages, current execution stage, and the duration of each stage.
+
+image::pipeline-visualization.png[alt=Pipeline Visualization]
+
+The following example displays the graphical representation of a Pipeline that the {ProductName} platform executes. You can access the logs and events associated with all the tasks.
+
+
+NOTE: The Pipeline visualisation is currently read-only. You can edit a Pipeline (the `.yml` file) by browsing to the relevant `config` file in a Git repository.
+
+== Task run status list
+The following table includes various statuses that the system displays during a Pipeline run:
+
+[cols="1,1"]
+|===
+|Status |Symbol
+
+|Success
+|image:success.png[alt=Success]
+
+|Running
+|image:running.png[alt=Running]
+
+|Pending
+|image:pending.png[alt=Pending]
+
+|Failed
+|image:fail.png[alt=Failed]
+
+|Pipeline
+|image:pipeline_icon.png[alt=Pipeline]
+
+|Environment (Static or Managed)
+|image:environment.png[alt=Environment]
+
+|GitHub
+|image:github.png[alt=GitHub]
+
+|===

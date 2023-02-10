@@ -1,0 +1,347 @@
+= Pipeline concepts
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Scope
+ 
+Learn the pipeline concepts to use the pipeline services to automate your deployment and save time during implementation.
+ 
+== Tasks
+
+A _TaskRun_ creates a Task for execution on a cluster with particular inputs, outputs, and execution parameters. You can use the task independently or as part of a _PipelineRun_ for each Task in the pipeline.
+ 
+
+ 
+Each Task consists of one or more Steps that run container images. Each container image does a specific piece of construction work. A _TaskRun_ performs the Steps in a Task in the provided order until all Steps succeed or the Task fails. A _PipelineRun_ creates a _TaskRun_ for each Task in a Pipeline automatically.
+ 
+The following example shows a TaskRun that runs the apply-manifests Task with the relevant input parameters:
+ 
+----
+apiVersion: tekton.dev/v1beta1 
+kind: TaskRun 
+metadata:
+ name: apply-manifests-taskrun 
+spec:
+ serviceAccountName: pipeline
+ taskRef: 
+   kind: Task
+   name: apply-manifests
+ workspaces: 
+ - name: source
+   persistentVolumeClaim:
+     claimName: source-pvc
+----
+ 
+== TaskRun
+ 
+A _TaskRun_ represents a task for execution with specific inputs, outputs, and execution parameters on a cluster. The system creates a _TaskRun_ on its own or as part of a PipelineRun for each task in a pipeline.
+ 
+A task consists of one or more steps that execute container images, and each container image performs a specific piecepipelineonboarding.html
+ 
+== Pipelines
+ 
+A _Pipeline_ is a collection of task resources, arranged in a specific order of execution. You can use them to construct complex workflows that automate the build, deployment, and delivery of applications. You can define a CI/CD workflow for your application using pipelines containing one or more tasks.
+ 
+A Pipeline resource definition consists of several fields or attributes, which together enable the pipeline to carry out a specific goal. Each Pipeline resource definition must contain at least one Task resource, which ingests specific inputs and produces specific outputs. The pipeline definition can also include Conditions, Workspaces, Parameters, or Resources depending on the application requirements.
+ 
+The following example shows the build-and-deploy pipeline, which builds an application image from a Git repository using the buildah ClusterTask resource:
+ 
+----
+apiVersion: tekton.dev/v1beta1 
+kind: Pipeline 
+metadata:
+ name: build-and-deploy 
+spec: 
+ workspaces: 
+ - name: shared-workspacepipelineonboarding.html
+   taskRef:
+     name: git-clone
+     kind: ClusterTask
+   workspaces:
+   - name: output
+     workspace: shared-workspace
+   params:
+   - name: url
+     value: $(params.git-url)
+   - name: subdirectory
+     value: ""
+   - name: deleteExisting
+     value: "true"
+   - name: revision
+     value: $(params.git-revision)
+ - name: build-image 
+   taskRef:
+     name: buildah
+     kind: ClusterTask
+   params:
+   - name: TLSVERIFY
+     value: "false"
+   - name: IMAGE
+     value: $(params.IMAGE)
+   workspaces:
+   - name: source
+     workspace: shared-workspace
+   runAfter:
+   - fetch-repository
+ - name: apply-manifests 
+   taskRef:
+     name: apply-manifests
+   workspaces:
+   - name: source
+     workspace: shared-workspace
+   runAfter: 
+   - build-image
+ - name: update-deployment
+   taskRef:
+     name: update-deployment
+   workspaces:
+   - name: source
+     workspace: shared-workspace
+   params:
+   - name: deploymenI service that exposes a subsett
+     value: $(params.deployment-name)
+   - name: IMAGE
+     value: $(params.IMAGE)
+   runAfter:
+   - apply-manifests
+----
+ 
+
+ 
+== PipelineRun
+ 
+A _PipelineRun_ is the running instance of a Pipeline. It creates a Pipeline for execution with specific inputs, outputs, and execution parameters on a cluster. For each Task in the _PipelineRun_, the system automatically creates a corresponding _TaskRun_ .
+ 
+The system executes all the Tasks in the Pipeline in the defined sequence until all Tasks are successful or a Task fails. The status field tracks and stores the progress of each TaskRun in the PipelineRun for monitoring and auditing purposes.
+
+The following example shows a PipelineRun to run the build-and-deploy Pipeline with relevant resources and parameters:
+
+----
+apiVersion: tekton.dev/v1beta1 
+kind: PipelineRun 
+metadata:
+ name: build-deploy-api-pipelinerun 
+spec:
+ pipelineRef:
+   name: build-and-deploy 
+ params: 
+ - name: deployment-name
+   value: vote-api
+ - name: git-url
+   value: https://github.com/{ProductName}-pipelines/vote-api.git
+ - name: IMAGE
+   value: image-registry.{ProductName}-image-registry.svc:5000/pipelines-tutorial/vote-api
+ workspaces: 
+ - name: shared-workspace
+   volumeClaimTemplate:
+     spec:
+       accessModes:
+         - ReadWriteOnce
+       resources:
+         requests:
+           storage: 500Mi
+----
+
+== Workspaces
+ 
+Workspaces declare shared storage volumes that a Task in a Pipeline needs at runtime to receive input or provide output. 
+
+Instead of specifying the actual location of the volumes, Workspaces enable you to declare the filesystem or parts of the filesystem that the system requires at the runtime.
+
+A Task or Pipeline declares the Workspace and you must provide the specific location details of the volume. The volume then mounts itself in to the Workspace in a _TaskRun_ or a _PipelineRun_. This separation of volume declaration from runtime storage volumes makes the Tasks reusable, flexible, and independent of the user environment.
+ 
+With Workspaces, you can:
+ 
+* Store Task inputs and outputs
+* Share data among Tasks
+* Use it as a mount point for credentials held in Secrets
+* Use it as a mount point for configurations held in ConfigMaps
+* Use it as a mount point for common tools shared by an organization
+* Create a cache of build artifacts that speed up jobs
+ 
+You can specify Workspaces in the _TaskRun_ or _PipelineRun_ using:
+ 
+* A read-only ConfigMaps or Secret
+* An existing PersistentVolumeClaim shared with other Tasks
+* A PersistentVolumeClaim from a provided VolumeClaimTemplate
+* An emptyDir that the system discards when the _TaskRun_ completes
+ 
+The following example shows a code snippet of the build-and-deploy Pipeline, which declares a shared-workspace Workspace for the build-image and apply-manifests Tasks as defined in the Pipeline.
+
+----
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+ name: build-and-deploy
+spec:
+ workspaces: 
+ - name: shared-workspace
+ params:
+...
+ tasks: 
+ - name: build-image
+   taskRef:
+     name: buildah
+     kind: ClusterTask
+   params:
+   - name: TLSVERIFY
+     value: "false"
+   - name: IMAGE
+     value: $(params.IMAGE)
+   workspaces: 
+   - name: source 
+     workspace: shared-workspace 
+   runAfter:
+   - fetch-repository
+ - name: apply-manifests
+   taskRef:
+     name: apply-manifests
+   workspaces: 
+   - name: source
+     workspace: shared-workspace
+   runAfter:
+     - build-image
+----
+ 
+Workspaces help tasks share data, and allow you to specify one or more volumes that each task in the pipeline requires during execution. You can create a persistent volume claim or provide a volume claim template that creates a persistent volume claim for you.
+
+The following code snippet of the build-deploy-api-pipelinerun PipelineRun uses a volume claim template to create a persistent volume claim for defining the storage volume for the shared-workspace Workspace used in the build-and-deploy Pipeline.
+
+----
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+ name: build-deploy-api-pipelinerun
+spec:
+ pipelineRef:
+   name: build-and-deploy
+ params:
+...
+ workspaces: 
+ - name: shared-workspace 
+   volumeClaimTemplate: 
+     spec:
+       accessModes:
+         - ReadWriteOnce
+       resources:
+         requests:
+           storage: 500Mi
+----
+ 
+== Triggers
+ 
+Use Triggers in conjunction with pipelines to create a full-fledged CI/CD system where Kubernetes resources define the entire CI/CD execution. Triggers capture the external events, such as a Git pull request, and process them to extract key pieces of information. Mapping this event data to a set of predefined parameters triggers a series of tasks that can then create and deploy Kubernetes resources and instantiate the pipeline.
+ 
+For example, you define a CI/CD workflow using {ProductName} Pipelines for your application. The pipeline must start for any new changes to take effect in the application repository. Triggers automate this process by capturing and processing any change event and by triggering a pipeline run that deploys the new image with the latest changes.
+ 
+Triggers consist of the following main resources that work together to form a reusable, decoupled, and self-sustaining CI/CD system:
+ 
+* The TriggerBinding resource validates events, extracts the fields from an event payload, and stores them as parameters.
+ 
++
+The following example shows a code snippet of the TriggerBinding resource, which extracts the Git repository information from the received event payload:
+
++
+----
+apiVersion: triggers.tekton.dev/v1alpha1 
+kind: TriggerBinding 
+metadata:
+ name: vote-app 
+spec:
+ params: 
+ - name: git-repo-url
+   value: $(body.repository.url)
+ - name: git-repo-name
+   value: $(body.repository.name)
+ - name: git-revision
+   value: $(body.head_commit.id)
+----
+
+* The TriggerTemplate resource acts as a standard for the way resources must be created. It specifies the way parameterized data from the TriggerBinding resource should be used. A trigger template receives input from the trigger binding, and then performs a series of actions that results in creation of new pipeline resources, and initiation of a new pipeline run.
+ 
++
+The following example shows a code snippet of a TriggerTemplate resource, which creates a pipeline run using the Git repository information received from the TriggerBinding resource you just created:
+
++
+----
+apiVersion: triggers.tekton.dev/v1alpha1 
+kind: TriggerTemplate 
+metadata:
+ name: vote-app 
+spec:
+ params: 
+ - name: git-repo-url
+   description: The git repository url
+ - name: git-revision
+   description: The git revision
+   default: pipelines-1.4
+ - name: git-repo-name
+   description: The name of the deployment to be created / patched
+ resourcetemplates: 
+ - apiVersion: tekton.dev/v1beta1
+   kind: PipelineRun
+   metadata:
+     name: build-deploy-$(tt.params.git-repo-name)-$(uid)
+   spec:
+     serviceAccountName: pipeline
+     pipelineRef:
+       name: build-and-deploy
+     params:
+     - name: deployment-name
+       value: $(tt.params.git-repo-name)
+     - name: git-url
+       value: $(tt.params.git-repo-url)
+     - name: git-revision
+       value: $(tt.params.git-revision)
+     - name: IMAGE
+       value: image-registry.{ProductName}-image-registry.svc:5000/pipelines-tutorial/$(tt.params.git-repo-name)
+     workspaces:
+     - name: shared-workspace
+       volumeClaimTemplate:
+        spec:
+         accessModes:
+          - ReadWriteOnce
+         resources:
+           requests:
+             storage: 500Mi
+----
+ 
+* The Trigger resource connects the TriggerBinding and TriggerTemplate resources, and this Trigger resource is referenced in the EventListener specification.
+
++
+The following example shows a code snippet of a Trigger resource, named vote-trigger that connects the TriggerBinding and TriggerTemplate resources.
+
++
+----
+apiVersion: triggers.tekton.dev/v1alpha1 
+kind: Trigger 
+metadata:
+ name: vote-trigger 
+spec:
+ serviceAccountName: pipeline 
+ bindings:
+   - ref: vote-app 
+ template: 
+    ref: vote-app
+----
+ 
+* The EventListener resource provides an endpoint, or an event sink, that listens for incoming HTTP-based events with a JSON payload. It extracts event parameters from each TriggerBinding resource, and then processes this data to create Kubernetes resources as specified by the corresponding TriggerTemplate resource. The EventListener resource also performs lightweight event processing or basic filtering on the payload using event interceptors, which identify the type of payload and optionally modify it. Currently, pipeline triggers support four types of interceptors: Webhook Interceptors, GitHub Interceptors, GitLab Interceptors, and Common Expression Language (CEL) Interceptors.
+
++
+The following example shows an EventListener resource, which references the Trigger resource named vote-trigger.
+
++
+----
+apiVersion: triggers.tekton.dev/v1alpha1 
+kind: EventListener 
+metadata:
+ name: vote-app 
+spec:
+ serviceAccountName: pipeline 
+ triggers:
+   - triggerRef: vote-trigger
+----
+
+Triggers in {ProductName} Pipelines support both HTTP (insecure) and HTTPS (secure HTTP) connections to the Eventlistener resource. With the secure HTTPS connection, you get end-to-end secure connection within and outside the cluster. After you create a namespace, you can enable this secure HTTPS connection for the Eventlistener resource by adding the operator.tekton.dev/enable-annotation=enabled label to the namespace, and then creating a Trigger resource and a secured route using re-encrypt TLS termination.

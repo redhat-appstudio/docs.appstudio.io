@@ -1,0 +1,72 @@
+site:
+  title: Stonesoup Documentation
+  url: http://localhost:8080
+
+content:
+  sources:
+  - url: .
+    branches: HEAD
+    edit_url: 'https://gitlab.cee.redhat.com/red-hat-stone-soup/stonesoup-documentation/-/blob/main/{path}'
+
+  # Enterprise Contract Policies
+  # Documents the policies defined in rego for the Enterprise Contract
+  - url: https://github.com/hacbs-contract/ec-policies.git
+    branches: main
+    start_path: antora/docs
+
+  # Enterprise Contract CLI
+  # Documents the commands and options for the "ec" command line tool
+  - url: https://github.com/hacbs-contract/ec-cli.git
+    branches: main
+    start_path: docs
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./antora-lunr-ui
+
+antora:
+  extensions:
+  - '@antora/collector-extension'
+  - '@antora/lunr-extension'
+  - '@hacbs-contract/ec-policies-antora-extension'
+  - '@hacbs-contract/reference-antora-extension'
+
+runtime:
+  log:
+    failure_level: warn
+
+asciidoc:
+  attributes:
+
+  # Standard document attributes to be used in our documentation
+    icons: font
+    numbered: ''
+    source-highlighter: highlightjs
+    url-guide: https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/
+
+  # Product content attributes
+    ProductName: Stonesoup
+    ProductShortName: ''
+    ProductRelease: ''
+    ProductVersion: ''
+    ProductPreviousVersion: ''
+    ProductNextVersion: ''
+
+  # Repository URLs
+    repoURL1: ''
+    repoURL2: ''
+
+  # Name of APIs and their URLs
+    APIName1: ''
+    APIName2: ''
+
+  # Knowledge base article links
+    # TBD
+
+  # Links to other projects
+    Placeholder: ''
+    Placeholder2: ''
+    Placeholder3: ''
+
