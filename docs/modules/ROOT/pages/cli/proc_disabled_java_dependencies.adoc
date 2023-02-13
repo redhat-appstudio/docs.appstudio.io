@@ -1,34 +1,39 @@
 == Configuring Java builds with disabled dependencies rebuild
 
-You must configure your repository by creating a ConfigMap called `jvm-build-config` to ensure that your namespace or workspace uses the JVM build service. When this ConfigMap is present, the build service operator configures the necessary in a workspace. To speed up the build process and reduce the load on Maven Central, this ConfigMap currently creates an artifact cache that caches Maven objects.
+You must configure your repository by creating a Kubernetes JBSConfig custom resource to ensure that your namespace uses the JVM build service. When this ConfigMap is present, the build service operator configures the necessary support infrastructure in a workspace. To speed up the build process and reduce the load on Maven Central, this currently creates an artifact cache that caches Maven objects.
 
-When building an application, the system redirects all requests by using this artifact cache. By default this proxies to maven central, however, you can configure other repositories.
+When building an application, the system redirects all requests by using this artifact cache. By default this proxies to maven central, however, you can configure other repositories. The repositories configured in your project will not be used,
+which allows the namespace administrator to control where dependencies come from.
 
 .*Procedure*
 
-. Browse to an appropriate repository and create a file, for example, `config.yaml`.
+. Browse to an appropriate directory and create a file, for example, `config.yaml`.
 
 . In the `config.yaml` file, create a *ConfigMap* resource with the following data:
 
 +
 [source,yaml]
 ----
-apiVersion: v1
-kind: ConfigMap
+apiVersion: jvmbuildservice.io/v1alpha1
+kind: JBSConfig
 metadata:
-name: jvm-build-config
-namespace: test-jvm-namespace
-Data:
-maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/" <1>
-maven-repository-301-jitpack: "https://jitpack.io"
-maven-repository-302-confluent: "https://packages.confluent.io/maven"
-maven-repository-303-gradle: "https://repo.gradle.org/artifactory/libs-releases"
-maven-repository-304-eclipselink: "https://download.eclipse.org/rt/eclipselink/maven.repo"
-maven-repository-305-redhat: "https://maven.repository.redhat.com/ga"
-maven-repository-306-gradleplugins: "https://plugins.gradle.org/m2"
-maven-repository-307-jsweet: "https://repository.jsweet.org/artifactory/libs-release-local”
+  name: jvm-build-config
+spec:
+  mavenBaseLocations: <1>
+    maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/"
+    maven-repository-301-gradleplugins: "https://plugins.gradle.org/m2"
+    maven-repository-302-confluent: "https://packages.confluent.io/maven"
+
 ----
-<1> To add a maven repository the key in the map must follow a set pattern, which is, maven-repository-$priority-$name: $repo-url. Additionally, Maven central has a priority of 200; therefore the system tries anything with a lower priority before maven central. The rebuilt artifacts have a priority of 100.
+<1> To add a maven repository the key in the map must follow a set pattern, which is, maven-repository-$priority-$name: $repo-url. Additionally, Maven central has a priority of 200; therefore the system tries anything with a lower priority before maven central. The rebuilt artifacts if they are in use have a priority of 100.
+
+=== Clearing the Cache
+
+If for some reason you need to clear the cache you can do it by applying an annotation to the `JBSConfig` object:
+
+`kubectl annotate jbsconfig jvmbuildservice.io/clear-cache=true --all`
+
+This will delete all cached artifacts from the local storage, and they will be re-downloaded from the upstream repositories.
 
 == Additional resources
 * For information about configuring standard Java builds when you have enabled dependencies rebuild, see xref:cli/proc_enabled_java_dependencies.adoc[Configuring standard Java builds with enabled dependencies rebuild].

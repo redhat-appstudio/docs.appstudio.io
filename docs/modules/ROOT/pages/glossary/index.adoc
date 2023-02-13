@@ -52,7 +52,7 @@ The layered image build service, or OSBS (derived from OpenShift Build Service),
 A component that moves the Pipeline output, which is all of the relevant PipelineRun information, to an external storage that is outside the cluster’s etcd database, after the system completes PipelineRun.
 
 == Pipelines as Code
-A practice that defines pipelines with source code in Git. Pipelines as Code is also the name of a subsystem that executes those pipelines.
+A practice that defines pipelines with source code in Git. Pipelines as Code is also the name of link:https://pipelinesascode.com[a subsystem] that executes those pipelines.
 
 == Pipeline results 
 Systems that retain the history and details of builds. 
@@ -87,8 +87,8 @@ A set of compute resources that you can use to develop, test, and stage your app
 == Stonesoup 
 A platform to automate the process of building, testing, and deploying applications to the hybrid cloud. Stonesoup offers enterprise-grade security and customizable feature sets.   
 
-== Supply chain levels for software artifacts (SLSA) 
-A security framework that helps prevent tampering by securing the packages and infrastructure of customers’ projects.
+== Supply chain Levels for Software Artifacts (SLSA) 
+A link:https://slsa.dev/[security framework] that helps prevent tampering by securing the packages and infrastructure of customers’ projects.
 
 == Task 
 One or more steps that run container images. Each container image performs a piece of construction work.
@@ -97,10 +97,10 @@ One or more steps that run container images. Each container image performs a pie
 A process that executes a Task on a cluster with inputs, outputs, and execution parameters. The system creates a TaskRun on its own or as a part of a PipelineRun for each task in a pipeline.
 
 == Tekton 
-Tekton is a Knative-based framework for CI/CD pipelines. Tekton is decoupled which means that you can use one pipeline to deploy to any Kubernetes cluster across multiple hybrid cloud providers. Tekton stores everything that is related to a pipeline in the cluster, so you can use the cluster across multiple pipelines.
+A Knative-based framework for CI/CD pipelines. Tekton is decoupled which means that you can use one pipeline to deploy to any Kubernetes cluster across multiple hybrid cloud providers. Tekton stores everything that is related to a pipeline in the cluster, so you can use the cluster across multiple pipelines.
 
 == Tekton chains 
 A mechanism to secure the software supply chain by recording events in a user-defined pipeline.
 
 == Workspace
-Storage volume that a Task requires at runtime to receive input or provide output.
+A storage volume that a Task requires at runtime to receive input or provide output.

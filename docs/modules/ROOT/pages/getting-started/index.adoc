@@ -14,7 +14,7 @@ Learn how a project team can onboard a product to {ProductName}.
 
 *Prerequisites*
 
-* Administrator creates a tenant workspace on KCP by using CLI (for example, Red Hat).
+* Administrator creates a tenant xref:glossary/index.adoc#_workspace[workspace].
 
 * The administrator then invites a developer to this workspace.
 
@@ -25,26 +25,26 @@ Complete the following steps to onboard a project to {ProductName}:
 . Create an application
 .. Add components
 .. Configure components
-.. Configure link:https://placeholder[build pipeline] for the components
+.. Configure xref:getting-started/build_service.adoc[build pipeline] for the components
 
 +
-NOTE: Your components are not fully configured until you browse to GitHub and merge a PR for each component to create its build pipeline. You can also make a GitHub commit and return to your applications page to check the status of your commit.
+NOTE: Your components are not fully configured until you browse to GitHub and merge a pull request (PR) for each component to create its build pipeline. You can also make a GitHub commit and return to your applications page to check the status of your commit.
 
 .. Add integration test pipeline to test all the components
 
 +
-NOTE: For your application, you can define one or more integration tests. For more information, see https://placeholer[Integration tests]
+NOTE: For your application, you can define one or more integration tests. For more information, see xref:concepts/testing_applications/con_test-overview.adoc#_integration_service_tests[integration tests]
 
 .. Select or create an environment to run all the components
 
 +
 +
-NOTE: Site Reliability Engineering (SRE) administrators create a `static` or `managed environment`. For more information, see https://placeholder[Release services].
+NOTE: Site Reliability Engineering (SRE) administrators create a `static` or `managed environment`. For more information, see xref:concepts/release-services/con_release-services-overview.adoc[release services].
 
 
 .. Optional: Review the status of the first build
 .. Optional: Customize build pipeline
 
-== Additional Resources
-* link:https://placeholder[Build pipeline customization]
-* link:https://placeholder[Build pipeline visualization]
+== Additional resources
+* xref:getting-started/build_service.adoc[Build pipeline customization]
+* xref:getting-started/pipeline_visualization.adoc[Pipeline visualization]

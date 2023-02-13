@@ -1,6 +1,6 @@
 = Introduction to Pipelines service
 
-Pipelines service is a managed service that allows users or services to securely run Tekton Pipelines on Kubernetes Control Plane (KCP). Additionally, it stores the metadata and Pipeline logs related to an executed Pipeline in a separate database.
+Pipelines service is a managed service that allows users or services to securely run Tekton Pipelines. Additionally, it stores the metadata and Pipeline logs related to an executed Pipeline in a separate database.
 
 == Key features
 
@@ -8,7 +8,7 @@ Pipelines service is a managed service that allows users or services to securely
 
 ** Red Hat does not expose _TaskRun_ API.
 
-* Provides transparent multi-cluster and multi-tenancy by using KCP.
+* Provides transparent multi-cluster and multi-tenancy.
 
 * Provides generic constructs, for example, Tasks for building and executing Pipeline.
 

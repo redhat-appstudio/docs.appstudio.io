@@ -24,48 +24,61 @@ apiVersion: tekton.dev/v1beta1 <1>
 kind: PipelineRun <2>
 metadata:
     name: build-service-on-push <3>
-    Annotations: <4>
+    annotations: <4>
         pipelinesascode.tekton.dev/on-event: "[push]"
         pipelinesascode.tekton.dev/on-target-branch: "[main]"
 spec:
-    Params: <5>
+    params: <5>
+    - name: git-url
+      value: "{{repo_url}}"
+    - name: revision
+      value: "{{revision}}"
+    - name: output-image
+      value: 'quay.io/redhat-appstudio/user-workload:{{revision}}'
+    pipelineSpec:
+      finally:
+      - name: show-summary <6>
+        params:
+        - name: pipeline-run-name
+          value: $(context.pipelineRun.name)
         - name: git-url
-          value: "{{repo_url}}"
-        - name: revision
-          value: "{{revision}}"
-        - name: output-image
-          value: 'quay.io/redhat-appstudio/build-service:{{revision}}'
-        - name: infra-deployment-update-script
-          value: "quay.io/redhat-appstudio/pull-request-builds:has-{{revision}}"
-    pipelineRef:
-          name: docker-build <6>
-          bundle: quay.io/redhat-appstudio/{ProductName}-core-service-templates-bundle:latest
-Workspaces: <7>
+          value: $(tasks.clone-repository.results.url)?rev=$(tasks.clone-repository.results.commit)
+        - name: image-url
+          value: $(params.output-image)
+workspaces: <7>
         - name: workspace
-          persistentVolumeClaim:
-            claimName: app-studio-default-workspace
-          subPath: build-service-push-{{ revision }}
+          volumeClaimTemplate:
+            metadata:
+              creationTimestamp: null
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+          status: {}
+status: {}
 ----
 
 +
 <1> PipelineRun API version v1beta1.
 <2> Specifies the type of Kubernetes object. In this example, _PipelineRun_.
 <3> Unique name to identify this PipelineRun.
-<4> Pipelines as Code adds Annotations automatically when it creates the PipelineRun object on OpenShift.
+<4> Definitions of tasks that the system runs. 
 <5> Specifies the list of parameters required to run the Pipeline.
-<6> Name of the Pipeline that the system runs. In this example, build-and-deploy.
+<6> Name of the Pipeline that the system runs.
 <7> Workspace used by the PipelineRun.
 
 == _PipelineRun_ template
 
 To create a build PR, the `{_PipelineRun_ template}.yml` file in the `\{source_repository} > .tekton` directory must include:
 
-* params
-* workspace
-* annotation
-* pipelineRef
+* Params
+* Workspace
+* Annotations
+* pipelineSpec
 
-=== params
+=== Params
 
 Every supported Tekton Pipeline resource should populate any of the following user-defined params as part of their build execution in a _PipelineRun_:
 
@@ -83,16 +96,14 @@ Every supported Tekton Pipeline resource should populate any of the following us
 
 Annotations are additional, informative tags. A tag allows you to classify or group various objects to ensure that you can easily watch them after an execution. The values of annotations do not change during runtime because they are static.
 
-NOTE: Pipelines as Code adds Annotations automatically when it creates the PipelineRun object on OpenShift.
+To customize a build pipeline, you need to set the `on-event` and `on-target-branch` annotations.
+
+NOTE: link:https://pipelinesascode.com[Pipelines as Code] adds annotations automatically when it creates the PipelineRun object on OpenShift.
 
 === Workspaces
 
+Workspaces declare shared storage volumes that a xref:glossary/index.adoc#_task[Task] in a Pipeline needs at runtime to receive input or provide output.
 
-=== Supported build types
+=== pipelineSpec
 
-You must include any of the following `pipelineRef` as part of their build execution in a _PipelineRun_:
-
-*docker-build*:: Builds Docker images from a Dockerfile and a "context”
-*devfile-build*: Extracts the build from the contents of the outerloop spec in devfiles
-*java-builder (maven via pom.xml)*:: Provides a default container suitable for java applications
-*nodejs-builder*:: Provides a default container suitable for node.js applications.
+In pipelineSpec, you can see each Task of a PipelineRun. You can also use pipelineSpec to add, update, and delete Tasks.
