@@ -25,12 +25,12 @@ Complete the following steps to onboard a project to {ProductName}:
 . Create an application
 .. Add components
 .. Configure components
-.. Configure xref:getting-started/build_service.adoc[build pipeline] for the components
+.. Configure xref:getting-started/build_service.adoc[Build Pipeline] for the components
 
 +
-NOTE: Your components are not fully configured until you browse to GitHub and merge a pull request (PR) for each component to create its build pipeline. You can also make a GitHub commit and return to your applications page to check the status of your commit.
+NOTE: Your components are not fully configured until you browse to GitHub and merge a pull request (PR) for each component to create its Build Pipeline. You can also make a GitHub commit and return to your applications page to check the status of your commit.
 
-.. Add integration test pipeline to test all the components
+.. Add integration test Pipeline to test all the components
 
 +
 NOTE: For your application, you can define one or more integration tests. For more information, see xref:concepts/testing_applications/con_test-overview.adoc#_integration_service_tests[integration tests]
@@ -43,8 +43,8 @@ NOTE: Site Reliability Engineering (SRE) administrators create a `static` or `ma
 
 
 .. Optional: Review the status of the first build
-.. Optional: Customize build pipeline
+.. Optional: Customize Build Pipeline
 
 == Additional resources
-* xref:getting-started/build_service.adoc[Build pipeline customization]
+* xref:getting-started/build_service.adoc[Build Pipeline customization]
 * xref:getting-started/pipeline_visualization.adoc[Pipeline visualization]
