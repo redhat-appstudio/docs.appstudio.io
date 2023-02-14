@@ -21,6 +21,9 @@ name: Publish website
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   repository_dispatch:
     types:
       - update
@@ -61,13 +64,25 @@ jobs:
         run: npm ci && npm run build
 
       - name: Setup Pages
+        # runs on push event filtered by branches in the 'on' section above, be
+        # wary of adding more branches without expanding this conditional to
+        # filter for pushes to the main branch
+        if: github.event_name == 'push'
         uses: actions/configure-pages@v3
 
       - name: Upload artifact
+        # runs on push event filtered by branches in the 'on' section above, be
+        # wary of adding more branches without expanding this conditional to
+        # filter for pushes to the main branch
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v1
         with:
           path: 'public'
 
       - name: Deploy to GitHub Pages
+        # runs on push event filtered by branches in the 'on' section above, be
+        # wary of adding more branches without expanding this conditional to
+        # filter for pushes to the main branch
+        if: github.event_name == 'push'
         id: deployment
         uses: actions/deploy-pages@v1
