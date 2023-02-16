@@ -1,7 +1,3 @@
-////
-
-I've commented out this content for now because Burr said this page is currently unsupported --Christian (csears@redhat.com), 2/6/2023
-
 = Managed services team onboarding
 When an application is ready for release, the Development team contacts the Managed Environment team. For example, their organization's SRE team requested access to the Managed Environment for the first production release. 
 
@@ -117,10 +113,11 @@ releaseStrategy: <release-strategy> <.>
 +
 [source,]
 ----
-./copy-application.sh -a <location_of_the_application>
+./copy-application.sh <managed workspace name> -a <development workspace name>/<application name>
 ----
 
 +
+=======
 NOTE: Run `./{ProductName}copy.sh --help` to review all the help options of the script.
+=======
 
-////
