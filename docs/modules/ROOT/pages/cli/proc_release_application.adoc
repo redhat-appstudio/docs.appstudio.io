@@ -1,3 +1,7 @@
+////
+
+I've commented out this content for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/6/2023
+
 = Releasing an application
 :icons: font
 :numbered:
@@ -161,7 +165,7 @@ apiVersion: appstudio.redhat.com/v1alpha1
 kind: ReleasePlanAdmission <1>
 metadata:
  name: sre-production <2>
- namespace: -n managed <3>
+ namespace: managed <3>
 spec:
  application: demo-app <4>
  environment: sre-production <5>
@@ -183,3 +187,5 @@ spec:
 
 // How integration controller uses the release plan and will creates a release object ... ships of the content
 // Alternatively you can add optional instructions to create a release manually.
+
+////

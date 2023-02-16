@@ -1,17 +1,12 @@
 = RenovateBot
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
 
-RenovateBot is a service that detects dependencies in your build pipeline and creates updates for those dependencies. 
+RenovateBot is a service that detects dependencies in your build pipeline and then creates updates for those dependencies. Your build pipeline is composed of Tekton xref:glossary/index.adoc[tasks]. These tasks come from Tekton bundles which are Open Container Initiative (OCI) artifacts. Your build pipeline references these Tekton bundles. 
 
-Your build pipeline is composed of Tekton xref:glossary/index.adoc[tasks]. These Tekton tasks come from Tekton bundles which are Open Container Initiative (OCI) artifacts. Your build pipeline references the Tekton bundles. 
-
-RenovateBot monitors Tekton bundle references, and ensures that they are up to date. When new versions of the Tekton bundles are available, RenovateBot creates a pull request with the updated references. This gives you time to review, change, and incorporate the new Tekton bundles.
+RenovateBot monitors Tekton bundle references and makes sure that they're up to date. When new versions of the Tekton bundles are available, RenovateBot creates a pull request with the updated references. This gives you time to review, change, and incorporate the new bundles.
 
 == Configuration
 
-You configure RenovateBot through its configuration file, `renovate.json`. The following is a sample `renovate.json` file: 
+Configure RenovateBot through its `renovate.json` configuration file. The following is a sample `renovate.json` file: 
 
 Sample:
 
@@ -45,11 +40,11 @@ Sample:
 
 Notice the following Tekton items in `renovate.json`: 
 
-<1> `link:https://docs.renovatebot.com/configuration-options/#filematch[fileMatch]`: An array type. RenovateBot parses each string in fileMatch, then extracts matching filenames from a repository. In this sample, fileMatch directs RenovateBot to extract all .yaml and .yml files in your repository. 
+<1> `link:https://docs.renovatebot.com/configuration-options/#filematch[fileMatch]`: An array type. RenovateBot parses each string in `fileMatch`, then extracts matching file names from a repository. In this sample, `fileMatch` directs RenovateBot to extract all `.yaml` and `.yml` files in your repository. 
 
-<2> `link:https://docs.renovatebot.com/configuration-options/#pindigests[pinDigests]`: A boolean type. When enabled, RenovateBot pins any Docker images or GitHub Actions by means of their SHA256 digest so that they are immutable.
+<2> `link:https://docs.renovatebot.com/configuration-options/#pindigests[pinDigests]`: A boolean type. When enabled, RenovateBot pins any Docker images or GitHub actions by means of their `SHA256` digest so that they're immutable.
 
-You can also update `renovate.json` with link:https://docs.renovatebot.com/configuration-options/#[many different options]. 
+You can also update `renovate.json` with link:https://docs.renovatebot.com/configuration-options/#[many other options]. 
 
 == Additional information
 

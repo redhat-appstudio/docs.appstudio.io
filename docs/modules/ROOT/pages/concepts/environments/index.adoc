@@ -1,24 +1,21 @@
 = Environments
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
 
-Environments are standalone pieces of infrastructure that you can use to develop, test, and release your code to production. You can create two types of environments in {ProductName}:
+Environments are standalone pieces of infrastructure that you can use to develop, test, and release your code to production. You can create the following two types of environments in {ProductName}:
 
-* Static environments
+* Static
 
-* Managed environments
+* Managed
 
-Additionally, the system creates and manages the third type of environment, *Ephemeral environments*. The system creates these temporary environments dynamically on demand and removes them after completing the build pipeline. The system uses these temporary environments to execute each integration scenario.
+Additionally, the system dynamically creates and manages a third type of temporary environment called an *Ephemeral environment*. Here, {ProductName} runs each integration scenario and then removes the environment after completing the build pipeline.
 
 == Static environment
 
-Static environments are abstract spaces in your current workspace where you can safely deploy and test your code (either manually or automatically) without breaking published applications in production. 
+In a static environment, you can safely deploy and test your code (either manually or automatically) in your workspace without breaking published applications in production. 
 
-A Static environment is available to all the applications within the same workspace, but can only have one running instance of each application. Since you cannot run multiple versions of the same application in the same Static environment, deploying a new version of an application will replace the one it currently runs.
+A static environment is available for every application in a workspace, but you can run only one instance of each application in a static environment. Because of this, when you deploy a new version of an application, {ProductName} replaces the version in your static environment too.
 
 == Managed environment
 
-Managed environments are user-facing workspaces where you link your applications to deploy them to production. This environment is managed by your organization's Managed environment team, for example, SREs.
+Managed environments are user-facing workspaces where you link your applications to deploy them to production. This environment is managed by your managed environment team; for example, by service reliability engineers (SREs).
 
-NOTE: You can release the application into production only after it has passed the Enterprise contract policy checks.
+NOTE: You can release an application to production only after it has passed the Enterprise contract policy checks.

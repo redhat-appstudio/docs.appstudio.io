@@ -1,20 +1,17 @@
 = Deleting an application from CLI
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
 
-You can delete an application if you are either the owner or have admin access to it.
+You can delete an application if you are the owner or if you have admin access to the application.
 
-WARNING: Deleting an application permanently deletes all the components and associated resources from the user interface and upstream repositories. You cannot undo this action.
+WARNING: If you delete an application permanently, you delete all the components and resources from the user interface (UI) and upstream repositories. You cannot undo the deletion.
 
 .*Prerequisites*
 
-* You have successfully signed in to {ProductName}.
+* You successfully signed in to Stonesoup.
 * You have at least one application.
 
 .*Procedures*
 
-. Delete an application by running:
+To delete an application, run the following command:
 
 +
 [source,command]
@@ -22,5 +19,5 @@ WARNING: Deleting an application permanently deletes all the components and asso
 oc delete application/<the-application-name>
 ----
 
-== Additional Resources
-For information about deleting an application from UI, review xref:how-to-guides/delete_application.adoc[Deleting an application from UI].
+== Additional resources
+For information about deleting an application from UI, refer to xref:how-to-guides/delete_application.adoc[Deleting an application from UI].

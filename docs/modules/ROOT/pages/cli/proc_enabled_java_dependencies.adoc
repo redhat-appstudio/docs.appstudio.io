@@ -1,8 +1,8 @@
 == Configuring Java builds with enabled dependencies rebuild
 
-Java applications download all of their dependencies as pre-compiled binaries from repositories such as Maven Central. While these pre-compiled binaries are convenient, they do not assure the origin of the dependency, and you cannot ensure that the binary artifact matches the open source code. Therefore, Java is different from languages like golang, which use source code-based dependencies.
+Java applications download all their dependencies as pre-compiled binaries from repositories, such as Maven Central. While these pre-compiled binaries are convenient, they do not assure the origin of the dependency, and you cannot ensure that the binary artifact matches the open source code. Therefore, Java is different from languages like golang which use source code-based dependencies.
 
-The JVM build service addressed this concern by allowing you to rebuild your application dependencies from the source automatically. Subsequently, you can assure the origin of your dependencies.
+The JVM build service addressed this concern by allowing you to rebuild your application dependencies from the source automatically. By rebuilding, you can be sure that your dependencies match the source code and were compiled in a clean and trusted environment.
 
 .*Workflow*
 
@@ -10,67 +10,292 @@ The JVM build service addressed this concern by allowing you to rebuild your app
 
 * The JVM Build Service analyzes your application and determines the dependencies that the system needs to be rebuilt.
 
-* It generates ArtifactBuild objects to represent each artifact in your application before determining from which repository and tag the system has derives these artifacts.
+* The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
 
-* The system analyzes the repository, and uses the results to find a build strategy (which can involve trial and error, for example, if the system cannot find the JDK version to use it will use them all in a specific order)
+* The system analyzes the repository and uses the results to find a build strategy. For example, if the system cannot find the JDK version to use, the system uses all versions to determine the most effective version to use.  
 
-* The system attempts to build all the dependencies and stores them in a persistent storage, for example, an S3-based Artifact Store.
+* The system attempts to build all the dependencies and stores them in container images in an image registry, and `quay.io` is the default.
 
-* When the system has completed all its builds you can rebuild your application.
+* When the system has completed all its builds, you can rebuild your application.
 
 * If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
 
 .*Procedure*
 
-. Browse to your repository and create a file, for example, `secret.yaml`.
-
-. In the secret.yaml file, create a *Secret* resource with the following data:
-
+. Configure the secret that is used to authenticate against the image registry. This is a standard `kubernetes.io/dockerconfigjson` secret that holds a `.dockerconfigjson` secret key. The easiest way to create this is to log into the image registry with `docker login`, and then run: `kubectl create secret generic jvm-build-image-secrets --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson`.
 +
-[source,yaml]
-----
-apiVersion: v1
-kind: Secret <1>
-metadata:
- name: jvm-build-secrets
- namespace: test-jvm-namespace
-stringData:
- registry.token: QUAY_TOKEN <2>
-----
-<1> The name of the resource that you are creating.
-<2> The authentication token URL.
+WARNING: This command includes all your docker logins, therefore, before running it, make sure that the `config.json` only contains information for the relevant repository. A good way to do this is to temporarily move your existing file somewhere else, do a `docker login`, create the secret, then move the old file back.
 
 . Create a file, for example, `config.yaml`.
 
-. In the `config.yaml` file, create a *ConfigMap* resource with the following data:
+. In the `config.yaml` file, create a *JBSConfig* resource with the following data:
 
 +
 [source,yaml]
 ----
-apiVersion: v1
-kind: ConfigMap
+apiVersion: jvmbuildservice.io/v1alpha1
+kind: JBSConfig
 metadata:
-name: jvm-build-config
-namespace: test-jvm-namespace
-data:
-enable-rebuilds: "true" <1>
-registry.host: quay.io <2>
-registry.port: 443
-registry.owner: OrgID <3>
-registry.repository: artifact-deployments
-registry.insecure: false
-maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/"
-maven-repository-301-jitpack: "https://jitpack.io"
-maven-repository-302-confluent: "https://packages.confluent.io/maven"
-maven-repository-303-gradle: "https://repo.gradle.org/artifactory/libs-releases"
-maven-repository-304-eclipselink: "https://download.eclipse.org/rt/eclipselink/maven.repo"
-maven-repository-305-redhat: "https://maven.repository.redhat.com/ga"
-maven-repository-306-gradleplugins: "https://plugins.gradle.org/m2"
-maven-repository-307-jsweet: "https://repository.jsweet.org/artifactory/libs-release-local"
+  name: jvm-build-config
+spec:
+  enable-rebuilds: "true" <1>
+  host: quay.io <2>
+  owner: OrgID <3>
+  repository: artifact-deployments <4>
+  mavenBaseLocations:
+    maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/"
+    maven-repository-301-gradleplugins: "https://plugins.gradle.org/m2"
+    maven-repository-302-confluent: "https://packages.confluent.io/maven"
+
 ----
-<1> To enable and configure the rebuild dependencies function you need to add enable-rebuilds: "true" to the `jvm-build-config` ConfigMap.
-<2> The URL of the repositories that holds the images of your rebuild dependencies.
+<1> To enable and configure the rebuild dependencies function you need to add enable-rebuilds: "true" to the `JBSConfig` object.
+<2> The URL of the registry that holds the images of your rebuild dependencies.
 <3> The organization ID.
+<4> The repository to store the images in.
+
+. Run `kubectl apply -f config.yaml` while logged into the build namespace.
+
+== Examining the System State
+
+After you have run your first java build with rebuilds enabled you can use `kubectl` to view the state of the rebuilds.
+
+To do this run the following command:
+
+[source]
+----
+kubectl get artifactbuilds.jvmbuildservice.io
+----
+
+This will give you output similar to the following:
+
+[source]
+----
+NAME                        GAV                                    STATE
+wsdl4j.1.6.3-138a1801       wsdl4j:wsdl4j:1.6.3                    ArtifactBuildComplete
+xmlsec.3.0.0-ceb06cd9       org.apache.santuario:xmlsec:3.0.0      ArtifactBuildComplete
+xsdlib.2013.6.1-0aed4ed6    net.java.dev.msv:xsdlib:2013.6.1       ArtifactBuildFailed
+----
+
+This lets you view the state of the builds of all maven artifacts that were identified. As a single build, it can produce multiple artifacts, and  you can look at the individual builds:
+
+[source]
+----
+kubectl get artifactbuilds.jvmbuildservice.io
+NAME                             URL                                              TAG                STATE                              MESSAGE
+03dc791547cab448e388fc3c4a1edaa7 https://github.com/LatencyUtils/LatencyUtils.git LatencyUtils-2.0.3 DependencyBuildStateComplete
+080dbba8b3ffba35739ebe5bce69a2be https://github.com/apache/commons-logging.git    LOGGING_1_2        DependencyBuildStateComplete
+----
+
+The `PipelineRun` objects associated with these builds start with the build name, so you can view the logs for a build under the appropriate `PipelineRun`.
+
+=== Re-Running Builds [[rebuilding_artifacts]]
+
+To rebuild an artifact, you need to annotate the `ArtifactBuild` object with `jvmbuildservice.io/rebuild=true`. For example, to rebuild the `zookeeper.3.6.3-8fc126b0` `ArtifactBuild`, you would run:
+
+[source]
+----
+kubectl annotate artifactbuild zookeeper.3.6.3-8fc126b0 jvmbuildservice.io/rebuild=true
+----
+
+You can also use the `jvmbuildservice.io/rebuild=failed` annotation to rebuild only failed artifacts, for example, the following command retries all failed artifacts:
+
+[source]
+----
+kubectl annotate artifactbuild --all jvmbuildservice.io/rebuild=failed
+----
+
+Generally, when you are trying to fix a failure, you must manually run the builds yourself.
+
+=== Dealing With Failed Builds
+
+In order to see why the build failed, look at the results from the JVM Build Service.
+
+Look at the state of the corresponding `ArtifactBuild`. In the previous example, to figure out why `jackson-databind`
+failed, execute the following command to view the ArtifactBuild state:
+
+[source]
+----
+kubectl get artifactbuilds.jvmbuildservice.io jackson.databind.2.13.4.2-50dca403 -o yaml
+----
+
+You might get the following output:
+
+[source]
+----
+apiVersion: jvmbuildservice.io/v1alpha1
+kind: ArtifactBuild
+metadata:
+  creationTimestamp: "2022-12-21T02:50:31Z"
+  generation: 1
+  name: jackson.databind.2.13.4.2-50dca403
+  namespace: test-jvm-namespace
+  resourceVersion: "51371901"
+  uid: f11a4b7f-b19b-4e79-ab8f-392bff80e25f
+spec:
+  gav: com.fasterxml.jackson.core:jackson-databind:2.13.4.2
+status:
+  scm:
+    scmType: git
+    scmURL: https://github.com/FasterXML/jackson-databind.git <1>
+    tag: jackson-databind-2.13.4.2
+  state: ArtifactBuildFailed <2>
+
+----
+<1> This is the SCM information that was successfully discovered
+<2> This tells us the current state. In this case the build has failed.
+
+You need to deal with the failure states:  `ArtifactBuildMissing` and `ArtifactBuildFailed`.
+
+=== Dealing With Missing Artifacts (`ArtifactBuildMissing`) [[missing_artifacts]]
+
+If your build has ended up in the state,`ArtifactBuildMissing`, you must add some SCM information into your build data repository.
+
+There are three possible causes of this state:
+
+- We could not figure out which repository the artifact comes from.
+- We could not map the version to a tag in this repository.
+- The pipeline failed for other reasons, for instance, network failure.  
+
+The pipeline will be named <artifact-build-name>-scm-discovery-<random-string>. To view the pipeline logs:
+
+[source]
+----
+tkn pr list | grep jackson.databind.2.13.4.2-50dca403 <1>
+tkn pr logs jackson.databind.2.13.4.2-50dca403-<discoveredid> <2>
+----
+<1> Find the pipeline name.
+<2> Use the name from the first line to view the logs.
+
+This pipeline log helps you identify why the build failed.  
+
+To fix missing SCM information, add additional information to the https://github.com/redhat-appstudio/jvm-build-data/tree/main/scm-info[build information repository].  After this information has been updated, see the instructions on how to re-run it: <<rebuilding_artifacts>>.
+
+The SCM information for the `com.fasterxml.jackson.core:jackson-databind:2.13.4.2` above will be searched for in the following
+location, from most specific to least specific:
+
+[source]
+----
+scm-info/com/fasterxml/jackson/core/_artifact/jackson-databind/_version/2.13.4.2/scm.yaml <1>
+scm-info/com/fasterxml/jackson/core/_artifact/jackson-databind/scm.yaml <2>
+scm-info/com/fasterxml/jackson/core/scm.yaml <3>
+----
+<1> This approach specifies the group-id, the artifact-id, and the version. Note, that the version matches based on 'less than', so older versions, like 2.1, would still match, while newer versions would not.
+<2> These match based on the group-id and artifact-id. This approach is good for when a specific group-id is used in lots of different repositories.
+<3> These match based on the group-id. This is used when the majority of the artifacts within the group id come from a single repo.
+
+After we identify where we can add a SCM info file, the file has the following format. Note that everything is optional except for the URL.
+
+[source,yaml]
+----
+type: "git" <1>
+uri: "https://github.com/eclipse-ee4j/jaxb-stax-ex.git" <2>
+tagMapping: <3>
+  - pattern: (.*)-jre <4>
+    tag: v$1 <5>
+  - pattern: (\d+)\.(\d+)
+    tag: release-$1-$2
+  - pattern: 3.0
+    tag: jaxb-stax3-3.0
+legacyRepos: <6>
+  - type: "git"
+    uri: "https://github.com/javaee/metro-stax-ex.git"
+    path: "stax-ex" <7>
+
+----
+<1> The type is optional, at the moment only git is supported.
+<2> The primary URI to search
+<3> Mappings between a version and a tag. We attempt to do this automatically but it is not always successful.
+<4> If the version matches the regex then we look for a corresponding tag.
+<5> The tag to search for in the repo. `$n` can be used to substitute the regex capture groups, with $0 being the full match.
+<6> Additional repositories to search. This can be useful if a project has moved home over time.
+<7> Some projects are not in the root of the repo. The path tells us the directory they are in.
+
+After adding this information, re-running the build should resolve this information, moving it to the  state `ArtifactBuildBuilding`, and eventually to `ArtifactBuildComplete`.
+
+
+=== Dealing With Failed Builds [[failed_builds]]
+
+To fix failed builds, look at the build logs and figure out why it failed.
+
+*Procedure*
+
+. Identify the correct `DependencyBuild` object. 
+
+. Run `kubectl get dependencybuilds` to list the objects. 
+
+. Pick the object you are interested in. Generally each `DependencyBuild` will have multiple pipeline
+runs, named using the pattern `<dependency-build-name>-build-<n>`. 
+
+. View he logs using the command `tkn pr logs <name>`:
+
+[source]
+----
+tkn pr logs e8f6f6126f222a021fedfaee3bd3f980-build-0
+----
+
+The builds are performed from lowest JDK to highest JDK. Although some JDKs may be skipped if the analyser can determine they
+are not relevant. If a build has failed because of a JDK version issue, you might need to look at a later build.
+
+==== Unknown Build Systems
+
+If there are no builds at all, then the analyser could not find a build file to use. 
+
+*Procedure*
+
+. Create a fork of the repository. 
+
+. Change the build system to Maven. 
+
+. Build from the fork. 
+
+For an example, see: https://github.com/jvm-build-service-code/cs-au-dk-dk.brics.automaton.
+
+The 1.11-8 release had no build file, so the project was forked and one was added. This was then added to the SCM information at https://github.com/redhat-appstudio/jvm-build-data/blob/30a00905314ca5bf20d653af1a59c39c93b9aadb/scm-info/dk/brics/_artifact/automaton/scm.yaml#L6.
+
+==== Tweaking Build Parameters
+
+Tweak build parameters to get them to pass. Tweak build paramaters by adding a `build.yaml` file to the build
+data repository. For our databind example, the file would go in one of the following locations:
+
+[source]
+----
+build-info/github.com/FasterXML/jackson-databind/_version/2.13.4.2/build.yaml <1>
+build-info/github.com/FasterXML/jackson-databind/build.yaml <2>
+----
+<1> This file applies to version up to and including version 2.13.4.2
+<2> This file applies to all other versions
+
+An example of a complete (although nonsensical) file is shown below:
+
+[source,yaml]
+----
+enforceVersion: true <1>
+additionalArgs: <2>
+  - "-DskipDocs"
+alternativeArgs: <3>
+  - "'set Global / baseVersionSuffix:=\"\"'"
+  - "enableOptimizer"
+preBuildScript: | <4>
+    ./autogen.sh
+    /bin/sh -c "$(rpm --eval %configure); $(rpm --eval %__make) $(rpm --eval %_smp_mflags)"
+additionalDownloads: <5>
+  - uri: https://github.com/mikefarah/yq/releases/download/v4.30.4/yq_linux_amd64 <6>
+    sha256: 30459aa144a26125a1b22c62760f9b3872123233a5658934f7bd9fe714d7864d <7>
+    type: executable <8>
+    fileName: yq <9>
+    binaryPath: only_for_tar/bin <10>
+----
+<1> If the tag contains build files that do not match the version include this to override the version.
+<2> Additional parameters to add to the build command line.
+<3> A complete replacement for the build command line, this should not be used with 'additionalArgs' as it will replace them. This is mostly used in SBT builds.
+<4> A script to run before the build. This can do things like build native components that are required.
+<5> Additional downloads required for the build.
+<6> The URI to download from
+<7> The expected SHA.
+<8> The type, can be either `executable`, or `tar`.
+<9> The final file name, this will be added to `$PATH`. This is only for `executable` files.
+<10> The path to the directory inside the tar file that contains executables, this will be added to `$PATH`.
+
 
 == Additional resources
 
