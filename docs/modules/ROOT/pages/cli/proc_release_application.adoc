@@ -1,7 +1,3 @@
-////
-
-I've commented out this content for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/6/2023
-
 = Releasing an application
 :icons: font
 :numbered:
@@ -187,5 +183,3 @@ spec:
 
 // How integration controller uses the release plan and will creates a release object ... ships of the content
 // Alternatively you can add optional instructions to create a release manually.
-
-////
