@@ -116,9 +116,8 @@ releaseStrategy: <release-strategy> <.>
 ./copy-application.sh <managed workspace name> -a <development workspace name>/<application name>
 ----
 
-=======
-
 +
+=======
 NOTE: Run `./{ProductName}copy.sh --help` to review all the help options of the script.
-
+=======
 
