@@ -39,8 +39,6 @@ NOTE: The `ReleasePlan` and `ReleasePlanAdmission` is an agreement between the d
 
 .*Prerequisites*
 * You have an existing Development and Managed workspace.
-* Ensure you have installed kustomize, kubectl, and Go.
-* Ensure you have downloaded your docker config json file from Quay and placed it in the <HOME>/docker.config directory.
 
 .*Procedures*
 
@@ -89,7 +87,10 @@ spec:
 
 .*Prerequisites*
 
+.*Prerequisites*
 * You have an existing Development and Managed workspace.
+* Ensure you have installed kustomize, kubectl, and Go.
+* Ensure you have downloaded your docker config json file from Quay and placed it in the <HOME>/docker.config directory.
 * An existing `ReleasePlan` object.
 
 .*Procedures*
