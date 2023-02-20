@@ -20,7 +20,7 @@ runtime:
   log:
     failure_level: warn
 site:
-  title: Stonesoup Documentation
+  title: App Studio Documentation
   url: https://docs.github.io/
   start_page: Documentation::index.adoc
   robots: allow
@@ -63,7 +63,7 @@ asciidoc:
     url-guide: https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/
 
   # Product content attributes
-    ProductName: Stonesoup
+    ProductName: App Studio
     ProductShortName: ''
     ProductRelease: ''
     ProductVersion: ''
