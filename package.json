@@ -9,6 +9,7 @@
   "homepage": "https://hacbs-contract.github.io/hacbs-contract.github.io/",
   "devDependencies": {
     "@hacbs-contract/ec-policies-antora-extension": "latest",
+    "@hacbs-contract/tekton-task-antora-extension": "latest",
     "@hacbs-contract/reference-antora-extension": "latest",
     "antora": "^3.1.2"
   },
