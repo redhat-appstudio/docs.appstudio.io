@@ -6,7 +6,7 @@ WARNING: If you delete an application permanently, you delete all the components
 
 .*Prerequisites*
 
-* You successfully signed in to Stonesoup.
+* You successfully signed in to {ProductName}.
 * You have at least one application.
 
 .*Procedures*
