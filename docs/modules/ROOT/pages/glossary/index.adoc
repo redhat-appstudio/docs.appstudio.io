@@ -10,10 +10,10 @@ The ability to update and manage Build Pipelines for each component in an applic
 A Kubernetes deployment, which includes nodes that run containerized applications, and a control plane that manages the nodes.
 
 == Commit 
-A change to one or more files. In Stonesoup, commits that you make to a linked repository move through the pipeline and automatically get published.
+A change to one or more files. In {ProductName}, commits that you make to a linked repository move through the pipeline and automatically get published.
 
 == Component 
-An image that Stonesoup builds from source code in a repository. One or more components that run together form an application.
+An image that {ProductName} builds from source code in a repository. One or more components that run together form an application.
 
 == Conftest 
 A utility for testing structured configuration data. Use Conftest to validate container information.
@@ -84,8 +84,8 @@ A set of component and container images that specifies which components should b
 == Static environment 
 A set of compute resources that you can use to develop, test, and stage your applications before you release them. You can share static environments across all applications in the workspace. 
 
-== Stonesoup 
-A platform to automate the process of building, testing, and deploying applications to the hybrid cloud. Stonesoup offers enterprise-grade security and customizable feature sets.   
+== {ProductName} 
+A platform to automate the process of building, testing, and deploying applications to the hybrid cloud. {ProductName} offers enterprise-grade security and customizable feature sets.   
 
 == Supply chain Levels for Software Artifacts (SLSA) 
 A link:https://slsa.dev/[security framework] that helps prevent tampering by securing the packages and infrastructure of customers’ projects.

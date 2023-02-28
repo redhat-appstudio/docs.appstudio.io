@@ -4,7 +4,7 @@ You can create static environments within your current workspace and use them to
 
 .*Prerequisites*
 
-* You successfully signed in to Stonesoup.
+* You successfully signed in to {ProductName}.
 
 
 .*Procedures*
@@ -15,7 +15,7 @@ You can create static environments within your current workspace and use them to
 . From the *Deployment strategy* drop-down list, select either *Automatic* or *Manual*.
 
 +
-NOTE: The deployment strategy handles any changes that you make to your code. If you select *Manual*, you must manually promote any new component updates to the environment. If you select *Automatic*, Stonesoup automatically deploys new component updates to the environment. You can change the deployment strategy when you promote new component updates.
+NOTE: The deployment strategy handles any changes that you make to your code. If you select *Manual*, you must manually promote any new component updates to the environment. If you select *Automatic*, {ProductName} automatically deploys new component updates to the environment. You can change the deployment strategy when you promote new component updates.
 
 . From the *Order in continuous delivery* drop-down list, select an option that will be the default for your application. 
 
