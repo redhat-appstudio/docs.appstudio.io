@@ -1,3 +1,6 @@
+[comment]
+--
+Adam Kaplan said this has to be rewritten because it's based on an older version of {ProductName} that used KCP. --Christian csears@redhat.com 3/1/23
 = Introduction to Pipelines service
 
 Pipelines service is a managed service that allows users or services to securely run Tekton Pipelines. Additionally, it stores the metadata and Pipeline logs related to an executed Pipeline in a separate database.
@@ -72,3 +75,4 @@ You can use a Pipelines service in any of the following ways.
 == Additional resources
 
 * xref:concepts/pipelines/persister.adoc[Persister component]
+--

@@ -1,3 +1,6 @@
+[comment]
+--
+Presumably this also has to be rewritten, since Adam Kaplan said that the index.adoc in this directory was based on an older version of {ProductName} that used KCP. --Christian csears@redhat.com 3/1/23
 = Persister component
 
 The Persister component contributes to the system's stability and optimal performance by collecting all the necessary _PipelineRun_ information and pushing it to an external storage.
@@ -71,6 +74,8 @@ ssl: <6>
 +
 <8> Optional: Set this option in case the server name is different from the address. For example, if you use oc port-forward to expose the API locally, you must set this option.
 
+
+
 +
 *Example*
 
@@ -113,3 +118,4 @@ a|`tkn results records list "default/results"`
 == Additional resources
 
 * xref:concepts/pipelines/index.adoc[Pipeline services]
+--

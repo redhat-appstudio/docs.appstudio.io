@@ -47,4 +47,4 @@ NOTE: Site Reliability Engineering (SRE) administrators create a `static` or `ma
 
 == Additional resources
 * xref:getting-started/build_service.adoc[Build Pipeline customization]
-* xref:getting-started/pipeline_visualization.adoc[Pipeline visualization]
+* xref:getting-started/component_deployment_lifecycle.adoc[Component deployment lifecycle]
