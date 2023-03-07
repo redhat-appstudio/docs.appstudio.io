@@ -1,0 +1,149 @@
+
+== Getting started in the CLI
+
+In addition to the user interface (UI), you can also use the command line interface (CLI) to access and configure {ProductName} to meet your specific needs.
+
+.Prerequisites
+
+To access {ProductName} by using the CLI, you must configure oc commands. Follow the instructions in xref:https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html[Getting started with the OpenShift CLI].
+
+.Procedure
+
+To log in to {ProductName} by using the CLI, complete the following steps: 
+
+. Navigate to the xref:https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/[OpenShift Developer Sandbox].
+. Select the checkbox next to *I agree to the Terms and Conditions*.
+. Select *Get started with OpenShift Developer Sandbox*.
+. In the upper right of the window, select *Proxy login command*.
+. Click the *copy icon* to copy the command and your unique token. 
+. Open your terminal and paste the command that you copied in the previous step. This command runs `oc login --token=[your token]`. 
+
+.Verification
+
+To verify that `oc login` worked correctly, complete the following steps:
+
+. Run `cd ~/.kube`.
+. Run `ls` and verify that there is a file named `config`. 
+
+== oc commands for {ProductName}
+
+The following list contains common `oc` commands and examples of their outputs, where relevant:
+
+=== oc get application
+
+Example output:
+
+[source]
+----
+NAME     AGE   STATUS   REASON
+my-app   15s    True      OK
+----
+
+=== oc get components
+
+* Example output:
+
+[source]
+----
+NAME                                        AGE   STATUS   REASON   TYPE
+devfile-sample-java-springboot-basic-mhqg   50s   True     OK       GitOpsResourcesGenerated
+----
+
+=== oc get environments 
+
+Example output:
+
+[source]
+----
+NAME          AGE
+development   2d19h
+----
+
+=== oc get snapshot
+
+Example output:
+
+[source]
+----
+NAME           AGE
+my-app-ggkxt   153m
+----
+
+=== oc get pipelinerun
+
+Example output:
+
+[source]
+----
+NAME                                              SUCCEEDED   REASON      STARTTIME   COMPLETIONTIME
+devfile-sample-java-springboot-basic-mhqg-mnwx6   True        Completed   9m30s       6m46s
+----
+
+=== oc get taskrun
+
+Example output:
+
+[source]
+----
+NAME                                                              SUCCEEDED   REASON      STARTTIME   COMPLETIONTIME
+devfile-sample-java-springboot-basic-mhqg-mnwx6-build-container   True        Succeeded   11m         9m45s
+devfile-sample-java-springboot-basic-mhqg-mnwx6-init              True        Succeeded   12m         12m
+devfile-sample-java-springboot-basic-mhqg-mnwx6-show-summary      True        Succeeded   9m42s       9m34s
+devfile-sample78ef7b0924ed3b025289a33d98b0e1f4-clone-repository   True        Succeeded   12m         11m`
+----
+
+=== oc get gitopsdeployment
+
+Example output:
+
+[source]
+----
+NAME                                                                                            SYNC STATUS   HEALTH STATUS
+my-app-development-binding-g7m54-my-app-development-devfile-sample-java-springboot-basic-mhqg   OutOfSync     Healthy
+----
+
+=== oc create deployment
+
+Example output:
+
+[source, cli]
+----
+NAME                                                                                            SYNC STATUS   HEALTH STATUS
+my-app-development-binding-g7m54-my-app-development-devfile-sample-java-springboot-basic-mhqg   OutOfSync     Healthy
+----
+
+=== oc create
+
+=== oc create secret
+
+=== oc create service [flags] [options]
+
+=== oc logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER]
+
+=== oc get pods
+
+Example output:
+
+[source]
+----
+NAME                                                              READY   STATUS      RESTARTS   AGE
+devfile-sample-java-springb8214c8b0443987b4d7705b3830fa823e-pod   0/6     Completed   0          13m
+devfile-sample-java-springbf2e030e1f22f1d5a7be9e9c899eaaf25-pod   0/1    Completed   0          11m
+devfile-sample-java-springboot-basic-mhqg-798c5845bd-sxfxt        1/1     Running     0          5m19s
+devfile-sample-java-springboot-basic-mhqg-mnwx6-init-pod          0/1     Completed   0          13m
+devfile-sample78ef7b0924ed3611ba7cdef4a1f702c76765753714be6-pod   0/1     Completed   0          13m
+----
+
+=== oc get pods -l '!tekton.dev/memberof
+
+Example output:
+
+[source, cli]
+----
+NAME                                                              READY   STATUS      RESTARTS   AGE
+devfile-sample-java-springb8214c8b0443987b4d7705b3830fa823e-pod   0/6     Completed   0          13m
+devfile-sample-java-springbf2e030e1f22f1d5a7be9e9c899eaaf25-pod   0/1     Completed   0          11m
+devfile-sample-java-springboot-basic-mhqg-798c5845bd-sxfxt        1/1     Running     0          5m4s
+devfile-sample-java-springboot-basic-mhqg-mnwx6-init-pod          0/1     Completed   0          13m
+devfile-sample78ef7b0924ed3611ba7cdef4a1f702c76765753714be6-pod   0/1     Completed   0          13m
+----
