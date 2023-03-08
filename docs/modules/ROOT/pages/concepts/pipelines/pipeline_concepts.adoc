@@ -1,3 +1,6 @@
+[comment]
+--
+Presumably this also has to be rewritten, since Adam Kaplan said that the index.adoc in this directory was based on an older version of {ProductName} that used KCP. --Christian csears@redhat.com 3/1/23
 = Pipeline concepts
 :toc: left
 :icons: font
@@ -345,3 +348,4 @@ spec:
 ----
 
 Triggers in {ProductName} Pipelines support both HTTP (insecure) and HTTPS (secure HTTP) connections to the Eventlistener resource. With the secure HTTPS connection, you get end-to-end secure connection within and outside the cluster. After you create a namespace, you can enable this secure HTTPS connection for the Eventlistener resource by adding the operator.tekton.dev/enable-annotation=enabled label to the namespace, and then creating a Trigger resource and a secured route using re-encrypt TLS termination.
+--

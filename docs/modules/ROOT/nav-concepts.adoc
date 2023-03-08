@@ -6,10 +6,14 @@
 *** xref:concepts/testing_applications/sanity_tests.adoc[Sanity tests]
 *** xref:concepts/testing_applications/adding_new_tests.adoc[Add a tew test]
 *** xref:concepts/testing_applications/configuring_tests.adoc[Configuring tests]
-** xref:concepts/pipelines/index.adoc[Pipelines]
-*** xref:concepts/pipelines/persister.adoc[Persister component]
-*** xref:concepts/pipelines/pipeline_concepts.adoc[Pipeline concepts]
 ** xref:concepts/RenovateBot/index.adoc[RenovateBot]
 ** xref:concepts/environments/index.adoc[Environments]
 ** xref:concepts/java-build-service/java-build-service.adoc[Java build service]
 ** xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components]
+
+////
+Adam Kaplan said that the index.adoc for Pipelines, and presumably the other docs in that directory, need to be rewritten, since index.adoc was based on an old version of {ProductName} that used KCP. --Christian csears@redhat.com 3/1/23
+** xref:concepts/pipelines/index.adoc[Pipelines]
+*** xref:concepts/pipelines/persister.adoc[Persister component]
+*** xref:concepts/pipelines/pipeline_concepts.adoc[Pipeline concepts]
+////

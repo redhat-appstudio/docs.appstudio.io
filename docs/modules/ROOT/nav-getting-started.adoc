@@ -1,4 +1,4 @@
 * xref:getting-started/index.adoc[Getting Started]
 ** xref:getting-started/roles_persmissions.adoc[Permissions and roles]
 ** xref:getting-started/build_service.adoc[Build Pipeline customization]
-** xref:getting-started/pipeline_visualization.adoc[Pipeline visualization]
+** xref:getting-started/component_deployment_lifecycle.adoc[Component deployment lifecycle]
