@@ -5,13 +5,13 @@ In addition to the user interface (UI), you can also use the command line interf
 
 .Prerequisites
 
-To access {ProductName} by using the CLI, you must configure oc commands. Follow the instructions in xref:https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html[Getting started with the OpenShift CLI].
+To access {ProductName} by using the CLI, you must configure oc commands. Follow the instructions in https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html[Getting started with the OpenShift CLI].
 
 .Procedure
 
 To log in to {ProductName} by using the CLI, complete the following steps: 
 
-. Navigate to the xref:https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/[OpenShift Developer Sandbox].
+. Navigate to the https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/[OpenShift Developer Sandbox].
 . Select the checkbox next to *I agree to the Terms and Conditions*.
 . Select *Get started with OpenShift Developer Sandbox*.
 . In the upper right of the window, select *Proxy login command*.
