@@ -1,4 +1,5 @@
 * xref:cli/index.adoc[CLI]
+** xref:cli/getting_started_in_cli.adoc[Getting started in the CLI].
 ** xref:cli/proc_enabled_java_dependencies.adoc[Configuring Java builds with enabled dependencies rebuild].
 ** xref:cli/proc_disabled_java_dependencies.adoc[Configuring Java builds with disabled dependencies rebuild].
 ** xref:cli/creating_a_custom_application_test_with_test_pipelines.adoc[Creating a custom application test with test pipelines]
