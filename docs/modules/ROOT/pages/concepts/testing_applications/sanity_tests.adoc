@@ -24,7 +24,6 @@ The {ProductName} component build pipeline supports several types of tests, incl
 |io_k8s_description_label_required |io.k8s.description |Description of the container in Kubernetes |The required 'io.k8s.description' label is missing!
 |vcs_ref_label_required |vcs-ref |A reference within the version control used by the container source. Generally one of git, hg, svn, bzr, cvs |The required 'vcs-ref' label is missing!
 |architecture_label_required |architecture |Architecture the software in the image should target. Default is Fedora OS architecture |The 'architecture' label is missing!
-|com_redhat_build_host_label_required |com.redhat.build-host |The build host used to create an image for internal use and auditability, similar to the use in RPM |
 |vendor_label_required |vendor |Name of the vendor |The required 'vendor' label is missing!
 |release_label_required |release |Release number for this version |The 'release' label is missing!
 |url_label_required |url |A URL where the user can find more information about the image | The required 'url' label is missing!
