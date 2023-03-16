@@ -5,7 +5,7 @@ In addition to the user interface (UI), you can also use the command line interf
 
 .Prerequisites
 
-To access {ProductName} by using the CLI, you must configure oc commands. Follow the instructions in https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html[Getting started with the OpenShift CLI].
+To access {ProductName} with the CLI, you must configure `oc` commands. Follow the instructions in https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html[Getting started with the OpenShift CLI].
 
 .Procedure
 
@@ -41,7 +41,7 @@ my-app   15s    True      OK
 
 === oc get components
 
-* Example output:
+Example output:
 
 [source]
 ----
@@ -99,24 +99,32 @@ Example output:
 [source]
 ----
 NAME                                                                                            SYNC STATUS   HEALTH STATUS
-my-app-development-binding-g7m54-my-app-development-devfile-sample-java-springboot-basic-mhqg   OutOfSync     Healthy
+my-app-development-binding-g7m54-my-app-development-devfile-sample-java-springboot-basic-mhqg   Synced        Healthy
 ----
 
-=== oc create deployment
+=== oc get deployment
 
 Example output:
 
 [source, cli]
 ----
 NAME                                                                                            SYNC STATUS   HEALTH STATUS
-my-app-development-binding-g7m54-my-app-development-devfile-sample-java-springboot-basic-mhqg   OutOfSync     Healthy
+my-app-development-binding-g7m54-my-app-development-devfile-sample-java-springboot-basic-mhqg   Synced        Healthy
 ----
 
 === oc create
 
 === oc create secret
 
-=== oc create service [flags] [options]
+=== oc get service [name]
+
+Example output:
+
+[source]
+----
+NAME                                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+devfile-sample-java-springboot-basic-mhqg   ClusterIP   172.30.23.168   <none>        8081/TCP   10d
+----
 
 === oc logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER]
 
