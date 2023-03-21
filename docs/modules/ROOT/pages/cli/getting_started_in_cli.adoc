@@ -49,6 +49,17 @@ NAME                                        AGE   STATUS   REASON   TYPE
 devfile-sample-java-springboot-basic-mhqg   50s   True     OK       GitOpsResourcesGenerated
 ----
 
+=== oc get routes
+
+Example output:
+
+[source]
+----
+NAME    HOST/PORT                     PATH  SERVICES                   PORT    TERMINATION     WILDCARD
+my-app  myapp-my-namespace.yourserver  /    single-container-app-7g2w  8080    edge/Redirect   None
+----
+
+
 === oc get environments 
 
 Example output:
@@ -136,13 +147,13 @@ Example output:
 ----
 NAME                                                              READY   STATUS      RESTARTS   AGE
 devfile-sample-java-springb8214c8b0443987b4d7705b3830fa823e-pod   0/6     Completed   0          13m
-devfile-sample-java-springbf2e030e1f22f1d5a7be9e9c899eaaf25-pod   0/1    Completed   0          11m
+devfile-sample-java-springbf2e030e1f22f1d5a7be9e9c899eaaf25-pod   0/1     Completed   0          11m
 devfile-sample-java-springboot-basic-mhqg-798c5845bd-sxfxt        1/1     Running     0          5m19s
 devfile-sample-java-springboot-basic-mhqg-mnwx6-init-pod          0/1     Completed   0          13m
 devfile-sample78ef7b0924ed3611ba7cdef4a1f702c76765753714be6-pod   0/1     Completed   0          13m
 ----
 
-=== oc get pods -l '!tekton.dev/memberof
+=== oc get pods -l '!tekton.dev/memberof'
 
 Example output:
 
