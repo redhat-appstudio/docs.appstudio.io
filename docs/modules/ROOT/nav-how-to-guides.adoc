@@ -2,3 +2,4 @@
 ** xref:how-to-guides/delete_application.adoc[Deleting an application from UI].
 ** xref:how-to-guides/proc_creating_static_environment.adoc[Creating a static environment]
 ** xref:how-to-guides/configuring_renovatebot.adoc[Configuring RenovateBot].
+** xref:how-to-guides/webui-sbom.adoc[Download SBOMs]
