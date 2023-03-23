@@ -105,6 +105,7 @@ $ git remote set-url upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stone
 $ git fetch upstream
 $ git rebase upstream/main
 ----
+
 [[documentation_update_process]]
 == Documentation Update Process
 
