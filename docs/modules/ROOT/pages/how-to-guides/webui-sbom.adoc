@@ -1,0 +1,118 @@
+= Download SBOMs
+
+:toc: left
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Software Bill of Materials
+A software bill of materials (SBOM) provides greater transparency for your software supply chain. In {ProductName}, an SBOM lists all the software libraries that a xref:../glossary/index.adoc#_component[component] uses. Those libraries may enable specific functionality, facilitate development, or serve some other purpose. 
+
+You can use an SBOM to better understand your software’s composition, identify vulnerabilities, and assess the potential impact of any security issues that may arise. You may also need to provide your customers with a component’s SBOM to comply with cybersecurity regulations. 
+
+== Downloading an SBOM
+
+Currently, {ProductName} requires you to download the SBOM by running a CLI command. This means you need to access {ProductName} through your CLI, and you must install an additional CLI tool. We apologize for this inconvenience. However, the {ProductName} web UI still accelerates the process of downloading an SBOM, and in the future, you will be able to download the SBOM directly through the web UI. 
+
+*Prerequisites*
+
+* Login to the {ProductName} web UI
+
+* Login to {ProductName} xref:../cli/getting_started_in_cli.adoc[through the CLI].
+
+* Install the link:https://docs.sigstore.dev/cosign/installation/[Cosign] CLI tool.
+
+*Procedure*
+
+Complete the following steps to download a component's SBOM:
+
+. In the console, navigate to the *Components* tab.
++
+image::sbom/components-tab.png[alt=Components tab] 
+
+. Choose which component's SBOM you want to download. Then toggle the arrow next to that component's name to view its drop down information.
+
++
+image::sbom/sbom-drop-down.png[alt=Component drop down information]
+
+. Under *Download SBOM*, copy the command for downloading the SBOM.
+
++
+image::sbom/sbom-text-to-paste.png[alt=Command to copy]
+
+. In the CLI, paste the command and run it.
+
++
+.. Example:
+
++
+[source]
+----
+$ cosign download sbom quay.io/redhat-appstudio/user-workload@sha256:<output omitted>
+----
+
++
+.. Cosign prints a warning about the authenticity of the SBOM, since it is unsigned. You can still use this SBOM for standard business processes, like providing an SBOM to your customers. And in the future, {ProductName} will produce signed SBOMs. However, do not use this unsigned SBOM as a legal document. 
+
++
+[source]
+----  
+WARNING: Downloading SBOMs this way does not ensure its authenticity. 
+If you want to ensure a tamper-proof SBOM, download it using 'cosign download attestation <image uri>' 
+or verify its signature using 'cosign verify --key <key path> --attachment sbom <image uri>'.
+----
+
++
+.. To view and use the SBOM more easily, you may want to redirect the output:
+
++
+[source]
+----  
+$ cosign download sbom quay.io/redhat-appstudio/user-workload@sha256:<output omitted> > sbom.txt
+----
+
+== Understanding the SBOM
+In the SBOM, as this sample excerpt shows, you can find the following information about each library the component uses:
+
+. Its author or publisher
+. Its name
+. Its version
+. Its licenses
+
+This information helps you verify that individual libraries are safely-sourced, updated, and compliant. 
+
+[source]
+----
+{
+    "bomFormat": "CycloneDX",
+    "specVersion": "1.4",
+    "serialNumber": "urn:uuid:89146fc4-342f-496b-9cc9-07a6a1554220",
+    "version": 1,
+    "metadata": {
+        ...
+    },
+    "components": [
+        {
+            "bom-ref": "pkg:pypi/flask@2.1.0?package-id=d6ad7ed5aac04a8",
+            "type": "library",
+            "author": "Armin Ronacher <armin.ronacher@active-4.com>", <1>
+            "name": "Flask", <2>
+            "version": "2.1.0", <3>
+            "licenses": [ <4>
+                {
+                    "license": {
+                        "id": "BSD-3-Clause"
+                    }
+                }
+            ],
+            "cpe": "cpe:2.3:a:armin-ronacher:python-Flask:2.1.0:*:*:*:*:*:*:*",
+            "purl": "pkg:pypi/Flask@2.1.0",
+            "properties": [
+                {
+                    "name": "syft:package:foundBy",
+                    "value": "python-package-cataloger"
+                    ...
+----
+
+== Additional resources
+* xref:../cli/cli-sbom.adoc[Download SBOMs in the CLI]
