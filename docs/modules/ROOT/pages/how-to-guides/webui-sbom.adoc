@@ -116,3 +116,5 @@ This information helps you verify that individual libraries are safely-sourced, 
 
 == Additional resources
 * xref:../cli/cli-sbom.adoc[Download SBOMs in the CLI]
+
+//Adding this comment so I can make a commit and open a PR for peer/SME review.
