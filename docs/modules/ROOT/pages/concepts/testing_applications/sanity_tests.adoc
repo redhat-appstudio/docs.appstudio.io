@@ -6,7 +6,7 @@ CP Development Team <cp-devel@redhat.com>
 :source-highlighter: highlightjs
 
 == Scope
-This document covers the sanity tests contained in {ProductName} that are executed as part of the {ProductName} component build pipeline. The sanity tests for {ProductName} automatically test all application images to ensure they are up to date, correctly formatted, and protect them from security vulnerabilities.
+This document covers the surface-level tests (formerly known as "sanity tests") that {ProductName} runs as part of its component build pipeline. These surface-level tests automatically check all application images to ensure that they're up-to-date and correctly formatted.
 
 == Sanity Tests
 The {ProductName} component build pipeline supports several types of tests, including sanity tests. The sanity tests used in {ProductName} are executed in the form of https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is https://www.conftest.dev/[conftest]. Currently implemented sanity tests are listed below. Only sanity tests which are currently implemented are listed in this section.
