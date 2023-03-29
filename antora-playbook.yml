@@ -29,13 +29,13 @@ content:
     - url: .
       start_path: docs
       branches: HEAD
-    - url: https://github.com/hacbs-contract/ec-policies.git
+    - url: https://github.com/enterprise-contract/ec-policies.git
       branches: main
       start_path: antora/docs
-    - url: https://github.com/hacbs-contract/ec-cli.git
+    - url: https://github.com/enterprise-contract/ec-cli.git
       branches: main
       start_path: docs
-    - url: https://github.com/hacbs-contract/enterprise-contract-controller.git
+    - url: https://github.com/enterprise-contract/enterprise-contract-controller.git
       branches: main
       start_path: docs
 ui:
