@@ -2,6 +2,32 @@
 
 {ProductName} is a fully managed service that provides a simple workflow for developing, testing, and releasing containerized applications that meets enterprise security standards.
 
+= Important notices about the privacy of your data 
+
+== Publication notification for GitHub and Quay 
+
+As a user, you have the right to understand where and how you enter personal and sensitive data, and when your data gets published to GitHub or Quay. 
+
+=== Data in Quay is public 
+
+If you use a public GitHub repository as a component’s source, {ProductName} publishes the container image it builds to a public Quay repository. 
+
+*Note:* There is no functionality to use a private Quay repository. The artifacts {ProductName} builds are public and visible to anyone who is viewing the Quay repository. 
+
+=== Data in GitHub repositories is public
+
+When you create an application, {ProductName} stores the link to your GitHub repository, branch, and folder in a GitOps repository managed by {ProductName}. {ProductName} uses that link when it pulls code from your GitHub repository. If you use a personal repo or personal fork from a public project, these Github repository URLs contain your personal Git username. 
+
+*Note:* There is no functionality to store the application configuration in a private GitOps repository. The artifacts created by {ProductName} are public and visible to anyone who is viewing the GitOps repository.
+
+=== Data in deployment variables is public 
+
+Developers often use deployment variables, also called environment variables, to store runtime configurations. These variables could contain sensitive data, such as database connections or credential information.
+
+*Note:* There is no functionality to secure sensitive data within a deployment variable. {ProductName} stores deployment variables in a public GitOps repository. Therefore, do not enter any sensitive data in deployment variables at all. 
+
+To learn more and to get started with {ProductName}, see the following documents: 
+
 xref:getting-started/index.adoc[Getting started]:: Get started with {ProductName}
 []
 xref:concepts/index.adoc[*Concepts*]:: Learn about technical and conceptual information
