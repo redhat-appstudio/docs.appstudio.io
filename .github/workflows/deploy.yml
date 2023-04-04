@@ -1,0 +1,25 @@
+name: Deploy Preview Site
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+    - name: Install Dependencies
+      run: npm install
+    - name: Build Preview Site
+      run: antora antora-playbook.yml --preview
+    - name: Deploy Preview Site
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./preview
