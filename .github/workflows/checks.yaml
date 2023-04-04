@@ -48,5 +48,21 @@ jobs:
         with:
           go-version: '1.19'
 
+      - name: Install Dependencies
+        run: npm install
+
       - name: Generate website
         run: npm ci && npm run build
+      
+      - name: Store pull request data
+        run: |
+          mkdir pull_request
+          echo ${{ github.event.pull_request.number }} > ./pull_request/number
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: website
+          path: |
+            public
+            pull_request
