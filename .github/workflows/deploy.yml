@@ -1,25 +1,50 @@
-name: Deploy Preview Site
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-on:
-  push:
-    branches:
-      - '*'
+name: Pull request checks
+
+on: pull_request
+
+env:
+  CAMEL_ENV: production
+  HUGO_OPTIONS: '--buildFuture'
 
 jobs:
-  build-preview:
+  checks:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14.x'
-    - name: Install Dependencies
-      run: npm install
-    - name: Build Preview Site
-      run: antora antora-playbook.yml --preview
-    - name: Deploy Preview Site
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./preview
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check cache
+        run: yarn check:dependencies
+      - name: Build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn build-all
+      - name: Run checks
+        run: yarn checks
+      - name: Store pull request data
+        run: |
+          mkdir pull_request
+          echo ${{ github.event.pull_request.number }} > ./pull_request/number
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: website
+          path: |
+            public
+            pull_request
