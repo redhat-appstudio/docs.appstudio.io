@@ -17,7 +17,7 @@
 
 # NOTE: Because this worklow is using secrets, it cannot run directly on a pull-request workflow, which is running in the context of the forked repository.
 
-name: Publish pull request content on netlify
+name: Publish preview
 
 on:
   workflow_run:
@@ -26,16 +26,36 @@ on:
       - completed
 
 jobs:
-  publish:
-    name: Publish content of the website pull request on netlify
-    runs-on: ubuntu-22.04
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     steps:
-      - name: Download website content artifact
-        uses: dawidd6/action-download-artifact@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download pull request artifact
+        uses: actions/github-script@v4
         with:
-          workflow: ${{ github.event.workflow_run.workflow_id }}
-          name: website-content
-          path: content
+          script: |
+            const artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{ github.event.workflow_run.id }},
+            });
+            const websiteArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == 'website'
+            })[0];
+            var download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: websiteArtifact.id,
+               archive_format: 'zip',
+            });
+            const fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
+      - name: Unzip website artifact
+        run: unzip -q website.zip
 
       - name: Set PR_NUMBER and PR_SHA variables
         id: vars
