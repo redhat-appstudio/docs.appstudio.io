@@ -21,8 +21,7 @@ name: Publish pull request content on netlify
 
 on:
   workflow_run:
-    workflows:
-      - 'Build website on pull request'
+    workflows: ["Check pull request"]
     types:
       - completed
 
