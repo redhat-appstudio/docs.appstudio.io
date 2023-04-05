@@ -53,6 +53,10 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
       - name: Unzip website artifact
         run: unzip -q website.zip
+        
+      - name: Install Dependencies
+        run: npm install
+        
       - name: Preview on Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
