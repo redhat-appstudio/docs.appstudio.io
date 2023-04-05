@@ -16,7 +16,7 @@ IMPORTANT: If at *ANY TIME* you feel lost or don't know what to do, start asking
 
 * Once you have configured *Git* and set up your repositories, use this xref:documentation_update_process[documentation update process] to make changes to the stonesoup documentation.
 
-* You must follow our xref:merge_request_workflow[documented merge request workflow] when you submit your merge request.
+* You must follow our xref:merge_request_workflow[documented merge request workflow] when you submit your merge request. 
 
 * This document contains xref:advanced_git_operations[advanced Git operations] such as how to xref:deleting_branches[delete branches], how to xref:access_unmerged_commits[work with unmerged commits], and how to xref:sync_origin_main_with_upstream[synchronize your origin main with upstream]. It also contains a section on xref:git_troubleshooting_tips[Git troubleshooting tips].
 
