@@ -53,24 +53,25 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
       - name: Unzip website artifact
         run: unzip -q website.zip
-      - name: Preview on Netlify
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      - name: Set PR_NUMBER and PR_SHA variables
+        id: vars
         run: |
-          PR_NUMBER=$(head -1 pull_request/number)
-          PR_NUMBER=${PR_NUMBER//[^0-9]/}
-          PR_URL="https://github.com/redhat-appstudio/docs.stonesoup.io/pull/${PR_NUMBER}"
-          DEPLOY_URL=$(npm exec netlify deploy --dir public --alias="pr-${PR_NUMBER}" --message="Preview for ${PR_URL}" --json 2> /dev/null |jq -r .deploy_url)
-          echo "DEPLOY_URL=${DEPLOY_URL}" >> $GITHUB_ENV
-          echo "ISSUE_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-      - uses: actions/github-script@v3
+          echo "PR_NUMBER=$(<content/PR_NUMBER)" >> $GITHUB_OUTPUT
+          echo "PR_SHA=$(<content/PR_SHA)" >> $GITHUB_OUTPUT
+      - name: Publish preview netlify
+        uses: netlify/actions/cli@master
+        id: netlify-publish
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          args: deploy --dir=content/website/build --functions=functions
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: 'Update status of Pull Request'
+        uses: actions/github-script@v6
+        with:
           script: |
-            github.issues.createComment({
-              issue_number: Number(process.env.ISSUE_NUMBER),
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 Preview is available at ${process.env.DEPLOY_URL}`
-            })
+            const { repo: { owner, repo } } = context;
+            const netlifyUrl = '${{ steps.netlify-publish.outputs.NETLIFY_URL }}';
+            const sha = '${{ steps.vars.outputs.PR_SHA }}';
+            await github.rest.repos.createCommitStatus({ owner, repo, sha, state: "success", target_url: netlifyUrl, description: "See pull request website online", context: "netlify"})
