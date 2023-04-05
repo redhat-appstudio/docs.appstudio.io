@@ -32,10 +32,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Download pull request artifact
-        uses: actions/github-script@v6
+        uses: actions/github-script@v4
         with:
           script: |
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+            const artifacts = await github.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{ github.event.workflow_run.id }},
@@ -43,7 +43,7 @@ jobs:
             const websiteArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == 'website'
             })[0];
-            var download = await github.rest.actions.downloadArtifact({
+            var download = await github.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: websiteArtifact.id,
@@ -64,11 +64,11 @@ jobs:
           DEPLOY_URL=$(npm exec netlify deploy --dir public --alias="pr-${PR_NUMBER}" --message="Preview for ${PR_URL}" --json 2> /dev/null |jq -r .deploy_url)
           echo "DEPLOY_URL=${DEPLOY_URL}" >> $GITHUB_ENV
           echo "ISSUE_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.rest.actions.createComment({
+            github.issues.createComment({
               issue_number: Number(process.env.ISSUE_NUMBER),
               owner: context.repo.owner,
               repo: context.repo.repo,
