@@ -54,9 +54,6 @@ jobs:
       - name: Unzip website artifact
         run: unzip -q website.zip
         
-      - name: Install Dependencies
-        run: npm install
-        
       - name: Preview on Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -65,7 +62,7 @@ jobs:
           PR_NUMBER=$(head -1 pull_request/number)
           PR_NUMBER=${PR_NUMBER//[^0-9]/}
           PR_URL="https://github.com/redhat-appstudio/docs.stonesoup.io/pull/${PR_NUMBER}"
-          DEPLOY_URL=$(npm exec netlify deploy --dir public --alias="pr-${PR_NUMBER}" --message="Preview for ${PR_URL}" --json 2> /dev/null |jq -r .deploy_url)
+          DEPLOY_URL=$(npx netlify deploy --draft --auth $NETLIFY_AUTH_TOKEN --site $NETLIFY_SITE_ID --dir path/to/website/content --message "Preview for PR $PR_NUMBER" 2> /dev/null | grep "Website draft is available at" | cut -d' ' -f4)
           echo "DEPLOY_URL=${DEPLOY_URL}" >> $GITHUB_ENV
           echo "ISSUE_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
       - uses: actions/github-script@v3
