@@ -3,7 +3,7 @@
 {ProductName} is a fully managed service that provides a simple workflow for developing, testing, and releasing containerized applications that meets enterprise security standards.
 
 == Important notices about the privacy of your data 
-
+sdfsdf
 == Publication notification for GitHub and Quay 
 
 As a user, you have the right to understand where and how you enter personal and sensitive data, and when your data gets published to GitHub or Quay. 
