@@ -1,4 +1,4 @@
-# HACBS Documentation Contributing Guide
+# StoneSoup Documentation Contributing Guide
 
 HACBS (Stonesoup Cloud Build Services) is an effort to automate
 build and delivery of Red Hat products. HACBS is a CD (Continuous
