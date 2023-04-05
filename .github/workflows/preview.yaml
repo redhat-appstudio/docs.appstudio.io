@@ -1,11 +1,10 @@
-#
-# Copyright (C) 2022 Red Hat, Inc.
+# Copyright 2022 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# SPDX-License-Identifier: Apache-2.0
-
-# NOTE: Because this worklow is using secrets, it cannot run directly on a pull-request workflow, which is running in the context of the forked repository.
+# SPDX-License-Identifier: Apache-2.0s
 
 name: Publish preview
 
@@ -56,27 +53,24 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
       - name: Unzip website artifact
         run: unzip -q website.zip
-
-      - name: Set PR_NUMBER and PR_SHA variables
-        id: vars
-        run: |
-          echo "PR_NUMBER=$(<content/PR_NUMBER)" >> $GITHUB_OUTPUT
-          echo "PR_SHA=$(<content/PR_SHA)" >> $GITHUB_OUTPUT
-
-      - name: Publish preview netlify
-        uses: netlify/actions/cli@master
-        id: netlify-publish
-        with:
-          args: deploy --dir=content/website/build --functions=functions
+      - name: Preview on Netlify
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-
-      - name: 'Update status of Pull Request'
-        uses: actions/github-script@v6
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          PR_NUMBER=$(head -1 pull_request/number)
+          PR_NUMBER=${PR_NUMBER//[^0-9]/}
+          PR_URL="https://github.com/redhat-appstudio/docs.stonesoup.io/pull/${PR_NUMBER}"
+          DEPLOY_URL=$(npm exec netlify deploy --dir public --alias="pr-${PR_NUMBER}" --message="Preview for ${PR_URL}" --json 2> /dev/null |jq -r .deploy_url)
+          echo "DEPLOY_URL=${DEPLOY_URL}" >> $GITHUB_ENV
+          echo "ISSUE_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+      - uses: actions/github-script@v3
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { repo: { owner, repo } } = context;
-            const netlifyUrl = '${{ steps.netlify-publish.outputs.NETLIFY_URL }}';
-            const sha = '${{ steps.vars.outputs.PR_SHA }}';
-            await github.rest.repos.createCommitStatus({ owner, repo, sha, state: "success", target_url: netlifyUrl, description: "See pull request website online", context: "netlify"})
+            github.issues.createComment({
+              issue_number: Number(process.env.ISSUE_NUMBER),
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 Preview is available at ${process.env.DEPLOY_URL}`
+            })
