@@ -1,1 +1,2 @@
 * xref:support/index.adoc[Support]
+* xref:support/index.adoc[Support]
