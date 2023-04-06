@@ -54,15 +54,15 @@ jobs:
       - name: Generate website
         run: npm ci && npm run build
       
-      - name: Store pull request details for publish-netlify
+      - name: Store pull request data
         run: |
-          echo "${{ github.event.number }}" > PR_NUMBER
-          echo "${{ github.event.pull_request.head.sha }}" > PR_SHA
-      - name: Upload artifact doc-content
-        uses: actions/upload-artifact@v3
+          mkdir pull_request
+          echo ${{ github.event.pull_request.number }} > ./pull_request/number
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: website
           path: |
             public
-            PR_NUMBER
-            PR_SHA
+            pull_request
