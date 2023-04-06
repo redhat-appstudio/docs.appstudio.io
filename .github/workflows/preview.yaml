@@ -27,13 +27,26 @@ jobs:
     name: Publish preview on netlify
     runs-on: ubuntu-22.04
     steps:
-      - name: Download doc-content artifact
-        uses: dawidd6/action-download-artifact@v2
+      - name: Download pull request artifact
+        uses: actions/github-script@v6
         with:
-          workflow: ${{ github.event.workflow_run.workflow_id }}
-          name: website
-          path: content
-          
+          script: |
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{ github.event.workflow_run.id }},
+            });
+            const websiteArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == 'website'
+            })[0];
+            var download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: websiteArtifact.id,
+               archive_format: 'zip',
+            });
+            const fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
       - name: Unzip website artifact
         run: unzip -q website.zip
         
