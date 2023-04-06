@@ -30,12 +30,12 @@ jobs:
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download pull request artifact
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           script: |
-            const artifacts = await github.actions.listWorkflowRunArtifacts({
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{ github.event.workflow_run.id }},
@@ -43,7 +43,7 @@ jobs:
             const websiteArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == 'website'
             })[0];
-            var download = await github.actions.downloadArtifact({
+            var download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: websiteArtifact.id,
@@ -53,25 +53,12 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
       - name: Unzip website artifact
         run: unzip -q website.zip
-        
+
       - name: Preview on Netlify
+        uses: nwtgck/actions-netlify@v2
+        with:
+          publish-dir: 'public'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          PR_NUMBER=$(head -1 pull_request/number)
-          PR_NUMBER=${PR_NUMBER//[^0-9]/}
-          PR_URL="https://github.com/redhat-appstudio/docs.stonesoup.io/pull/${PR_NUMBER}"
-          DEPLOY_URL=$(npx netlify deploy --draft --auth $NETLIFY_AUTH_TOKEN --site $NETLIFY_SITE_ID --dir path/to/website/content --message "Preview for PR $PR_NUMBER" 2> /dev/null | grep "Website draft is available at" | cut -d' ' -f4)
-          echo "DEPLOY_URL=${DEPLOY_URL}" >> $GITHUB_ENV
-          echo "ISSUE_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-      - uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.issues.createComment({
-              issue_number: Number(process.env.ISSUE_NUMBER),
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 Preview is available at ${process.env.DEPLOY_URL}`
-            })
