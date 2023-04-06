@@ -18,15 +18,19 @@ name: Publish preview
 
 on:
   workflow_run:
-    workflows: "Check pull request"
+    workflows: ["Check pull request"]
     types:
       - completed
 
 jobs:
-  publish:
-    name: Publish preview on netlify
-    runs-on: ubuntu-22.04
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Download pull request artifact
         uses: actions/github-script@v6
         with:
@@ -49,27 +53,12 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
       - name: Unzip website artifact
         run: unzip -q website.zip
-        
-      - name: Set PR_NUMBER and PR_SHA variables
-        id: vars
-        run: |
-          echo "pr_number=$(<content/PR_NUMBER)" >> $GITHUB_OUTPUT
-          echo "pr_sha=$(<content/PR_SHA)" >> $GITHUB_OUTPUT
-      - name: Publish preview netlify
-        uses: netlify/actions/cli@master
-        id: netlify-publish
-        with:
-          args: deploy --dir=content/public --functions=functions
-        env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
-      - name: Update status comment
-        uses: actions-cool/maintain-one-comment@v3
+      - name: Preview on Netlify
+        uses: nwtgck/actions-netlify@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            🎊 Navigate the preview: ${{ steps.netlify-publish.outputs.NETLIFY_URL }} 🎊
-            <!-- Sticky Pull Request Comment -->
-          body-include: "<!-- Sticky Pull Request Comment -->"
-          number: ${{ steps.vars.outputs.pr_number }}
+          publish-dir: 'public'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
