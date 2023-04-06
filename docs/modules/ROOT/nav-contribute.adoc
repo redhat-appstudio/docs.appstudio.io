@@ -1,1 +1,3 @@
 * xref:contribute/index.adoc[Contribute to documentation]
+
+// This is good.
