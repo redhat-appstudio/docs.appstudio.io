@@ -8,9 +8,11 @@
   },
   "homepage": "https://hacbs-contract.github.io/hacbs-contract.github.io/",
   "devDependencies": {
+    "@antora/collector-extension": "^1.0.0-alpha.3",
+    "@antora/lunr-extension": "^1.0.0-alpha.8",
     "@hacbs-contract/ec-policies-antora-extension": "latest",
-    "@hacbs-contract/tekton-task-antora-extension": "latest",
     "@hacbs-contract/reference-antora-extension": "latest",
+    "@hacbs-contract/tekton-task-antora-extension": "latest",
     "antora": "^3.1.3"
   },
   "overrides": {
@@ -22,10 +24,5 @@
   },
   "engines": {
     "node": "18"
-  },
-  "dependencies": {
-    "@antora/collector-extension": "^1.0.0-alpha.3",
-    "@antora/lunr-extension": "^1.0.0-alpha.8",
-    "netlify-cli": "^6.14.10"
   }
 }

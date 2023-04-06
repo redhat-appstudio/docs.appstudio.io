@@ -30,3 +30,6 @@ build/
 public/
 .idea/
 .cache
+
+# Netlify deploy output from preview workflow
+deploy.json
