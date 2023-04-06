@@ -61,7 +61,7 @@ jobs:
       - name: Upload artifact doc-content
         uses: actions/upload-artifact@v3
         with:
-          name: wesbite
+          name: website
           path: |
             public
             PR_NUMBER
