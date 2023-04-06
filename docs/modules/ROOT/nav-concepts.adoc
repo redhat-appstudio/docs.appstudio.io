@@ -17,3 +17,10 @@ Adam Kaplan said that the index.adoc for Pipelines, and presumably the other doc
 *** xref:concepts/pipelines/persister.adoc[Persister component]
 *** xref:concepts/pipelines/pipeline_concepts.adoc[Pipeline concepts]
 ////
+
+////
+Adam Kaplan said that the index.adoc for Pipelines, and presumably the other docs in that directory, need to be rewritten, since index.adoc was based on an old version of {ProductName} that used KCP. --Christian csears@redhat.com 3/1/23
+** xref:concepts/pipelines/index.adoc[Pipelines]
+*** xref:concepts/pipelines/persister.adoc[Persister component]
+*** xref:concepts/pipelines/pipeline_concepts.adoc[Pipeline concepts]
+////
