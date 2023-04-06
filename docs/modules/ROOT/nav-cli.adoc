@@ -11,3 +11,7 @@
 I'm commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
 ** xref:cli/proc_release_application.adoc[Releasing an application]
 ////
+////
+I'm commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
+** xref:cli/proc_release_application.adoc[Releasing an application]
+////
