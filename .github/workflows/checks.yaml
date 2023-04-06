@@ -53,14 +53,14 @@ jobs:
 
       - name: Generate website
         run: npm ci && npm run build
-      
+
       - name: Store pull request data
         run: |
           mkdir pull_request
           echo ${{ github.event.pull_request.number }} > ./pull_request/number
-      
+
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: website
           path: |
