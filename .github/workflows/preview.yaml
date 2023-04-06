@@ -32,10 +32,11 @@ jobs:
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           name: website
-          path: |
-            public
-            pull_request
-
+          path: content
+          
+      - name: Unzip website artifact
+        run: unzip -q website.zip
+        
       - name: Set PR_NUMBER and PR_SHA variables
         id: vars
         run: |
@@ -45,7 +46,7 @@ jobs:
         uses: netlify/actions/cli@master
         id: netlify-publish
         with:
-          args: deploy --dir=content/build/site --functions=functions
+          args: deploy --dir=content/public --functions=functions
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
