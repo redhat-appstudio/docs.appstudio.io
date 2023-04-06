@@ -31,8 +31,10 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
-          name: doc-content
-          path: content
+          name: website
+          path: |
+            public
+            pull_request
 
       - name: Set PR_NUMBER and PR_SHA variables
         id: vars
