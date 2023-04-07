@@ -1,9 +1,13 @@
 = Support for {ProductName}
 
-To get support you can:
 
-* Email us - link:mailto:stonesoup@redhat.com[Stone Soup mailing list].
+To get support, you can engage with us using the following options:
 
-* Contact with us in our Google Group link:https://groups.google.com/g/stonesoup[Google group: Stone soup]
 
-* File a Jira ticket in the link:https://issues.redhat.com/projects/STONE[STONE project].
+* Join us on Slack: add the link:https://dn.dev/DevNationSlack[DevNation workspace] and find us in the link:https://rhdevnation.slack.com/archives/C04LXT1EU7K[#software-supply-chain-security] channel.
+
+
+* Email us at link:mailto:sscs@redhat.com[sscs@redhat.com].
+
+
+* Select *Raise an issue* in the banner of any page.
