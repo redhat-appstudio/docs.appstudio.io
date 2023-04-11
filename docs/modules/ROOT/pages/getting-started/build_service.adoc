@@ -66,7 +66,7 @@ status: {}
 <3> Unique name to identify this PipelineRun.
 <4> Definitions of xref:glossary/index.adoc#_task[Tasks] that the system runs. 
 <5> Specifies the list of parameters required to run the Pipeline.
-<6> Name of the Pipeline that the system runs.
+<6> Name of the Pipeline Task that the system runs.
 <7> Workspace used by the PipelineRun.
 
 == PipelineRun template
@@ -76,7 +76,7 @@ To create a build pull request (PR), the `{PipelineRun template}.yml` file in th
 * Parameters
 * Workspace
 * Annotations
-* `pipelineSpec`
+* pipelineSpec
 
 === Parameters
 
@@ -84,11 +84,11 @@ Every supported Tekton Pipeline resource should populate any of the following us
 
 * `git-url`
 
-* `git-revision`
+* `revision`
 
 * `output-image`
 
-* `dockerfile-path`
+* `dockerfile`
 
 * `path-context`
 
@@ -104,6 +104,6 @@ NOTE: link:https://pipelinesascode.com[Pipelines as Code] adds annotations autom
 
 Workspaces declare shared storage volumes that a Task in a Pipeline needs at runtime to receive input or provide output.
 
-=== `pipelineSpec`
+=== pipelineSpec
 
 In `pipelineSpec`, you can see each Task of a PipelineRun. You can also use `pipelineSpec` to add, update, and delete Tasks.
