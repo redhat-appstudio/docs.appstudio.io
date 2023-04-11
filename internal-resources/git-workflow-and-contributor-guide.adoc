@@ -4,135 +4,228 @@
 :numbered:
 :internal-guide:
 
-= Stonesoup contributor guide
+= {Product_Name} Contributor Guide
 
-== Overview
+== How to use this guide
 
-This document describes the tasks needed to contribute to stonesoup documentation.
+The Contributor Guide is for writers on the {Product_Name} team, or anyone who wants to edit our documentation.
 
-IMPORTANT: If at *ANY TIME* you feel lost or don't know what to do, start asking questions on the _#forum-hac-docs_ slack channel.
+NOTE: To get help, post in the Slack channel, _#forum-hac-docs_.
 
-* Before you begin, you need to perform the following one time process to xref:install_and_configure_git[install and configure Git]
+We organized this guide into the following sections:
 
-* Once you have configured *Git* and set up your repositories, use this xref:documentation_update_process[documentation update process] to make changes to the stonesoup documentation.
+* *Getting started*: outlines all of the tools that you need to install before you can begin working on our documentation. The steps in this section should be a one-time process.
+* *Typical workflow for editing the documentation*: represents the tasks that a writer needs to do on a weekly basis to maintain the documentation. Use this section for every day guidance while you do your work. 
+* *Advanced resources*: covers edge cases and errors that you do not know how to fix. We do not update or maintain the information in this section, so use it with caution. These sections might not follow style guide principles or be up to date.
 
-* You must follow our xref:merge_request_workflow[documented merge request workflow] when you submit your merge request.
+== Getting started
 
-* This document contains xref:advanced_git_operations[advanced Git operations] such as how to xref:deleting_branches[delete branches], how to xref:access_unmerged_commits[work with unmerged commits], and how to xref:sync_origin_main_with_upstream[synchronize your origin main with upstream]. It also contains a section on xref:git_troubleshooting_tips[Git troubleshooting tips].
+Before you contribute to the documentation, you must install our tools, and fork and clone our repository.
 
-[[install_and_configure_git]]
-== Install Antora
-stonesoup documentation uses Antora as a publishing tool. To contribute to the project you must first install https://docs.antora.org/antora/latest/install/install-antora/[Antora].
+NOTE: Commands in this guide sometimes contain brackets [ ]. You must replace the content that is inside of the brackets with your own specific variable. Do not include the brackets when you run your command in the command line interface (CLI). 
 
-== Install and Configure Git
+===  Installing and configuring Git
 
-[[install_git]]
-===  Install Git
+Git is our version control system. To install and set up Git, go to https://help.github.com/articles/set-up-git/. 
 
-The Git client allows you to access the `stonesoup-documentation` GitLab repository from a command line in your local file system.
+To customize your CLI, you can use the following add-ons:
 
-. https://help.github.com/articles/set-up-git/[Set up Git] to allow command line access to the repositories.
-. Set up https://gitlab.cee.redhat.com/help/ssh/README.md[authentication] to GitLab.
+* https://ohmyz.sh/
+* https://fig.io/
 
-IMPORTANT: If you are suddenly prompted for a password when you attempt to access GitLab, it is possible that you have overwritten your SSH public key. Once you have set up your SSH public key and authenticated to GitLab, be careful not to overwrite it. If you generate a new public SSH key for another product and overwrite this one, you will lose your authentication to GitLab! If this happens, you must add your new SSH public key to GitLab.
 
-=== Fork the Upstream Repository
+=== Installing a text editor
 
-Fork the `stonesoup-documentation` upstream repository to create a copy under your own GitLab ID. This allows you to work on multiple features and push changes to branches in your own GitLab instance so you don't have to worry about losing work. When you are ready, you can request the changes to be merged back into the upstream repository.
+Download a text editor. Our team generally uses https://code.visualstudio.com/[Visual Studio (VS) Code].
 
-. Open a browser and navigate to the https://gitlab.cee.redhat.com/red-hat-stone-soup/stonesoup-documentation.
-. Select the https://gitlab.cee.redhat.com/red-hat-stone-soup/stonesoup-documentation/-/forks/new[Fork] icon.
+=== Installing Antora
+{Product_Name} documentation uses Antora as a publishing tool. To contribute to the project, install https://docs.antora.org/antora/latest/install/install-antora/[Antora].
 
-+
-image::images/fork.png[alt=Fork]
+==== Installing Antora on a Mac
+The process to install Antora on a Mac is slightly different. 
 
-. Choose your user account for the location of the forked repository. This creates your own copy of the repository under your own GitLab ID.
+Prerequisites:
 
-=== Clone Your Forked Repository
+You must have https://brew.sh/[Homebrew] installed. 
 
-Clone your forked repository to bring your GitLab repository files to your local machine. Your forked repository is now the `origin` repository for your local files.
+Procedure: 
 
-. Open a terminal and navigate to the directory where you want to create the new repository folder.
-. Type the following command.
-+
-[source,bash,options="nowrap"]
-----
-$ git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git
-----
-. Navigate to the newly created `stonesoup-documentation` folder.
-+
-[source,bash,options="nowrap"]
-----
-$ cd stonesoup-documentation/
-----
+NOTE: The first time you do the following steps, the CLI might take several minutes to load. 
 
-For more information about http://doc.gitlab.com/ee/workflow/forking_workflow.html[forking] and http://doc.gitlab.com/ce/gitlab-basics/command-line-commands.html#clone-your-project[cloning], consult the official http://doc.gitlab.com/ce/[Gitlab documentation].
+. Download https://go.dev/[golang] and https://nodejs.org/en[nodejs].
+. In the CLI, run `brew install make`.
+. Run `sudo rm /usr/local/bin/make`. 
+. Run `npm install`
+. Run `npm run build` 
 
-=== Add the Upstream as a Remote Repository
+=== Fork and clone the GitHub repository 
 
-Once you have your fork checked out and cloned locally, add the git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git repository as a remote:
+We use the internet hosting service GitHub for our documentation projects. Make an account at https://github.com/. 
 
-. List the current list of remote repositories:
-+
-[source,bash]
-----
-$ git remote -v
-origin git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git (fetch)
-origin git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git (push)
-----
+==== Install an SSH key
 
-. Add the upstream as a remote repository and fetch its contents. This allows you to check out and work with the latest source code.
-+
-[source,bash]
-----
-$ git remote add -f upstream  git@gitlab.cee.redhat.com:red-hat-stonesoup-documentation/stonesoup-documentation.git
-----
+Before you use GitHub, you must authenticate with an SSH key. 
 
-. Verify the new remote was added:
-+
-[source,bash]
-----
-$ git remote -v
-origin git@gitlab.cee.redhat.com:<username>>/stonesoup-documentation.git (fetch)
-origin git@gitlab.cee.redhat.com:<username>/stonesoup-documentation.git (push)
-upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git (fetch)
-upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git (push)
-----
-. If the upstream repository is moved, you can change the upstream URL using the following command.
-+
-[source,bash]
-----
-$ git remote set-url upstream git@gitlab.cee.redhat.com:red-hat-stone-soup/stonesoup-documentation.git
-----
-. Use the following commands any time you need to fetch the latest source code locally.
-+
-[source,bash]
-----
-$ git fetch upstream
-$ git rebase upstream/main
-----
+Follow the instructions in https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent[GitHub's documentation]. 
 
-[[documentation_update_process]]
-== Documentation Update Process
+IMPORTANT: If you are prompted for a password when you try to access GitHub, you might have overwritten your SSH public key. If you generate a new public SSH key for another product and overwrite the key that you make in this section, you will lose your authentication. If this happens, you must add your new SSH public key to GitHub.
 
-You should now have a clone of your forked repository on your local machine and added the upstream repository as a remote.
+==== Forking the upstream repository
 
-Updates to the documentation should be based on JIRAs that request bug fixes, enhancements, or new features. For more information about how JIRAs affect the documentation process, see https://placeholder.adoc[The stonesoup JIRA Workflow].
+Procedure
 
-The basic documentation process is as follows:
+Complete the following steps to fork the `docs.stonesoup.io` upstream repository and create a copy under your own GitHub ID: 
 
-* xref:check_out_a_topic_branch_from_the_upstream_repository[Check out a topic branch] from the upstream repository.
-* Make your changes and xref:make_your_changes_and_add_them_to_git[add them to Git].
-* xref:test_your_changes[Test Your Changes] to make sure they do not break the build and to verify that the updates render as you expect.
-* xref:commit_your_changes_and_push_them_to_your_own_repository[Commit your changes and push] them to your own repository.
-* Verify your changes and xref:verify_your_changes_and_open_a_merge_request_to_upstream[open a merge request] to upstream.
-* xref:modify_a_merge_request[Fix issues] noted in your merge request.
+. Go to https://github.com/redhat-appstudio/docs.stonesoup.io. 
+. In the upper right corner, select *Fork*. 
+. In *Owner*, select your username. 
+. Enter a name and description.
+. Select *Create fork*. 
 
+==== Cloning your forked repository
+
+Procedure
+
+. Go to the forked repository that you made in the previous section.  
+. Select *Code* and then select *SSH* in the drop-down. 
+. Copy the text that appears. 
+. In your CLI, run `cd [location where you want to put your cloned directory]`.
+** For example, `cd ~/Documents`.
+. Run `git clone [URL that you copied in step 3]`
+** For example, `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
+
+== Typical workflow for editing the documentation
+In this section, you will learn how to make edits to your documentation, use Git, and find your pull request on GitHub. This is the workflow that writers on the team use on a daily basis. 
+
+=== Steps before you edit the documentation
+Procedure
+
+Complete the following steps in your command line interface (CLI) before you make edits to the documentation: 
+
+. Run `cd [file location of your repo]`
+** For example, `cd ~/Documents/docs.stonesoup.io` 
+. Run `git checkout main` to switch to the main branch.
+** If you are already on the main branch, proceed to the following step.
+. Run `git fetch upstream` to download the data from the upstream, or main, repo.
+. Run `git rebase upstream/main` to maintain a linear project history. 
+. Run `git push` to ensure that your local main branch is up to date with origin/main. 
+. Run `git checkout -b [name of branch] upstream/main` to create a new branch and switch to it. 
+** Name your branch after your Jira issue number. If you are making a change that does not correspond to a Jira ticket, give the branch another descriptive name. 
+** For example, `git checkout -b HACDOCS-170 upstream/main`
+
+Verification
+
+* Run `git status` at any point to ensure that your main branch is up to date. 
+
+=== Editing the documentation with Visual Studio Code
+
+NOTE: Ensure that you follow the steps in the section “Steps before you edit the documentation.” You must be on a feature branch. 
+
+You can work in any text editor that you’d like, but this document will outline how Visual Studio (VS) Code works. 
+
+Prerequisites 
+
+* You must have VS Code downloaded. 
+
+Procedure
+
+Complete the following steps to make a change to the documentation in VS Code:
+
+. Open VS Code. 
+. Select *File > Open Folder*. 
+** If you already have the proper folder open, proceed to step 4.
+. Navigate to *docs.stonesoup.io > docs > modules > ROOT > pages* and then select *Open*. 
+** If you are editing different content in our repo, select the relevant folder. 
+. Open the file that you want to edit, or create a new file. 
+. Make changes to the document and reference the Ascii Doctor documentation if needed.
+. Select *File > Save*. 
+
+=== Committing and pushing your changes
+After you edit the documentation, you must use Git to publish the changes. 
+
+Procedure
+
+. Run `git status` to check that your edits were successful. 
+. Run `npm run build` to run Antora. 
+. Copy the link that populates and paste it into your browser. Ensure that everything looks correct. 
+. In the CLI, run a variation of the command `git add` to add your edits to staging. 
+** To add everything that you edited, run `git add *`.
+** To add only a specific file, run `git add [file name]`. 
+. Run `git status` again to confirm that you added the correct files. 
+. Run `git commit -m “[Summary of what you changed in present tense]” to commit your changes and write a commit message.
+** For example, `git commit -m “Add a new page about using RenovateBot.”`
+. Run `git push -u origin [Name of feature branch]`.
+** The feature branch is the branch that you created in the section Steps before you edit the documentation.
+** For example, `git push -u origin HACDOCS-270`. 
+
+=== Opening your pull request
+
+In the previous section, you created a pull request (PR). Next, we will find the PR and officially open it. 
+
+Procedure
+
+. Navigate to https://github.com/redhat-appstudio/docs.stonesoup.io.
+. Find your PR at the top of the window. 
+. Select *Compare & pull request*.
+. Enter a short description of your PR in *Description*. 
+. Click *Create pull request*. 
+
+From this point on, use GitHub's user interfact (UI) to work on your PR. For help with GitHub, go to https://support.github.com/. 
+
+=== Amending a previous pull request
+
+Sometimes, you need to edit content again even though you already created a PR. Instead of creating a new PR, you can edit the existing one. 
+
+Procedure
+
+Complete the following steps only if you need to amend a PR:
+
+. Run `cd [file location of your repo]`.
+** For example, `cd ~/Documents/docs.stonesoup.io` 
+. Run `git checkout main` to switch to the main branch.
+** If you are already on the main branch, proceed to the following step.
+. Run `git fetch upstream` to download the data from the upstream, or main, repo.
+. Run `git rebase upstream/main` to maintain a linear project history. 
+. Run `git push` to ensure that your local main branch is up to date with origin/main. 
+. Run `git checkout [name of feature branch]`.
+. Make changes in your documentation. 
+. Run `npm run build`.
+** Copy the link that populates and paste it into your browser. Ensure that everything is correct. 
+. Run `git add`.
+. Run `git status`.
+. Run `git commit -–amend –-no-edit`.
+** This command amends your previous commit and does not change the commit message. If you want to edit the commit message, omit `–-no-edit`.
+. Run `git push --force-with-lease`.
+
+Verification
+
+To verify that the commit went through, complete the following steps:
+
+. In your CLI, run `git status` and confirm that your branch is up to date.
+. In your PR, navigate to the Commits tab. The most recent commit should match up with the time that you amended the commit.
+
+=== Deleting your branches
+After you complete working on a feature branch, remember to delete it by completing the following step:
+
+* In your CLI, run `git branch -d [branch name]`
+
+Verification
+
+To confirm which branches you currently have, run the following: 
+
+* `git branch`
+
+NOTE: You cannot delete a branch that you are currently on. You must first switch to a different branch, for example, `main`. 
+
+== Advanced resources
+The following sections go into advanced resources that you might not need to use every day. 
+
+Now that you set up your tools, you are ready to edit the documentation. 
 
 You may want to need to do some more xref:advanced_git_operations[advanced Git operations], such as delete branches, access unmerged commits, or sync up your GitLab repository main branch with the official upstream repository. There is also a list of xref:useful_git_commands[useful Git commands]. Feel free to add to this list.
 
 [[check_out_a_topic_branch_from_the_upstream_repository]]
-=== Check Out a Topic Branch from the Upstream Repository
+== Check Out a Topic Branch from the Upstream Repository
 
 . _Fetch_ the latest from the upstream repository to make sure you are working with the latest code base.
 +
@@ -303,33 +396,7 @@ Using the GitLab Web interface:
 For more details on creating a merge request, see the http://doc.gitlab.com/ce/gitlab-basics/add-merge-request.html[GitLab documentation].
 
 [[copy_the_doc_to_a_shared_server]]
-=== Send the doc link for SME or Peer review
 
-For complicated changes that include multiple topics and alter the table of contents for a book, it is helpful to share the test build link so that it can be easily reviewed by an SME.
-
-To share the test build link.
-
-. For an MR, when the system completes a _PipelineRun_ successfully, select the pipeline number. For example, pipeline #22222
-+
-image::images/pipeline_number.png[alt=Pipeline Number]
-. Select the *Test* pipeline.
-+
-image::images/test.png[]
-
-. In the Job artifacts section, select *Browse*.
-
-+
-image::images/browse.png[]
-
-. In the Name column, select *public* > *index.html*.
-
-. Copy share the ink that the system displays in the You are being redirected away from GitLab section.
-
-+
-image::images/share.png[]
-
-
-[[modify_a_merge_request]]
 === Modify a Merge Request
 
 The administrator or others may make comments and request that you make fixes to your merge request before it is merged. Use the following procedure to make your updates for an existing merge request.
@@ -405,13 +472,6 @@ This process continues until the reviewer marks the merge request *Ready to Merg
 * If the content looks good, the administrator can merge the request.
 * If the administrator finds a problem, the *Feedback Provided* label is added and comments are provided about what needs to be changed.
 . After the request is merged to main, open the related JIRA, select *Pull Request Closed* or *Workflow* -> *Resolve Issue*, add a comment and the link where the modified content can be previewed on the QA preview server (https://access.qa.redhat.com/documentation).
-
-[[build_the_documentation]]
-== Build the Documentation
-To build your Antora book:
-
-. On your terminal run `npm install` and then `npm run build`.
-. Copy and paste the build link on any browser to review the output.
 
 [[advanced_git_operations]]
 == Advanced Git Operations
