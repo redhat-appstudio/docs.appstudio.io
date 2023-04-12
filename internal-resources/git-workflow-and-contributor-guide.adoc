@@ -33,6 +33,8 @@ To customize your CLI, you can use the following add-ons:
 * https://ohmyz.sh/
 * https://fig.io/
 
+You can also create aliases to make your daily workflow more efficient. For more information, go to https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases[Git SCM's documentation].
+
 
 === Installing a text editor
 
@@ -46,13 +48,13 @@ The process to install Antora on a Mac is slightly different.
 
 Prerequisites:
 
-You must have https://brew.sh/[Homebrew] installed. 
+* You must have https://brew.sh/[Homebrew], https://go.dev/[golang], and https://nodejs.org/en[nodejs] installed. 
+
 
 Procedure: 
 
 NOTE: The first time you do the following steps, the CLI might take several minutes to load. 
 
-. Download https://go.dev/[golang] and https://nodejs.org/en[nodejs].
 . In the CLI, run `brew install make`.
 . Run `sudo rm /usr/local/bin/make`. 
 . Run `npm install`
@@ -93,6 +95,52 @@ Procedure
 ** For example, `cd ~/Documents`.
 . Run `git clone [URL that you copied in step 3]`
 ** For example, `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
+
+==== Adding the upstream as a remote repository
+
+Procedure
+
+After you have your fork checked out and cloned locally, add the `git@github.com:redhat-appstudio/docs.stonesoup.io.git` repository as a remote:
+
+. List the current remote repositories:
++
+[source,bash]
+----
+$ git remote -v
+origin git@github.com:<username>/docs.stonesoup.io.git (fetch)
+origin git@github.com:<username>/docs.stonesoup.io.git (push)
+----
+
+. Add the upstream as a remote repository and fetch its contents. This enables you to check out and work with the latest source code:
++
+[source,bash]
+----
+$ git remote add -f upstream  git@github.com:redhat-appstudio/docs.stonesoup.io.git
+----
+
+. Verify that the new remote was added:
++
+[source,bash]
+----
+$ git remote -v
+origin git@github.com:<username>/docs.stonesoup.io.git (fetch)
+origin git@github.com:<username>/docs.stonesoup.io.git (push)
+upstream git@github.com:redhat-appstudio/docs.stonesoup.io.git (fetch)
+upstream git@github.com:redhat-appstudio/docs.stonesoup.io.git (push)
+----
+. If the upstream repository is moved, you can change the upstream URL with the following command:
++
+[source,bash]
+----
+$ git remote set-url upstream git@github.com:redhat-appstudio/docs.stonesoup.io.git
+----
+
+Use the following commands any time that you need to fetch the latest source code locally:
+[source,bash]
+----
+$ git fetch upstream
+$ git rebase upstream/main
+----
 
 == Typical workflow for editing the documentation
 In this section, you will learn how to make edits to your documentation, use Git, and find your pull request on GitHub. This is the workflow that writers on the team use on a daily basis. 
@@ -207,7 +255,7 @@ To verify that the commit went through, complete the following steps:
 === Deleting your branches
 After you complete working on a feature branch, remember to delete it by completing the following step:
 
-* In your CLI, run `git branch -d [branch name]`
+* In your CLI, run `git branch -D [branch name]`
 
 Verification
 
