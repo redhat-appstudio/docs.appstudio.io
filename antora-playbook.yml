@@ -50,9 +50,9 @@ antora:
   extensions:
   - '@antora/collector-extension'
   - '@antora/lunr-extension'
-  - '@hacbs-contract/ec-policies-antora-extension'
-  - '@hacbs-contract/tekton-task-antora-extension'
-  - '@hacbs-contract/reference-antora-extension'
+  - '@enterprise-contract/ec-policies-antora-extension'
+  - '@enterprise-contract/tekton-task-antora-extension'
+  - '@enterprise-contract/reference-antora-extension'
 
 asciidoc:
   attributes:
