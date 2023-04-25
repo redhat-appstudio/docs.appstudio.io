@@ -2,7 +2,7 @@
 
 == How {ProductName} testing helps you
 
-{ProductName} has multiple components, one of which is the Test component. The Test component works throughout the pipeline process to ensure your application and its components comply with basic tests, like sanity, security, or tests you add to the application. The Test component ensures all application components work in congruence with integration testing. Furthermore, administrator defined Enterprise Contract (EC) uses the information provided by the Test component to ensure your application complies with organizational and legal standards. For both component and integration testing, you can create your own tests to ensure your application meets your standards and needs.
+{ProductName} has multiple components, one of which is the Test component. The Test component works throughout the pipeline process to ensure your application and its components comply with basic tests, like surface-level, security, or tests you add to the application. The Test component ensures all application components work in congruence with integration testing. Furthermore, administrator defined Enterprise Contract (EC) uses the information provided by the Test component to ensure your application complies with organizational and legal standards. For both component and integration testing, you can create your own tests to ensure your application meets your standards and needs.
 
 == Test types
 
@@ -10,15 +10,15 @@
 
 There are currently 3 types of image tests in {ProductName}.
 
-* Sanity Tests
+* Surface-level Tests
 * Product Security Tests
 * Custom Tests.
 
-By default, {ProductName} performs Sanity and Product Security tests. You specifically create the Custom tests for your application.
+By default, {ProductName} performs Surface-level and Product Security tests. You specifically create the Custom tests for your application.
 
-==== Sanity tests
+==== Surface-level tests
 
-Sanity Tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The sanity tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Sanity Tests can be link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/testing_applications/sanity_tests.html[found here].
+Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Surface-level tests can be link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/concepts/testing_applications/surface-level_tests.html[found here].
 
 ==== Product Security tests
 
