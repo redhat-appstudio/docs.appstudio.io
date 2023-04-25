@@ -36,6 +36,6 @@ If for some reason you need to clear the cache you can do it by applying an anno
 This will delete all cached artifacts from the local storage, and they will be re-downloaded from the upstream repositories.
 
 == Additional resources
-* For information about configuring standard Java builds when you have enabled dependencies rebuild, see xref:cli/proc_enabled_java_dependencies.adoc[Configuring standard Java builds with enabled dependencies rebuild].
+* For information about configuring standard Java builds when you have enabled dependencies rebuild, see xref:how-to-guides/proc_enabled_java_dependencies.adoc[Configuring standard Java builds with enabled dependencies rebuild].
 
 * For more information, see xref:concepts/java-build-service/java-build-service.adoc[Java build service].

@@ -18,7 +18,7 @@ Currently, {ProductName} requires you to download the SBOM by running a CLI comm
 
 * Login to the {ProductName} web UI
 
-* Login to {ProductName} xref:../cli/getting_started_in_cli.adoc[through the CLI].
+* Login to {ProductName} xref:../getting-started/getting_started_in_cli.adoc[through the CLI].
 
 * Install the link:https://docs.sigstore.dev/cosign/installation/[Cosign] CLI tool.
 
@@ -115,4 +115,4 @@ This information helps you verify that individual libraries are safely-sourced, 
 ----
 
 == Additional resources
-* xref:../cli/cli-sbom.adoc[Download SBOMs in the CLI]
+* xref:how-to-guides/cli-sbom.adoc[Download SBOMs in the CLI]
