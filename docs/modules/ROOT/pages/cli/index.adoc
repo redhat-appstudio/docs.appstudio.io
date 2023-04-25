@@ -1,0 +1,13 @@
+= Command-line interface (CLI)
+:icons: font
+:numbered:
+:source-highlighter: highlightjs
+
+== Overview
+See all the tasks that you can complete in {ProductName} by using the CLI.
+
+////
+I commented this out for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/6/2023
+xref:cli/proc_release_application.adoc[Creating managed environements]:: Complete the steps to create managed environments.
+[]
+////

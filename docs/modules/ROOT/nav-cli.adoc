@@ -1,0 +1,13 @@
+* xref:cli/index.adoc[CLI]
+** xref:cli/getting_started_in_cli.adoc[Getting started in the CLI].
+** xref:cli/proc_enabled_java_dependencies.adoc[Configuring Java builds with enabled dependencies rebuild].
+** xref:cli/proc_disabled_java_dependencies.adoc[Configuring Java builds with disabled dependencies rebuild].
+** xref:cli/creating_a_custom_application_test_with_test_pipelines.adoc[Creating a custom application test with test pipelines]
+** xref:cli/delete_application.adoc[Deleting an application from CLI].
+** xref:cli/proc_managed_services_onboarding.adoc[Managed services team onboarding]
+** xref:cli/cli-sbom.adoc[Download SBOMs]
+
+////
+I'm commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
+** xref:cli/proc_release_application.adoc[Releasing an application]
+////

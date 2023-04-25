@@ -1,16 +1,5 @@
-* How-to guides
-** xref:how-to-guides/proc_managed_services_onboarding.adoc[CLI: Managed services team onboarding]
-** xref:how-to-guides/cli-sbom.adoc[CLI: Download SBOMs]
-** xref:how-to-guides/webui-sbom.adoc[Web UI: Download SBOMs]
-** xref:how-to-guides/proc_enabled_java_dependencies.adoc[CLI: Configuring Java builds with enabled dependencies rebuild].
-** xref:how-to-guides/proc_disabled_java_dependencies.adoc[CLI: Configuring Java builds with disabled dependencies rebuild].
-** xref:how-to-guides/configuring_renovatebot.adoc[Web UI: Configuring RenovateBot].
-** xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[CLI: Creating a custom application test with test pipelines]
-** xref:how-to-guides/proc_creating_static_environment.adoc[Web UI: Creating a static environment]
-** xref:how-to-guides/delete_application.adoc[CLI: Deleting an application].
-** xref:how-to-guides/delete_application.adoc[Web UI: Deleting an application].
-
-////
-I'm commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
-** xref:cli/proc_release_application.adoc[Releasing an application]
-////
+* xref:how-to-guides/index.adoc[How-to guides]
+** xref:how-to-guides/delete_application.adoc[Deleting an application from UI].
+** xref:how-to-guides/proc_creating_static_environment.adoc[Creating a static environment]
+** xref:how-to-guides/configuring_renovatebot.adoc[Configuring RenovateBot].
+** xref:how-to-guides/webui-sbom.adoc[Download SBOMs]

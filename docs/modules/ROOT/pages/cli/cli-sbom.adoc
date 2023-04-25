@@ -18,7 +18,7 @@ You can use an SBOM to better understand the composition of your software, ident
 
 * Install the link:https://stedolan.github.io/jq/download/[jq] CLI tool.
 
-* xref:getting-started/getting_started_in_cli.adoc[Login] to {ProductName}.
+* xref:cli/getting_started_in_cli.adoc[Login] to {ProductName}.
 
 *Procedure*
 

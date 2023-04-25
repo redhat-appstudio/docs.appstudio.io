@@ -40,7 +40,9 @@ To learn more and to get started with {ProductName}, see the following sections:
 
 xref:getting-started/index.adoc[Getting started]:: Get started with {ProductName}.
 []
-xref:how-to-guides/index.adoc[*How-to guides*]:: Put {ProductName} to work for you.
+xref:how-to-guides/index.adoc[*How-to guides*]:: Complete tasks in the {ProductName} console.
+[]
+xref:cli/index.adoc[*Cli*]:: Complete tasks by using the CLI.
 []
 xref:concepts/index.adoc[*Concepts*]:: Learn about technical and conceptual information.
 []

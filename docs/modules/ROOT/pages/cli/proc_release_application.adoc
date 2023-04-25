@@ -23,11 +23,11 @@ image::managed_environment.png[alt=Managed Environment]
 
 To release an application to a managed environment:
 
-. The development team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releaseplan_object[`ReleasePlan`] object in the developer workspace. The `ReleasePlan` object includes a reference to the application that the development team wants to release, along with the namespace and workspace where the application is suppose to release.
+. The development team creates a xref:cli/proc_release_application.adoc#_creating_a_releaseplan_object[`ReleasePlan`] object in the developer workspace. The `ReleasePlan` object includes a reference to the application that the development team wants to release, along with the namespace and workspace where the application is suppose to release.
 
-. The Managed environment team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releasestrategy_object[`ReleaseStrategy`] object to ensure that the release of an application meets link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/ec-policies/index.html[enterprise contract].
+. The Managed environment team creates a xref:cli/proc_release_application.adoc#_creating_a_releasestrategy_object[`ReleaseStrategy`] object to ensure that the release of an application meets link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/ec-policies/index.html[enterprise contract].
 
-. The Managed environment team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releaseplanadmission_object[`ReleasePlanAdmission`] object in the managed workspace.
+. The Managed environment team creates a xref:cli/proc_release_application.adoc#_creating_a_releaseplanadmission_object[`ReleasePlanAdmission`] object in the managed workspace.
 
 +
 The `ReleasePlanAdmission` indicates that the Managed environment team has approved the `ReleasePlan` for an application. The `ReleasePlanAdmission` also refers to the `ReleaseStrategy`, which ensures that the application's release meets security standards.
