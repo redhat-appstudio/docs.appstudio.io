@@ -1,0 +1,1 @@
+include::docs/modules/ROOT/pages/getting-started/index.adoc[leveloffset=1]
