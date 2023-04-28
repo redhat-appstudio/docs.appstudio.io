@@ -1,0 +1,11 @@
+<title>{ProductName}</title>
+<productname>{ProductName}</productname>
+<productnumber>{ProductRelease}</productnumber>
+<subtitle>Guide to securely storing credentials in credential stores</subtitle>
+<abstract>
+    <para>Guide to securely storing credentials in credential stores.</para>
+</abstract>
+<authorgroup>
+    <orgname>Red Hat Customer Content Services</orgname>
+</authorgroup>
+<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />

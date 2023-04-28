@@ -1,0 +1,10 @@
+:toc:
+:toclevels: 4
+:numbered:
+:imagesdir: images
+:imagesdir: ../images
+:context: default
+
+// Product content attributes
+:ProductName: Red Hat Trusted Application Pipeline
+:ProductShortName: Trusted Application Pipeline

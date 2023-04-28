@@ -1,1 +1,45 @@
-include::docs/modules/ROOT/pages/getting-started/index.adoc[leveloffset=1]
+//Landing page
+include::docs/modules/ROOT/pages/index.adoc[]
+
+//Getting Started
+include::docs/modules/ROOT/pages/getting-started/index.adoc[]
+include::docs/modules/ROOT/pages/getting-started/index.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/getting_started_in_cli.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/getting-started/roles_persmissions.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/getting-started/build_service.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/getting-started/component_deployment_lifecycle.adoc[leveloffset=+1]
+
+//How-to-guides
+include::docs/modules/ROOT/pages/how-to-guides/index.adoc[]
+include::docs/modules/ROOT/pages/how-to-guides/proc_managed_services_onboarding.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/cli-sbom.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/webui-sbom.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/proc_enabled_java_dependencies.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/proc_disabled_java_dependencies.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/configuring_renovatebot.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/proc_creating_static_environment.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/delete_application.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/how-to-guides/delete_application.adoc[leveloffset=+1]
+
+
+// Concepts
+* xref:concepts/index.adoc[]
+include::docs/modules/ROOT/pages/concepts/release-services/con_release-services-overview.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/concepts/enterprise-contract/con_enterprise-contract-overview.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/concepts/testing_applications/index.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/concepts/testing_applications/con_test-overview.adoc[leveloffset=+2]
+include::docs/modules/ROOT/pages/concepts/testing_applications/surface-level_tests.adoc[leveloffset=+2]
+include::docs/modules/ROOT/pages/concepts/testing_applications/adding_new_tests.adoc[leveloffset=+2]
+include::docs/modules/ROOT/pages/concepts/testing_applications/configuring_tests.adoc[leveloffset=+2]
+include::docs/modules/ROOT/pages/concepts/RenovateBot/index.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/concepts/environments/index.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/concepts/java-build-service/java-build-service.adoc[leveloffset=+1]
+include::docs/modules/ROOT/pages/concepts/java-build-service/java-build-service-components.adoc[leveloffset=+1]
+
+
+// Glossary
+include::docs/modules/ROOT/pages/glossary/index.adoc[]
+
+//Support
+include:::docs/modules/ROOT/pages/support/index.adoc[]
