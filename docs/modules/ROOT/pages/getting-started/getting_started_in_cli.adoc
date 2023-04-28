@@ -14,7 +14,7 @@ To log in to {ProductName} by using the CLI, complete the following steps:
 . Navigate to the https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/[OpenShift Developer Sandbox].
 . Select the checkbox next to *I agree to the Terms and Conditions*.
 . Select *Get started with OpenShift Developer Sandbox*.
-. In the upper right of the window, select *Proxy login command*.
+. In the webpage banner, select *Proxy login command*.
 . Click the *copy icon* to copy the command and your unique token. 
 . Open your terminal and paste the command that you copied in the previous step. This command runs `oc login --token=[your token]`. 
 
