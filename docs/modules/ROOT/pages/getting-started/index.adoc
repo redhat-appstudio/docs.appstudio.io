@@ -78,7 +78,9 @@ The additional source code that you add can either be from the same repository t
 
 In the *Overview* tab, select *Add component*. 
 
-image::add-more-components[Overview tab that shows how you can add additional components to your application.]
+////
+image::modules/ROOT/images/Add_more_components.png[Overview tab that shows how you can add additional components to your application.]
+////
 
 === Customize your build pipeline
 
@@ -120,7 +122,9 @@ To add an integration test, complete the following steps:
 
 You can find each component’s route in the *Components* tab, next to each component’s details:
 
-image::View-application-route[The Components tab has a hyperlink called Route that opens the current component's route.]
+////
+image::modules/ROOT/images/View-application-route.png[The Components tab has a hyperlink called Route that opens the current component's route.]
+////
 
 === Examine your integration test results
 
@@ -129,15 +133,21 @@ You can view your test results in two different ways:
 * Go to the *Activity* tab and select *Pipeline runs*.
 * View your integration test log output by selecting Logs:
 
+////
 image::logs[In Activity after you select Pipeline runs, there is a tab called Logs.]
+////
 
 === Deploy your app 
 Check the status of your application in *Environments*. You can view your type of environment, its strategy, and its deployment status:
 
-image::Environments-tab[The Environments tab shows the status of your environment, its deployment strategy, the health of your application, and your last deploy date. In this example, the development is Static, the strategy is Automatic, the application is healthy, and the last deploy was on March 7, 2023 at 11:58 AM.]
+////
+image::modules/ROOT/images/Environments-tab.png[The Environments tab shows the status of your environment, its deployment strategy, the health of your application, and your last deploy date. In this example, the development is Static, the strategy is Automatic, the application is healthy, and the last deploy was on March 7, 2023 at 11:58 AM.]
+////
 
 An environment is a set of compute resources that you can use to develop, test, and stage your applications.
 
 == What's next 
 
-Congrats on creating your first application! To learn more about {ProductName}, check out our xref:pages/how-to-guides/index.adoc[How-to-guides] or our xref:pages/concepts/index.adoc[Concepts] section. 
+////
+Congrats on creating your first application! To learn more about {ProductName}, check out our xref:index.adoc[How-to-guides] or our xref:concepts/index.adoc[Concepts] section. 
+////
