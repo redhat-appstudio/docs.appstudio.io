@@ -1,7 +1,8 @@
 ---
-name: Documentation
+name: Home
 version: main
 nav:
+- modules/ROOT/why-product-name.adoc
 - modules/ROOT/nav-getting-started.adoc
 - modules/ROOT/nav-how-to-guides.adoc
 - modules/ROOT/nav-cli.adoc
