@@ -38,7 +38,7 @@ kind: JBSConfig
 metadata:
   name: jvm-build-config
 spec:
-  enable-rebuilds: "true" <1>
+  enableRebuilds: "true" <1>
   host: quay.io <2>
   owner: OrgID <3>
   repository: artifact-deployments <4>
