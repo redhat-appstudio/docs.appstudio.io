@@ -1,5 +1,5 @@
 ---
-name: Home
+name: Documentation
 version: main
 nav:
 - modules/ROOT/why-product-name.adoc
