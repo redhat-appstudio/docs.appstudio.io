@@ -2,6 +2,7 @@
 name: Documentation
 version: main
 nav:
+- modules/ROOT/nav-why.adoc
 - modules/ROOT/nav-getting-started.adoc
 - modules/ROOT/nav-how-to-guides.adoc
 - modules/ROOT/nav-cli.adoc
