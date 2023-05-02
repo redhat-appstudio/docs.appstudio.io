@@ -1,0 +1,143 @@
+= Get started
+
+{ProductName} is a multi-tenant, software as a service (SaaS) based continuous integration and continuous delivery (CI/CD) service with an emphasis on secure supply chain features.
+
+== Sign up
+Let’s get you signed up!
+
+. Go to https://console.redhat.com/beta/hac/application-pipeline[{ProductName}]. 
+. Click *Join waitlist*. 
+
+== Create your first application
+We include ready-to-use bundled code samples that you can import into our service. In this guide, we’ll walk you through how to fork a sample repository and create your first application. 
+
+=== Name your application
+Every great app needs a name – add yours! 
+
+. Select *Create an application*. 
+. Name your application.
+
+=== Choose a bundled sample
+
+. Click *Start with a sample*.
+. Choose one of the following options: 
+* Node.js
+* Quarkus
+* Spring Boot
+* Python 
+* Go
+
+Decided on a favorite sample? Great! Now let’s fork the code to your repo in the next section. By the way, we call this code a _component_. 
+
+=== Fork a sample repository
+
+==== Why should you fork a sample?
+
+There are many perks to forking one of our samples, this list shows a few:
+
+* Pipeline customization
+* Automated builds for new commits with GitHub webhook integration
+* Pull request testing
+* Rebuilding dependencies from source
+* Scanning your build for vulnerabilities, viruses, and other checks
+
+==== Steps to fork
+
+To fork the sample, complete the following steps:
+
+. In the sample that you chose, click *Git repository*. This link takes you to GitHub.
+. Now that you’re in GitHub, click *Fork*.
+. Copy the URL of this new forked repository. We'll use this URL in the next section! 
+
+[NOTE]
+====
+Right now we support GitHub, but come back soon for other Git providers! 
+====
+
+=== Import the code from your forked repository
+
+. Return to the app and go back to the *Select a sample* view. 
+. Click *Import your code*.
+. In *Git repo URL*, paste the URL that you copied in the previous section.
+. Click *Next*.
+
+=== Review and configure
+We scan your Git repository for source code and detect your runtime and other configuration settings for you to review. You have the option to use our default build pipeline or to customize the pipeline. 
+
+For now, select *Default*.
+
+=== Congrats!
+
+Now click *Create* and we’ll start building your application. We build an image from the source code of this sample. 
+
+=== Add more components 
+
+Because your application can run on one or more components, you might want to add more. 
+
+The additional source code that you add can either be from the same repository that you used when you created your application, _or_ a different Git repository. Remember, we call source code _components_.
+
+In the *Overview* tab, select *Add component*. 
+
+image::add-more-components[Overview tab that shows how you can add additional components to your application.]
+
+=== Customize your build pipeline
+
+To add automation, you can upgrade your default build pipelines to custom build pipelines. 
+
+Custom build pipelines are pipelines as code, set on your component's repository. With custom build pipelines, pull requests and commits to your main branch automatically rebuild. 
+
+By customizing your build pipeline, you can change the tasks that are included, control when those tasks update to newer versions, and accept any changes to the pipeline when you're ready for them.
+
+To get started, click *Manage build pipelines* from the *Overview* page.
+
+=== View your activity 
+You can view your latest commits, as well as your pipeline runs. 
+
+==== View your latest commits
+
+Since you forked your repo, you have permissions to commit to the Git repo. We like to focus on commits, rather than pipelines, so that it’s easy to correlate a developer's work with what’s going on in the system. 
+
+To view your recent commits, go to the *Activity* tab and click *Latest commits*. 
+
+==== View your pipeline runs
+
+Didn’t fork your repo? Fret not! You can also view your activity by pipeline runs. A pipeline run is a collection of TaskRuns that are arranged in a specific order of execution. 
+
+To view your pipeline runs, go to the *Activity* tab and click *Pipeline runs*. 
+
+=== Add an integration test
+
+An integration test is a pipeline that you set up in GitHub. When you add components, it tests each one individually, and then tests the application as a whole.
+
+To add an integration test, complete the following steps:
+
+. Go to the *Integration tests* tab.
+. Click *Add integration test*.
+. Enter a name for your test, a path to the container image, and the name of the pipeline that you want to run. 
+. Click *Add integration test*.
+
+=== View your application route 
+
+You can find each component’s route in the *Components* tab, next to each component’s details:
+
+image::View-application-route[The Components tab has a hyperlink called Route that opens the current component's route.]
+
+=== Examine your integration test results
+
+You can view your test results in two different ways: 
+
+* Go to the *Activity* tab and select *Pipeline runs*.
+* View your integration test log output by selecting Logs:
+
+image::logs[In Activity after you select Pipeline runs, there is a tab called Logs.]
+
+=== Deploy your app 
+Check the status of your application in *Environments*. You can view your type of environment, its strategy, and its deployment status:
+
+image::Environments-tab[The Environments tab shows the status of your environment, its deployment strategy, the health of your application, and your last deploy date. In this example, the development is Static, the strategy is Automatic, the application is healthy, and the last deploy was on March 7, 2023 at 11:58 AM.]
+
+An environment is a set of compute resources that you can use to develop, test, and stage your applications.
+
+== What's next 
+
+Congrats on creating your first application! To learn more about {ProductName}, check out our xref:pages/how-to-guides/index.adoc[How-to-guides] or our xref:pages/concepts/index.adoc[Concepts] section. 
