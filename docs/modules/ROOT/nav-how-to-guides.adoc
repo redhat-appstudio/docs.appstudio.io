@@ -1,4 +1,5 @@
 * xref:how-to-guides/how-to-guide-landing-page.adoc[How-to guides]
+** xref:how-to-guides/Import-code/proc_importing_code.adoc[Importing and configuring code]
 ** xref:how-to-guides/proc_upgrade_build_pipeline.adoc[Upgrading the build pipeline]
 ** Testing your application
 *** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} Test components]
@@ -20,7 +21,7 @@ Commenting these out per HACDOCS-425 and -414
 ////
 
 ////
-I'm commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
+Commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
 ** xref:cli/proc_release_application.adoc[Releasing an application]
 ** xref:how-to-guides/proc_managed_services_onboarding.adoc[CLI: Managed services team onboarding]
 ////
