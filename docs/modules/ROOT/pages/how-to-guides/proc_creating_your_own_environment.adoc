@@ -1,0 +1,31 @@
+= Creating your own environment 
+
+Use {ProductName} to continuously build and test your application. Use your own cluster as your deployment environment. By using your own cluster outside Red Hat, you have more control over where your application is deployed, and you can ensure it meets your specific needs. If you bring your own cluster you can still access all the features and benefits of {ProductName}. 
+
+.Prerequisites
+
+* You must have access to credentials with full read and write access to the namespace that you provided to {ProductName}.   
+* When you upload a `kubeconfig` file, it must include a credential with full read and write access to your provided namespace. 
+* The supplied `kubeconfig` file must use token-based authentication to connect to your cluster. Other mechanisms, such as certificate-based authentication, are not yet supported. 
+* The context in your `kubeconfig` file must point to the cluster you want to use at the time you upload the file. 
+
+.Procedures
+
+To create your own environment and upload your own `kubeconfig` file, complete the following steps in the {ProductName} UI: 
+
+. Go to *Environments* > *Create Environment*. 
+. Complete all the required fields for *Create Environment*.  
+. Complete all the required fields for *Cluster information*: 
+.. For *Select cluster*, select that you are bringing your own cluster.  
+.. For *Cluster type*, select *Non-OpenShift* or *OpenShift*. 
+. Upload your `kubeconfig` file.
+. Attach the namespace to the cluster that you selected for this application.
+. Confirm that your environment is created and is accessible under *Environments*. 
+
+.Troubleshooting 
+
+If there were any errors while creating your environment, complete the following steps: 
+
+. Go to *Environment Card* > *Connection error*. 
+. Delete the failed environment. 
+. Create a new environment. Only include the sections of your `kubeconfig` file that relate to the target cluster and credentials. 
