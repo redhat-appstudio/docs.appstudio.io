@@ -5,29 +5,27 @@ Use {ProductName} to continuously build and test your application. Use your own 
 .Prerequisites
 
 * You must have access to credentials with full read and write access to the namespace that you provided to {ProductName}.   
-* When you upload a kubeconfig file, it must include a credential with full read and write access to your provided namespace. 
-* The supplied kubeconfig file must use  token based authentication to connect to your cluster. Other mechanisms, such as certificate-based authentication, are not yet supported. 
-* The context in your kubeconfig file must point to the cluster you want to use at the time you upload the file. 
+* When you upload a `kubeconfig` file, it must include a credential with full read and write access to your provided namespace. 
+* The supplied `kubeconfig` file must use token-based authentication to connect to your cluster. Other mechanisms, such as certificate-based authentication, are not yet supported. 
+* The context in your `kubeconfig` file must point to the cluster you want to use at the time you upload the file. 
 
 .Procedures
 
-To create your own environment and upload your own kubeconfig file, complete the following steps in the {ProductName} UI: 
+To create your own environment and upload your own `kubeconfig` file, complete the following steps in the {ProductName} UI: 
 
 . Go to *Environments* > *Create Environment*. 
 . Complete all the required fields for *Create Environment*.  
 . Complete all the required fields for *Cluster information*: 
 .. For *Select cluster*, select that you are bringing your own cluster.  
-.. For *Cluster type*, select `Non-OpenShift` or `OpenShift`. 
-. Upload your kubeconfig file.
+.. For *Cluster type*, select *Non-OpenShift* or *OpenShift*. 
+. Upload your `kubeconfig` file.
 . Attach the namespace to the cluster that you selected for this application.
 . Confirm that your environment is created and is accessible under *Environments*. 
 
 .Troubleshooting 
 
-If there were an error while creating your environment, complete the following steps: 
+If there were any errors while creating your environment, complete the following steps: 
 
 . Go to *Environment Card* > *Connection error*. 
 . Delete the failed environment. 
-. Create a new environment. Only include the sections of your kubeconfig file that relate to the target cluster and credentials. 
-
-*Note:* If the environment is not created properly, you might experience issues with the functionality of the application. In such cases, the {ProductName} team can assist you in troubleshooting these issues. 
+. Create a new environment. Only include the sections of your `kubeconfig` file that relate to the target cluster and credentials. 
