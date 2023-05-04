@@ -1,3 +1,5 @@
+[comment]
+--
 = Creating static environments
 
 You can create static environments within your current workspace and use them to internally deploy and test your applications. 
@@ -33,3 +35,4 @@ After you successfully create an environment, the system displays the environmen
 
 * *Settings > Environments* 
 * *Applications > Environment* 
+--

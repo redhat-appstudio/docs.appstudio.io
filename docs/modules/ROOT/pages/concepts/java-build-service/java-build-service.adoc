@@ -11,9 +11,9 @@ The JVM build service enhances your Java builds by providing the following featu
 
 You can configure standard Java builds in either of the following situations:
 
-* When you have xref:how-to-guides/proc_enabled_java_dependencies.adoc[enabled dependencies rebuild]
+* When you have xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc#_configuring_java_builds_with_enabled_dependencies_rebuild[enabled dependencies rebuild]
 
-* When you have xref:how-to-guides/proc_disabled_java_dependencies.adoc[disabled dependencies rebuild]
+* When you have xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc#_configuring_java_builds_with_disabled_dependencies_rebuild[disabled dependencies rebuild]
 
 == Additional resources
 
