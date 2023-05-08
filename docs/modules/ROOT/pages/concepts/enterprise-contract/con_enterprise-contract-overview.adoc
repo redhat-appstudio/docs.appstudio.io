@@ -18,8 +18,8 @@ When a `Tekton Pipeline` produces a container image, {ProductName} stores the si
 
 To learn more about {ProductName} EC, see the following pages:
 
-* xref:ec-policies::index.adoc[Enterprise Contract Policies]
-* xref:ec-cli::index.adoc[Enterprise Contract CLI]
+* Enterprise Contract Policies
+* Enterprise Contract CLI
 
 To learn about other {ProductName} streams that help you with your containerized development needs, see the following pages:
 
