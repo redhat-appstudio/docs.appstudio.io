@@ -1,0 +1,49 @@
+= Upgrading the build pipeline
+
+To reinforce the security of your application, and to customize the way that {ProductName} builds the components of your application, you must upgrade your build pipeline.
+
+By default, {ProductName} builds the components of applications using, as the name suggests, the default build pipeline. This pipeline offers quick and easy containerized deployment. Default build pipelines also create, for each component, the same three container images as upgraded build pipelines: 
+
+* A business application container image, which runs when your component deploys
+* A signature image, to verify that the business application container image came from a trusted source
+* An attestation image, to verify who built the component, how it was built, and if it was built correctly
+
+However, the default build pipeline skips many tasks that {ProductName} can perform to further secure your application. Again, to perform these checks and scans on any given component, you must upgrade that component’s build pipeline.    
+
+.Prerequisites
+
+* You must have an application that {ProductName} has successfully built and deployed using the default build pipeline.  
+
+.Procedure
+To upgrade the build pipeline:
+
+. In the *Overview* tab of your application, scroll down and select *Manage build pipelines*.
+. If you have not already installed the {ProductName} GitHub application, select Install GitHub application on the “Manage build pipelines” popup page. 
+
++
+[NOTE]
+====
+If you want to restrict the GitHub application’s access to certain repositories only, use the Only select repositories option in GitHub during the installation.
+====
+
+. Returning to the “Manage build pipelines” page in {ProductName}, for any component whose build pipeline you would like to upgrade, select *Send pull request*.  
+. Select *Merge in GitHub*.
+. In GitHub, merge the pull request from the “red-hat-trusted-app-pipeline” bot.
+. Let {ProductName} complete another PipelineRun for the newly-upgraded build pipeline.
+ 
+.Verification
+Confirm that most of the build pipeline tasks that {ProductName} previously skipped are now included in the recent PipelineRun: 
+
+. Go to *Activity > Pipeline runs*. 
+. Select the most recent *PipelineRun*. 
+. View the build pipeline tasks and scroll down to view the vulnerabilities scan, which summarizes the results of the `clair-scan`. 
+
+.Customization
+After upgrading the build pipeline, you can also customize it: 
+
+. Upgrade the build pipeline of your component, as previously described. 
+. Go to the component’s GitHub repository. 
+. Find the new `.tekton` directory, which is the result of upgrading the build pipeline. 
+. Modify the contents of this directory to change how {ProductName} builds the component. 
+
+

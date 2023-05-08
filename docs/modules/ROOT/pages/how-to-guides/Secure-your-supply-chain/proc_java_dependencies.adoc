@@ -1,3 +1,7 @@
+= Configuring dependencies rebuild for Java applications
+
+For Java applications in {ProductName}, you can configure the Java Virtual Machine (JVM) build service either with the dependencies rebuild feature enabled or with that feature disabled. This document outlines, for each scenario, why and how you would configure the JVM build service.  
+
 == Configuring Java builds with enabled dependencies rebuild
 
 Java applications download all their dependencies as pre-compiled binaries from repositories, such as Maven Central. While these pre-compiled binaries are convenient, they do not assure the origin of the dependency, and you cannot ensure that the binary artifact matches the open source code. Therefore, Java is different from languages like golang which use source code-based dependencies.
@@ -38,7 +42,7 @@ kind: JBSConfig
 metadata:
   name: jvm-build-config
 spec:
-  enable-rebuilds: "true" <1>
+  enableRebuilds: "true" <1>
   host: quay.io <2>
   owner: OrgID <3>
   repository: artifact-deployments <4>
@@ -55,7 +59,7 @@ spec:
 
 . Run `kubectl apply -f config.yaml` while logged into the build namespace.
 
-== Examining the System State
+=== Examining the System State
 
 After you have run your first java build with rebuilds enabled you can use `kubectl` to view the state of the rebuilds.
 
@@ -88,7 +92,7 @@ NAME                             URL                                            
 
 The `PipelineRun` objects associated with these builds start with the build name, so you can view the logs for a build under the appropriate `PipelineRun`.
 
-=== Re-Running Builds [[rebuilding_artifacts]]
+==== Re-Running Builds [[rebuilding_artifacts]]
 
 To rebuild an artifact, you need to annotate the `ArtifactBuild` object with `jvmbuildservice.io/rebuild=true`. For example, to rebuild the `zookeeper.3.6.3-8fc126b0` `ArtifactBuild`, you would run:
 
@@ -146,7 +150,7 @@ status:
 
 You need to deal with the failure states:  `ArtifactBuildMissing` and `ArtifactBuildFailed`.
 
-=== Dealing With Missing Artifacts (`ArtifactBuildMissing`) [[missing_artifacts]]
+==== Dealing With Missing Artifacts (`ArtifactBuildMissing`) [[missing_artifacts]]
 
 If your build has ended up in the state,`ArtifactBuildMissing`, you must add some SCM information into your build data repository.
 
@@ -213,9 +217,9 @@ legacyRepos: <6>
 After adding this information, re-running the build should resolve this information, moving it to the  state `ArtifactBuildBuilding`, and eventually to `ArtifactBuildComplete`.
 
 
-=== Dealing With Failed Builds [[failed_builds]]
+==== Identifying why a build failed [[failed_builds]]
 
-To fix failed builds, look at the build logs and figure out why it failed.
+To fix failed builds, first look at the build logs and figure out why it failed.
 
 *Procedure*
 
@@ -297,8 +301,47 @@ additionalDownloads: <5>
 <10> The path to the directory inside the tar file that contains executables, this will be added to `$PATH`.
 
 
+== Configuring Java builds with disabled dependencies rebuild
+
+You must configure your repository by creating a Kubernetes JBSConfig custom resource to ensure that your namespace uses the JVM build service. When this ConfigMap is present, the build service operator configures the necessary support infrastructure in a workspace. To speed up the build process and reduce the load on Maven Central, this currently creates an artifact cache that caches Maven objects.
+
+When building an application, the system redirects all requests by using this artifact cache. By default this proxies to maven central, however, you can configure other repositories. The repositories configured in your project will not be used,
+which allows the namespace administrator to control where dependencies come from.
+
+.*Procedure*
+
+. Browse to an appropriate directory and create a file, for example, `config.yaml`.
+
+. In the `config.yaml` file, create a *ConfigMap* resource with the following data:
+
++
+[source,yaml]
+----
+apiVersion: jvmbuildservice.io/v1alpha1
+kind: JBSConfig
+metadata:
+  name: jvm-build-config
+spec:
+  mavenBaseLocations: <1>
+    maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/"
+    maven-repository-301-gradleplugins: "https://plugins.gradle.org/m2"
+    maven-repository-302-confluent: "https://packages.confluent.io/maven"
+
+----
+<1> To add a maven repository the key in the map must follow a set pattern, which is, maven-repository-$priority-$name: $repo-url. Additionally, Maven central has a priority of 200; therefore the system tries anything with a lower priority before maven central. The rebuilt artifacts if they are in use have a priority of 100.
+
+=== Clearing the Cache
+
+If for some reason you need to clear the cache you can do it by applying an annotation to the `JBSConfig` object:
+
+`kubectl annotate jbsconfig jvmbuildservice.io/clear-cache=true --all`
+
+This will delete all cached artifacts from the local storage, and they will be re-downloaded from the upstream repositories.
+
 == Additional resources
 
-* For information about Java build service components, see xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components].
+For more information, see:
 
-* For more information, see xref:concepts/java-build-service/java-build-service.adoc[Java build service].
+* xref:concepts/java-build-service/java-build-service.adoc[Java build service].
+
+* xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components] 
