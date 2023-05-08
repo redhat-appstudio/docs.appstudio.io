@@ -47,9 +47,10 @@ asciidoc:
 
   # Standard document attributes to be used in our documentation
     icons: font
-    numbered: ''
     source-highlighter: highlightjs
     url-guide: https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/
+    idseparator: '-'
+    page-pagination: '-'
 
   # Product content attributes
     ProductName: App Studio
