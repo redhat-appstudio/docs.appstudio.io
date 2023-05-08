@@ -29,7 +29,6 @@ content:
     - url: .
       start_path: docs
       branches: HEAD
-
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
@@ -38,12 +37,10 @@ ui:
 output:
   dir: ./public
 
-extensions:
+antora:
+  extensions:
   - '@antora/collector-extension'
   - '@antora/lunr-extension'
-  - '@enterprise-contract/ec-policies-antora-extension'
-  - '@enterprise-contract/tekton-task-antora-extension'
-  - '@enterprise-contract/reference-antora-extension'
 
 asciidoc:
   attributes:
