@@ -2,6 +2,7 @@
 * xref:getting-started/index.adoc[Get started]
 ** xref:getting-started/getting_started_in_cli.adoc[Getting started in the CLI]
 
+
 //// 
 ** xref:getting-started/roles_persmissions.adoc[Permissions and roles]
 ** xref:getting-started/build_service.adoc[Build Pipeline customization]
