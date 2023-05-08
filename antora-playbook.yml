@@ -29,15 +29,6 @@ content:
     - url: .
       start_path: docs
       branches: HEAD
-    - url: https://github.com/enterprise-contract/ec-policies.git
-      branches: main
-      start_path: antora/docs
-    - url: https://github.com/enterprise-contract/ec-cli.git
-      branches: main
-      start_path: docs
-    - url: https://github.com/enterprise-contract/enterprise-contract-controller.git
-      branches: main
-      start_path: docs
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
@@ -49,9 +40,6 @@ output:
 extensions:
   - '@antora/collector-extension'
   - '@antora/lunr-extension'
-  - '@enterprise-contract/ec-policies-antora-extension'
-  - '@enterprise-contract/tekton-task-antora-extension'
-  - '@enterprise-contract/reference-antora-extension'
 
 asciidoc:
   attributes:
