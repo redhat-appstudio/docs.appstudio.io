@@ -54,4 +54,4 @@ After you merge the PR, the commit activity shows that the merged commit is bein
 With {ProductName}, it’s easy to automate the application creation process from commit to production deployment.
 
 == What’s next 
-To learn how to create an app with a sample, go to xref:getting-started/index.adoc[Get started].
+To learn how to create an app with a sample, go to xref:getting-started/index.adoc[Getting started].
