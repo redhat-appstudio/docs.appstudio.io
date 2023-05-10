@@ -10,6 +10,7 @@
 ** xref:how-to-guides/proc_managed_services_onboarding.adoc[CLI: Managed services team onboarding]
 ** xref:how-to-guides/delete_application.adoc[CLI: Deleting an application].
 ** xref:how-to-guides/delete_application.adoc[Web UI: Deleting an application].
+** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Web UI: Managing compliance with the Enterprise Contract]
 
 ////
 Commenting these out per HACDOCS-425 and -414 

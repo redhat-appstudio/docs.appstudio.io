@@ -1,0 +1,44 @@
+:_content-type: PROCEDURE
+
+[id="managing-compliance-with-the-enterprise-contract_{context}"]
+= Managing compliance with the Enterprise Contract
+
+The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use Enterprise Contract to keep your software supply chain secure and ensure conatiner images comply with your organization's policies. It does this by verifying the security and provenance of builds created through {ProductName}.
+
+{ProductName}'s build process uses the Tekton Chains to generate a signed in-toto attestation of the build pipeline. The Enterprise Contract then uses this attestation to verify the build's integrity and compliance with a set of policies. These policies include best practices and any organization-specific requirements.
+
+.Prerequisites
+
+* You have created an application. 
+* You have an upgraded build pipeline.
+
+.Procedure
+
+. Open an existing application and go to the *Integration tests* tab.
+. Select *Add integration test*.
+. In the *Integration test name* field, enter a name of your choosing.
+. In the *Image bundle* field, enter *quay.io/redhat-appstudio-tekton-catalog/pipeline-enterprise-contract:devel.*
+. In the *Pipeline to run* field, enter *enterprise-contract*.
+. Optional: If passing the this test is optional, and you do not want to prevent the application from being deployed or released, then select *Mark as optional for release*.
+. Select *Add Integration test*.
+. Trigger a new build by commiting a change in the GitHub repository of the application you are working with.
+
+
+.Verification
+
+. On your application, go to the *Activity > Pipeline* runs tab.
+
+. Select a pipeline run with *Type* as *Test*, and review the status of your test pipeline.
+
+. You can also review pipeline run details, logs, task runs, and security details by selecting a pipeline run with *Type* as *Test*. 
+
+[role="_additional-resources"]
+.Additional resources
+* To generate a signed link:https://in-toto.io/in-toto/[in-toto] attestation of the build pipeline, go to link:https://tekton.dev/docs/chains/[Tekton Chains].
+* For information on the source code for the Tekton pipelines defined in the bundle, see the link:https://github.com/redhat-appstudio/build-definitions/blob/main/pipelines/enterprise-contract.yaml[build-definitions] and 
+link:https://github.com/enterprise-contract/ec-cli/blob/main/tasks/verify-enterprise-contract/0.1/verify-enterprise-contract.yaml[ec-cli] repositories.
+* To use a specific version of the pipeline bundle instead of the devel tag, you can select one of the link:https://quay.io/repository/redhat-appstudio-tekton-catalog/pipeline-enterprise-contract?tab=tags[pinned tags].
+* For information on components in Enterprise Contract, see the link:https://enterprisecontract.dev/docs/ec/main/index.html#_components[Components].
+* For information on the Enterprise Contract policies designed for {ProductName}, see the link:https://enterprisecontract.dev/docs/ec-policies/index.html[Enterprise Contract Policies].
+
+

@@ -42,36 +42,9 @@ antora:
   - '@antora/collector-extension'
   - '@antora/lunr-extension'
 
-asciidoc:
-  attributes:
+urls:
+    html_extension_style: indexify # For consistency with pages indexed by search engines, see https://docs.antora.org/antora/latest/playbook/urls-html-extension-style/
+    redirect_facility: static # The least convenient, but only available redirect on our hosting platform, see https://docs.antora.org/antora/latest/playbook/urls-redirect-facility/
+    latest_prerelease_version_segment: next # Override the version in the navigation https://docs.antora.org/antora/latest/playbook/urls-redirect-facility/
+    latest_version_segment_strategy: replace # Consequence of static redirect, see https://docs.antora.org/antora/latest/playbook/urls-redirect-facility/
 
-  # Standard document attributes to be used in our documentation
-    icons: font
-    source-highlighter: highlightjs
-    url-guide: https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/
-    idseparator: '-'
-    page-pagination: '-'
-
-  # Product content attributes
-    ProductName: App Studio
-    ProductShortName: ''
-    ProductRelease: ''
-    ProductVersion: ''
-    ProductPreviousVersion: ''
-    ProductNextVersion: ''
-
-  # Repository URLs
-    repoURL1: ''
-    repoURL2: ''
-
-  # Name of APIs and their URLs
-    APIName1: ''
-    APIName2: ''
-
-  # Knowledge base article links
-    # TBD
-
-  # Links to other projects
-    Placeholder: ''
-    Placeholder2: ''
-    Placeholder3: ''

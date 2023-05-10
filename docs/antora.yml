@@ -10,3 +10,41 @@ nav:
 - modules/ROOT/nav-glossary.adoc
 - modules/ROOT/nav-contribute.adoc
 - modules/ROOT/nav-support.adoc
+
+asciidoc:
+  attributes:
+
+  # Standard document attributes to be used in our documentation
+    icons: font
+    source-language: asciidoc@
+    source-highlighter: highlightjs
+    url-guide: https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/
+    idseparator: '-'
+    page-pagination: '-'
+    idprefix: ''
+    experimental: ""
+
+  # Product content attributes
+    ProductName: App Studio
+    context: app
+    ProductShortName: ''
+    ProductRelease: ''
+    ProductVersion: ''
+    ProductPreviousVersion: ''
+    ProductNextVersion: ''
+
+  # Repository URLs
+    repoURL1: ''
+    repoURL2: ''
+
+  # Name of APIs and their URLs
+    APIName1: ''
+    APIName2: ''
+
+  # Knowledge base article links
+    # TBD
+
+  # Links to other projects
+    Placeholder: ''
+    Placeholder2: ''
+    Placeholder3: ''
