@@ -1,5 +1,5 @@
 * How-to guides
-** Secure your supply chain
+** Securing your supply chain
 *** xref:how-to-guides/Secure-your-supply-chain/proc_upgrade_build_pipeline.adoc[Upgrading the build pipeline]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[Inspecting SBOMs]
 **** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc#_downloading_an_sbom_in_the_web_ui[In the web UI]
