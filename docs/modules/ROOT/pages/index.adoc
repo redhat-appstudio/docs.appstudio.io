@@ -42,7 +42,7 @@ xref:getting-started/index.adoc[Getting started]:: Get started with {ProductName
 []
 xref:how-to-guides/index.adoc[*How-to guides*]:: Put {ProductName} to work for you.
 []
-xref:concepts/index.adoc[*Concepts*]:: Learn about technical and conceptual information.
+xref:concepts/testing_applications/con_test-overview.adoc[*Concepts*]:: Learn about technical and conceptual information.
 []
 xref:glossary/index.adoc[*Glossary*]:: View a list of relevant terms and their definitions. 
 []
