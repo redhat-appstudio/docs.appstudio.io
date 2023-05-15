@@ -1,51 +1,57 @@
-= {ProductName}
-:toc: left
-:toclevels: 1
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
+= Why {ProductName}?
 
-Welcome to the {ProductName} documentation!
+Developing an app is a long, costly process. Multiple teams, computing power, and a whole lot of time make the endeavor of launching an app _expensive_. 
 
-== Why use {ProductName}?
+Enter {ProductName} – your one stop shop for building, testing, and deploying source code with secure CI/CD. Simply input the URL of your repository into our service, and we get to work building a pipeline, generating a snapshot, testing your code, and ultimately deploying your application to the hybrid cloud. Quickly get your app out to the world and then immediately see the value that it creates.
 
-You can use {ProductName} to enable continuous integration and continuous development (CI/CD) for your applications in a matter of minutes. You can also use {ProductName} to secure your software supply chain. With {ProductName}, you can reach link:https://slsa.dev/spec/v0.1/levels#summary-of-levels[SLSA level 3] security standards. And you can customize how {ProductName} builds, tests, and deploys containerized applications.  
+*Give us a few clicks, and we’ll get you started in a few minutes.*
 
-== Important notices about the privacy of your data 
+_We’re secure_: We provide support for https://slsa.dev/spec/v0.1/levels#summary-of-levels[SLSA Level 3] compliance to help you spot critical vulnerabilities. You can rest assured that our strong protections against tampering and threats can help keep you and your applications safe. 
 
-=== Publication notification for GitHub and Quay 
+_We’re fast_: We help you import, containerize, and deploy your applications in minutes. 
 
-As a user, you have the right to understand where and how you enter personal and sensitive data, and when your data gets published to GitHub or Quay. 
+Let’s get to work and give you back the time, effort, and money that your developers traditionally spent on manual processes. 
 
-=== Data in Quay is public 
+== Key features
+Want to learn more? You can benefit from all of the following features with {ProductName}: 
 
-If you use a public GitHub repository as a component’s source, {ProductName} publishes the container image it builds to a public Quay repository. 
+* Build your Java, Python, Node, or Go-based application into a container image. 
+* Apply the appropriate attestations and cryptographic signatures and provenance by using Tekton chains. 
+* Automatically deploy your container image to a provided development environment.
+* Verify that your container image meets SLSA guidelines by using our enterprise contract with 41+ rules.
+* Catch critical vulnerabilities quickly with each pull request. 
+* Continuously build, test, and roll out your applications with a simple `git push` or acceptance of a pull request.
+* Take advantage of GitOps-based continuous deployment with an embedded ArgoCD to your Kubernetes.
+* And much more!
 
-*Note:* There is no functionality to use a private Quay repository. The artifacts {ProductName} builds are public and visible to anyone who is viewing the Quay repository. 
+== Use cases
+You can create applications with any of the following languages and frameworks:
 
-=== Data in GitHub repositories is public
+* Java
+* Spring Boot
+* Quarkus
+* Node.js
+* Python
+* Go
 
-When you create an application, {ProductName} stores the link to your GitHub repository, branch, and folder in a GitOps repository managed by {ProductName}. {ProductName} uses that link when it pulls code from your GitHub repository. If you use a personal repo or personal fork from a public project, these Github repository URLs contain your personal Git username. 
+We use our Dockerfiles and Devfiles to containerize your application. 
 
-*Note:* There is no functionality to store the application configuration in a private GitOps repository. The artifacts created by {ProductName} are public and visible to anyone who is viewing the GitOps repository.
+== How does it work?
 
-=== Data in deployment variables is public 
+Under the hood, {ProductName} is largely based on OpenShift, Tekton, and ArgoCD. To get started, you don’t need to know anything about those technologies, but we know you might be curious! 
 
-Developers often use deployment variables, also called environment variables, to store runtime configurations. These variables could contain sensitive data, such as database connections or credential information.
+=== Customized Tekton build pipeline
+{ProductName} enables you to have a Tekton pipeline stored in your own repo. We provide features to help you keep that pipeline up to date and in compliance with your release standards.
 
-*Note:* There is no functionality to secure sensitive data within a deployment variable. {ProductName} stores deployment variables in a public GitOps repository. Therefore, do not enter any sensitive data in deployment variables at all. 
+=== View your triggered builds 
+We automatically start a build by using the pipeline definition in your pull request (PR). You can set up your PRs to auto-merge after successful PR tests. 
 
-== Using these documents
-To learn more and to get started with {ProductName}, see the following sections: 
+We post PR test feedback on GitHub by using the `checks` API. In this way, your application code and your build pipeline code can be properly tested and automatically merged. Builds that are triggered by a PR are not deployed to your development environment, so you must merge them first.
 
-xref:getting-started/get-started.adoc[Getting started]:: Get started with {ProductName}.
-[]
-xref:how-to-guides/index.adoc[*How-to guides*]:: Put {ProductName} to work for you.
-[]
-xref:concepts/testing_applications/con_test-overview.adoc[*Concepts*]:: Learn about technical and conceptual information.
-[]
-xref:glossary/index.adoc[*Glossary*]:: View a list of relevant terms and their definitions. 
-[]
-xref:contribute/index.adoc[*Contribute to documentation*]:: View guidelines for contributing.
-[]
-xref:support/index.adoc[*Support*]:: Join us on Slack, email us, or raise an issue.
+=== Merge and retest your pull requests
+After you merge the PR, the commit activity shows that the merged commit is being built. If successful, we trigger any integration tests that you defined and then move to deployment.
+
+With {ProductName}, it’s easy to automate the application creation process from commit to production deployment.
+
+== What’s next 
+To learn how to create an app with a sample, go to xref:getting-started/get-started.adoc[Getting started].

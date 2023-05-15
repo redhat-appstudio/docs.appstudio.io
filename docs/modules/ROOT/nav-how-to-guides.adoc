@@ -1,18 +1,15 @@
-* How-to guides
+* xref:how-to-guides/how-to-guide-landing-page.adoc[How-to guides]
 ** xref:how-to-guides/proc_upgrade_build_pipeline.adoc[Upgrading the build pipeline]
+** Testing your application
+*** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} Test components]
+*** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level test]
 ** Secure your supply chain
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[Inspecting SBOMs]
-**** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc#_downloading_an_sbom_in_the_web_ui[In the web UI]
-**** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc#_downloading_an_sbom_in_the_cli[In the CLI]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps in the CLI]
-** xref:how-to-guides/proc_creating_your_own_environment.adoc[Web UI: Creating your own environment]
-** xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[CLI: Creating a custom application test with test pipelines]
-** xref:how-to-guides/delete_application.adoc[CLI: Deleting an application].
-** xref:how-to-guides/delete_application.adoc[Web UI: Deleting an application].
-** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Web UI: Managing compliance with the Enterprise Contract]
+** xref:how-to-guides/proc_creating_your_own_environment.adoc[Creating your own environment]
+** xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[Creating a custom application test with test pipelines]
+** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
 ** xref:how-to-guides/proc_delete_application.adoc[Deleting an application].
-*** xref:how-to-guides/proc_delete_application.adoc#deleting-an-application-in-the-ui[In the web UI].
-*** xref:how-to-guides/proc_delete_application.adoc#deleting-an-application-in-the-cli[Using CLI].
 
 
 ////
