@@ -3,7 +3,7 @@
 [id="managing-compliance-with-the-enterprise-contract_{context}"]
 = Managing compliance with the Enterprise Contract
 
-The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use Enterprise Contract to keep your software supply chain secure and ensure conatiner images comply with your organization's policies. It does this by verifying the security and provenance of builds created through {ProductName}.
+The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use Enterprise Contract to keep your software supply chain secure and ensure container images comply with your organization's policies. It does this by verifying the security and provenance of builds created through {ProductName}.
 
 {ProductName}'s build process uses the Tekton Chains to generate a signed in-toto attestation of the build pipeline. The Enterprise Contract then uses this attestation to verify the build's integrity and compliance with a set of policies. These policies include best practices and any organization-specific requirements.
 
