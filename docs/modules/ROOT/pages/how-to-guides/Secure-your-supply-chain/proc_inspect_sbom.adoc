@@ -1,9 +1,5 @@
 = Inspecting SBOMs
 
-:toc: left
-:icons: font
-:source-highlighter: highlightjs
-
 == Software bill of materials
 A software bill of materials (SBOM) provides greater transparency for your software supply chain. In {ProductName}, an SBOM lists all the software libraries that a component uses. Those libraries can enable specific functionality or facilitate development. 
 
