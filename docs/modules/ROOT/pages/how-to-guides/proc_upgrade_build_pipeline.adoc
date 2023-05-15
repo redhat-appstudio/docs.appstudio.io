@@ -58,3 +58,12 @@ After upgrading the build pipeline, you can also customize it:
 {ProductName} creates pull requests that contain updates to the pipeline definitions under the `.tekton` directory.
 Run the tests on these pull requests by creating a comment containing `/ok-to-test` and then merging the changes when the tests pass.
 ====
+
+.Security
+To reinforce the security of your custom build pipeline, you can follow these 3 steps:
+
+* Add an `OWNERS` file to the `.tekton` directory and list trusted contributors there. To learn more, see Kubernetes docs about link:https://www.kubernetes.dev/docs/guide/owners/[OWNERS files].
+* Don't comment `/ok-to-test` on pull requests from untrusted authors, review such PRs carefully first. The `/ok-to-test` comment runs the PipelineRun, and malicious code in a PR can change your build and compromise the security of your application. To learn more about running the PipelineRun, see the link:https://pipelinesascode.com/docs/guide/running/#running-the-pipelinerun[Running the PipelineRun guide] from Pipelines as Code docs. 
+* Specify the PipelineRun definition source by setting the `pipelinerun_provenance` setting to `default_branch`. This way Pipelines as Code uses the PipelineRun definition from the default branch of the repository, and only contributors with default branch merge rights have access to PipelineRun.
++
+If you don’t set `pipelinerun_provenance`, you allow the default behaviour: the PipelineRun definition is fetched from a branch where the PipelineRun event is triggered. This way bad actors can change the PipelineRun definition and get access to your code. To learn more about setting the PipelineRun definition source, see link:https://pipelinesascode.com/docs/guide/repositorycrd/#pipelinerun-definition-provenance[PipelineRun definition provenance].
