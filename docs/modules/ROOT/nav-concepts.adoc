@@ -1,9 +1,6 @@
-* Concepts
-** Testing applications
-*** xref:concepts/testing_applications/con_test-overview.adoc[Overview of test components]
-*** xref:concepts/testing_applications/surface-level_tests.adoc[Surface-level tests]
-*** xref:concepts/testing_applications/adding_new_tests.adoc[Add a tew test]
-*** xref:concepts/testing_applications/configuring_tests.adoc[Configuring tests]
+* xref:concepts/index.adoc[Concepts]
+** xref:concepts/release-services/con_release-services-overview.adoc[Release services]
+** xref:concepts/enterprise-contract/con_enterprise-contract-overview.adoc[Enterprise contract]
 ** xref:concepts/RenovateBot/index.adoc[RenovateBot]
 ** xref:concepts/java-build-service/java-build-service.adoc[Java build service]
 ** xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components]
