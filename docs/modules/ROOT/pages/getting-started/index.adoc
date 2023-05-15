@@ -19,8 +19,8 @@ Every great app needs a name – add yours!
 
 === Choosing a bundled sample
 
-. Click *Start with a sample*.
-. Choose one of the following options: 
+Scroll to the section *Select a sample* and choose one of the following options: 
+
 * Node.js
 * Quarkus
 * Spring Boot
@@ -56,19 +56,20 @@ Right now we support GitHub, but come back soon for other Git providers!
 
 === Importing the code from your forked repository
 
-. Return to the app and go back to the *Select a sample* view. 
-. Click *Import your code*.
+. Return to the app and scroll up to *Bring in your own code*. 
 . In *Git repo URL*, paste the URL that you copied in the previous section.
-. Click *Next*.
+. Click *Import code*.
 
 === Reviewing and configuring
-We scan your Git repository for source code and detect your runtime and other configuration settings for you to review. You have the option to use our default build pipeline or to customize the pipeline. 
+We now scan your Git repository for source code and detect your runtime and other configuration settings for you to review. You have the option to use our default build pipeline or to customize the pipeline. 
 
-For now, select *Default*.
+For now, leave the toggle set to *Default build pipeline*.
 
 == Congrats!
 
-Now click *Create* and we’ll start building your application. We build an image from the source code of this sample.
+Now, scroll to the end of the page and click *Create application*. We build an image from the source code of this sample. 
+
+Congrats! You're done with the first steps! 
 
 == Next steps
 
@@ -107,40 +108,40 @@ Didn’t fork your repo? Fret not! You can also view your activity by pipeline r
 
 To view your pipeline runs, go to the *Activity* tab and click *Pipeline runs*. 
 
-=== Adding an integration test
+The following image shows the *Pipeline run details*. 
 
-An integration test is a pipeline that you set up in GitHub. When you add components, it tests each one individually, and then tests the application as a whole.
+image::Pipeline-runs.png[View of an application's pipeline runs. Multiple tasks are depicted in a tree flow and the user can click on a task to view more details.]
 
-To add an integration test, complete the following steps:
+From the previous view, you can see tasks that you can run based on the pipeline definition while the image is being inspected. You can also click an individual task to see its details. 
 
-. Go to the *Integration tests* tab.
-. Click *Add integration test*.
-. Enter a name for your test, a path to the container image, and the name of the pipeline that you want to run. 
-. Click *Add integration test*.
+=== Viewing your application route
 
-=== Viewing your application route 
+You can find each component’s route in the *Components* tab, next to each component’s details.
 
-You can find each component’s route in the *Components* tab, next to each component’s details:
+=== Managing compliance with Enterprise Contract 
+The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use EC to keep your software supply chain secure and to ensure that container images comply with your organization’s policies. 
 
 ////
-image::modules/ROOT/images/View-application-route.png[The Components tab has a hyperlink called Route that opens the current component's route.]
+For more information on this topic, go to [placeholder for Gaurav's topic]
 ////
-
-=== Examining your integration test results
-
-You can view your test results in two different ways: 
-
-* Go to the *Activity* tab and select *Pipeline runs*.
-* View your integration test log output by selecting *Logs*:
-
-image::Logs_step2.png[In Activity after you select Pipeline runs, there is a tab called Logs.]
 
 === Deploying your app 
 Check the status of your application in *Environments*. You can view information about your environment such as its type, strategy, and deployment status:
 
 image::Environments.png[The Environments tab shows the type of your environment, its deployment strategy, the cluster type, the application status, the last deploy, and the applications deployed. In this example, the type is Default, the strategy is Automatic, the cluster type is OpenShift, the Application status is Missing, the Last deploy is -, and there are 3 applications deployed.]
 
-An environment is a set of compute resources that you can use to develop, test, and stage your applications.
+An environment is a set of compute resources that you can use to develop, test, and stage your applications. There is a development environment included for you so that you can explore {ProductName}.
+
+=== Examining your SBOM
+
+A software bill of materials (SBOM) is a list of all the software libraries that a component uses. You can run 'cosign' in your command line interface (CLI) to inspect the image SBOM.
+
+For more information on this topic, go to xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc.
+
+
+////
+Placeholder for BYOC topic 
+////
 
 == Great work!
 Congrats on creating your first application!
