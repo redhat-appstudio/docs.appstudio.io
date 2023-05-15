@@ -1,0 +1,29 @@
+== How-to guides
+Guides to help you complete a specific goal.
+
+xref:how-to-guides/proc_upgrade_build_pipeline.adoc[**Upgrading the build pipeline**]
+Provides procedures for upgrading the build pipeline.
+
+xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[**Inspecting Software bill of materials (SBOMS)**]
+Provides procedures on downloading SBOMS through the UI and using the CLI.
+
+xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[**Configuring dependencies rebuild for Java applications**]
+Provides procedures on configuring dependencies rebuild for Java applications
+
+
+xref:how-to-guides/proc_creating_your_own_environment.adoc[**Creating your own environment**]
+Provides procedures on creating your own environment.
+
+xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[**Creating a Custom Application Test with Test Pipelines**]
+Provides procedures on how integration services use Tekton test pipelines and test scenarios.
+
+xref:how-to-guides/testing_applications/con_test-overview.adoc[Testing applications]
+Provides information on {ProductName} test components and surface-level tests
+
+xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[**Managing compliance with the Enterprise Contract**]
+Provides procedures on managing compliance with the Enterprise Contract through UI and using CLI. 
+
+xref:how-to-guides/proc_delete_application.adoc[**Deleting an application**]
+Provides procedures on deleting an application through UI and using the CLI.
+
+

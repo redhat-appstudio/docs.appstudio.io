@@ -1,6 +1,4 @@
-* xref:concepts/index.adoc[Concepts]
-** xref:concepts/release-services/con_release-services-overview.adoc[Release services]
-** xref:concepts/enterprise-contract/con_enterprise-contract-overview.adoc[Enterprise contract]
+* Conceptss
 ** xref:concepts/RenovateBot/index.adoc[RenovateBot]
 ** xref:concepts/java-build-service/java-build-service.adoc[Java build service]
 ** xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components]

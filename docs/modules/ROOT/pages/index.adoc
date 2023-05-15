@@ -40,9 +40,9 @@ To learn more and to get started with {ProductName}, see the following sections:
 
 xref:getting-started/get-started.adoc[Getting started]:: Get started with {ProductName}.
 []
-xref:how-to-guides/index.adoc[*How-to guides*]:: Put {ProductName} to work for you.
+xref:how-to-guides/how-to-guide-landing-page.adoc[How-to guides]:: Put {ProductName} to work for you.
 []
-xref:concepts/testing_applications/con_test-overview.adoc[*Concepts*]:: Learn about technical and conceptual information.
+xref:how-to-guides/testing_applications/con_test-overview.adoc[*Concepts*]:: Learn about technical and conceptual information.
 []
 xref:glossary/index.adoc[*Glossary*]:: View a list of relevant terms and their definitions. 
 []
