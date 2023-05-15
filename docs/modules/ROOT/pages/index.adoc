@@ -38,7 +38,7 @@ Developers often use deployment variables, also called environment variables, to
 == Using these documents
 To learn more and to get started with {ProductName}, see the following sections: 
 
-xref:getting-started/index.adoc[Getting started]:: Get started with {ProductName}.
+xref:getting-started/get-started.adoc[Getting started]:: Get started with {ProductName}.
 []
 xref:how-to-guides/index.adoc[*How-to guides*]:: Put {ProductName} to work for you.
 []

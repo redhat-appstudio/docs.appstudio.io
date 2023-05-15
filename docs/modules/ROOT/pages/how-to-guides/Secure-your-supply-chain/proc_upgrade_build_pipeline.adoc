@@ -46,4 +46,8 @@ After upgrading the build pipeline, you can also customize it:
 . Find the new `.tekton` directory, which is the result of upgrading the build pipeline. 
 . Modify the contents of this directory to change how {ProductName} builds the component. 
 
-
+[NOTE]
+====
+{ProductName} creates pull requests that contain updates to the pipeline definitions under the `.tekton` directory.
+Run the tests on these pull requests by creating a comment containing `/ok-to-test` and then merging the changes when the tests pass.
+====

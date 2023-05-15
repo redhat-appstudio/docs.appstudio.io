@@ -2,11 +2,17 @@
 ** Securing your supply chain
 *** xref:how-to-guides/Secure-your-supply-chain/proc_upgrade_build_pipeline.adoc[Upgrading the build pipeline]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[Inspecting SBOMs]
-*** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps]
-** xref:how-to-guides/proc_creating_your_own_environment.adoc[Creating your own environment]
-** xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[Creating a custom application test with test pipelines]
-** xref:how-to-guides/proc_managed_services_onboarding.adoc[Managed services team onboarding]
-** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
+**** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc#_downloading_an_sbom_in_the_web_ui[In the web UI]
+**** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc#_downloading_an_sbom_in_the_cli[In the CLI]
+*** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps in the CLI]
+** xref:how-to-guides/proc_creating_your_own_environment.adoc[Web UI: Creating your own environment]
+** xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[CLI: Creating a custom application test with test pipelines]
+** xref:how-to-guides/proc_managed_services_onboarding.adoc[CLI: Managed services team onboarding]
+** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Web UI: Managing compliance with the Enterprise Contract]
+** xref:how-to-guides/proc_delete_application.adoc[Deleting an application].
+*** xref:how-to-guides/proc_delete_application.adoc#deleting-an-application-in-the-ui[In the web UI].
+*** xref:how-to-guides/proc_delete_application.adoc#deleting-an-application-in-the-cli[Using CLI].
+
 
 ////
 Commenting these out per HACDOCS-425 and -414 
