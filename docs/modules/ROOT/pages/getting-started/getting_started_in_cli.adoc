@@ -1,5 +1,5 @@
 
-== Getting started in the CLI
+== Getting started with CLI
 
 In addition to the user interface (UI), you can also use the command line interface (CLI) to access and configure {ProductName} to meet your specific needs.
 
