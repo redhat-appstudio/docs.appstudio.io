@@ -23,6 +23,6 @@ To learn more about {ProductName} EC, see the following pages:
 
 To learn about other {ProductName} streams that help you with your containerized development needs, see the following pages:
 
-* xref:concepts/testing_applications/index.adoc[Application testing]
+* xref:how-to-guides/testing_applications/con_test-overview.adoc[Application testing]
 * xref:concepts/release-services/con_release-services-overview.adoc[Release strategy]
 * xref:concepts/pipelines/index.adoc[Pipelines]

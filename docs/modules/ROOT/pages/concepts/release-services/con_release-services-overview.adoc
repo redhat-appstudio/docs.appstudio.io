@@ -26,6 +26,6 @@ Inside a managed workspace, SREs rely on the release strategy to deploy your app
 
 To learn about other {ProductName} components that can help you with containerized development, see the following:
 
-* xref:concepts/testing_applications/index.adoc[Testing applications] 
+* xref:how-to-guides/testing_applications/con_test-overview.adoc[Testing applications] 
 * xref:concepts/enterprise-contract/con_enterprise-contract-overview.adoc[Enterprise contract] 
 * xref:concepts/pipelines/index.adoc[Pipelines]

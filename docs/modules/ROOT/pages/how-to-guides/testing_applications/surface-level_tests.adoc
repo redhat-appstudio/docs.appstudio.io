@@ -1,9 +1,4 @@
 = Surface-level tests
-CP Development Team <cp-devel@redhat.com>
-:toc: left
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
 
 == Scope
 This document covers the surface-level tests (formerly known as "sanity tests") that {ProductName} runs as part of its component build pipeline. These surface-level tests automatically check all application images to ensure that they're up-to-date, correctly formatted, and protected from security vulnerabilities.

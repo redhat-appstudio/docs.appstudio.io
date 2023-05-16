@@ -1,3 +1,5 @@
+sectlinks
+
 = Getting started
 
 {ProductName} is a multi-tenant, software as a service (SaaS) based continuous integration and continuous delivery (CI/CD) service with an emphasis on secure supply chain features.
@@ -11,11 +13,7 @@ Let’s get you signed up!
 == Creating your first application
 We include ready-to-use bundled code samples that you can import into our service. In this guide, we’ll walk you through how to fork a sample repository and create your first application. 
 
-=== Naming your application
-Every great app needs a name – add yours! 
-
-. Select *Create an application*. 
-. Name your application.
+To begin the process, click *Create an application*. 
 
 === Choosing a bundled sample
 
@@ -33,7 +31,7 @@ Decided on a favorite sample? Great! Now let’s fork the code to your repo in t
 
 ==== Why should you fork a sample?
 
-There are many perks to forking one of our samples, this list shows a few:
+There are many perks to forking one of our samples, for example:
 
 * Pipeline customization
 * Automated builds for new commits with GitHub webhook integration
@@ -45,7 +43,7 @@ There are many perks to forking one of our samples, this list shows a few:
 
 To fork the sample, complete the following steps:
 
-. In the sample that you chose, click *Git repository*. This link takes you to GitHub.
+. Click *Open Git repository* for the sample that you chose. This link takes you to GitHub.
 . Now that you’re in GitHub, click *Fork*.
 . Copy the URL of this new forked repository. We'll use this URL in the next section! 
 
@@ -57,21 +55,26 @@ Right now we support GitHub, but come back soon for other Git providers!
 === Importing the code from your forked repository
 
 . Return to the app and scroll up to *Bring in your own code*. 
-. In *Git repo URL*, paste the URL that you copied in the previous section.
+. In *Git repository URL*, paste the URL that you copied in the previous section.
 . Click *Import code*.
 
 === Reviewing and configuring
-We now scan your Git repository for source code and detect your runtime and other configuration settings for you to review. You have the option to use our default build pipeline or to customize the pipeline. 
+We now scan your Git repository for source code and detect your runtime and other configuration settings for you to review. You have the option to use our default build pipeline or to customize the pipeline. In this getting started guide, we'll stick with the default option. 
 
-For now, leave the toggle set to *Default build pipeline*.
+Complete the following steps to finish the process:
+
+. In *Application details*, enter a name for your app.
+. In *Component name*, enter a name for your component. 
+. Leave the toggle set to *Default build pipeline*.
+. Scroll to the end of the page and click *Create application*.
 
 == Congrats!
 
-Now, scroll to the end of the page and click *Create application*. We build an image from the source code of this sample. 
+Now, we build an image from the source code of your sample. 
 
-Congrats! You're done with the first steps! 
+Great work! You're done with the first steps.
 
-== Next steps
+== Advanced options
 
 === Adding more components 
 
@@ -85,20 +88,20 @@ image::Add_more_components.png[Overview tab that shows how you can add additiona
 
 === Customizing your build pipeline
 
-To add automation, you can upgrade your default build pipelines to custom build pipelines. 
+In this guide, we used the default built pipeline. To add automation, you can upgrade to custom build pipelines. 
 
 Custom build pipelines are pipelines as code, set on your component's repository. With custom build pipelines, pull requests and commits to your main branch automatically rebuild. 
 
 By customizing your build pipeline, you can change the tasks that are included, control when those tasks update to newer versions, and accept any changes to the pipeline when you're ready for them.
 
-To get started, click *Manage build pipelines* from the *Overview* page.
+To get started, click *Manage build pipelines* from the *Overview* page. For more information on this topic, go to xref:how-to-guides/proc_upgrade_build_pipeline.adoc[Upgrading your build pipeline].
 
 === Viewing your activity 
 You can view your latest commits, as well as your pipeline runs. 
 
 ==== Viewing your latest commits
 
-Since you forked your repo, you have permissions to commit to the Git repo. We like to focus on commits, rather than pipelines, so that it’s easy to correlate a developer's work with what’s going on in the system. 
+Because you forked your repo, you have permissions to commit to the Git repo. We like to focus on commits, rather than pipelines, so that it’s easy to correlate a developer's work with what’s going on in the system. 
 
 To view your recent commits, go to the *Activity* tab and click *Latest commits*. 
 
@@ -108,22 +111,22 @@ Didn’t fork your repo? Fret not! You can also view your activity by pipeline r
 
 To view your pipeline runs, go to the *Activity* tab and click *Pipeline runs*. 
 
-The following image shows the *Pipeline run details*. 
+The following image shows the *Pipeline run details*:
 
 image::Pipeline-runs.png[View of an application's pipeline runs. Multiple tasks are depicted in a tree flow and the user can click on a task to view more details.]
 
-From the previous view, you can see tasks that you can run based on the pipeline definition while the image is being inspected. You can also click an individual task to see its details. 
+In the previous view, you can see tasks that you can run based on the pipeline definition while the image is being inspected. You can also click an individual task to see its details. 
 
 === Viewing your application route
 
-You can find each component’s route in the *Components* tab, next to each component’s details.
+You can find each component’s route in the *Components* tab, next to each component’s details. 
+
+Refer to the following image:
+
+image::Application_route.png[In the Components tab, there is a link called Route next to every component that takes you to the application route.]
 
 === Managing compliance with Enterprise Contract 
 The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use EC to keep your software supply chain secure and to ensure that container images comply with your organization’s policies. 
-
-////
-For more information on this topic, go to [placeholder for Gaurav's topic]
-////
 
 === Deploying your app 
 Check the status of your application in *Environments*. You can view information about your environment such as its type, strategy, and deployment status:
@@ -132,16 +135,13 @@ image::Environments.png[The Environments tab shows the type of your environment,
 
 An environment is a set of compute resources that you can use to develop, test, and stage your applications. There is a development environment included for you so that you can explore {ProductName}.
 
+For information about creating an application with your own cluster, refer to xref:how-to-guides/proc_creating_your_own_environment.adoc[Creating your own environment].
+
 === Examining your SBOM
 
 A software bill of materials (SBOM) is a list of all the software libraries that a component uses. You can run 'cosign' in your command line interface (CLI) to inspect the image SBOM.
 
 For more information on this topic, go to xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc.
-
-
-////
-Placeholder for BYOC topic 
-////
 
 == Great work!
 Congrats on creating your first application!

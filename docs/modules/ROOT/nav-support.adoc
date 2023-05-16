@@ -1,1 +1,2 @@
-* xref:support/index.adoc[Support]
+* xref:support/support.adoc[Support]
+* xref:support/data-privacy.adoc[Important notices about the privacy of your data ]
