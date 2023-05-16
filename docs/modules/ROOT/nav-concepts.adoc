@@ -1,4 +1,5 @@
 * Concepts
+** xref:concepts/slsa/con_slsa-conformity.adoc[Supply chain security through SLSA conformity]
 ** xref:concepts/RenovateBot/index.adoc[RenovateBot]
 ** xref:concepts/java-build-service/java-build-service.adoc[Java build service]
 ** xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components]
