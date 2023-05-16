@@ -1,6 +1,7 @@
 * xref:index.adoc[Why {ProductName}]
-* xref:getting-started/get-started.adoc[Get started]
-** xref:getting-started/getting_started_in_cli.adoc[Getting started in the CLI]
+* Getting Started
+** xref:getting-started/get-started.adoc[Getting started with {productname}]
+** xref:getting-started/getting_started_in_cli.adoc[Getting started with CLI]
 
 
 //// 
