@@ -66,8 +66,12 @@ To reinforce the security of your custom build pipeline, complete the following 
 ** To learn more, see Kubernetes docs about link:https://www.kubernetes.dev/docs/guide/owners/[OWNERS files].
 * Avoid commenting `/ok-to-test` on pull requests from untrusted authors, review such PRs carefully first. The `/ok-to-test` comment runs the PipelineRun, and malicious code in a PR can change your build and compromise the security of your application.
 ** To learn more about running the PipelineRun, see the link:https://pipelinesascode.com/docs/guide/running/#running-the-pipelinerun[Running the PipelineRun guide] from Pipelines as Code docs. 
-* Specify the PipelineRun definition source by setting the `pipelinerun_provenance` setting to `default_branch`. This way Pipelines as Code uses the PipelineRun definition from the default branch of the repository, and only contributors with default branch merge rights have access to PipelineRun.
+* Consider changing the PipelineRun definition source by setting the `pipelinerun_provenance` setting to `default_branch`. With this setting, Pipelines as Code uses the PipelineRun definition from the default branch of the repository, usually `main` or `master`, and only contributors with default branch merge rights can modify the PipelineRun.
 +
-If you don’t set `pipelinerun_provenance`, you allow the default behaviour: the PipelineRun definition is fetched from a branch where the PipelineRun event is triggered. This way bad actors can change the PipelineRun definition and get access to your code.
+If you don’t set `pipelinerun_provenance`, you allow the default behaviour: the PipelineRun definition is fetched from the branch where the PipelineRun event is triggered, and any contributor can get access to the PipelineRun definition.
++
+Testing changes to the PipelineRun is easier with the default behaviour because PipelineRun changes are tested when a user submits a pull request, before the merge.
++
+Setting the `pipelinerun_provenance` setting to `default_branch` is more cautious because a PipelineRun definition is tested only after a repository owner reviews and merges it. However, if the proposed change doesn't work correctly, a repository owner might need to merge a few changes to debug the PipelineRun.
 
 ** To learn more about setting the PipelineRun definition source, see link:https://pipelinesascode.com/docs/guide/repositorycrd/#pipelinerun-definition-provenance[PipelineRun definition provenance].
