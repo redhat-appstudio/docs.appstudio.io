@@ -1,4 +1,4 @@
-= Getting started
+= Getting started with {ProductName}
 
 {ProductName} is a multi-tenant, software as a service (SaaS) based continuous integration and continuous delivery (CI/CD) service with an emphasis on secure supply chain features.
 
