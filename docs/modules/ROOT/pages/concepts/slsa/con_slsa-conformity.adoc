@@ -115,8 +115,8 @@ a|{ProductName}:
 
 3+^|_For build isolation_
 
-|L1: Provenance exists
-|None
+|L1
+|No build isolation requirements for L1 conformity
 |N/A
 
 |L2: Hosted build platform
