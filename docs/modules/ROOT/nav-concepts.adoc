@@ -1,11 +1,11 @@
 * Concepts
 ** xref:concepts/slsa/con_slsa-conformity.adoc[Supply chain security through SLSA conformity]
-** xref:concepts/RenovateBot/index.adoc[RenovateBot]
 ** xref:concepts/java-build-service/java-build-service.adoc[Java build service]
 ** xref:concepts/java-build-service/java-build-service-components.adoc[Java build service components]
 
 ////
 Adam Kaplan said that the index.adoc for Pipelines, and presumably the other docs in that directory, need to be rewritten, since index.adoc was based on an old version of {ProductName} that used KCP. --Christian csears@redhat.com 3/1/23
+** xref:concepts/RenovateBot/index.adoc[RenovateBot]
 ** xref:concepts/pipelines/index.adoc[Pipelines]
 *** xref:concepts/pipelines/persister.adoc[Persister component]
 *** xref:concepts/pipelines/pipeline_concepts.adoc[Pipeline concepts]
