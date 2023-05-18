@@ -115,10 +115,6 @@ a|{ProductName}:
 
 3+^|_For build isolation_
 
-|L1: Provenance exists
-|None
-|N/A
-
 |L2: Hosted build platform
 |All build steps run using a hosted build platform on shared or dedicated infrastructure, not on an individual’s workstation.
 |{ProductName} is hosted through ROSA.
