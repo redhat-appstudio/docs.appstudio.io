@@ -5,7 +5,7 @@ A software bill of materials (SBOM) provides greater transparency for your softw
 
 You can use an SBOM to better understand the composition of your software, identify vulnerabilities, and assess the potential impact of any security issues that may arise. Also, to comply with cybersecurity regulations, you might need to provide your customers with the SBOM for your application's components. 
 
-== Downloading an SBOM in the web UI
+== Viewing an SBOM in the web UI
 
 .Prerequisites
 
@@ -19,9 +19,7 @@ In the console, complete the following steps to download the SBOM for a componen
 
 . For the component whose SBOM you want to view, select its most recent pipeline run.
 
-. From the *Pipeline run details* page, select the *Logs* tab. 
-
-. In the navigation bar, select *show-sbom*.
+. On the *Pipeline run details* page, select *View SBOM*. 
 .. You can use your web browser to immediately search the SBOM for terms that indicate vulnerabilities in your software supply chain. For example, try searching for "log4j".
 .. You can select *Download* to download the SBOM, or *Expand* to view it full-screen.
 
