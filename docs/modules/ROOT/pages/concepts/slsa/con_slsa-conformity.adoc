@@ -7,8 +7,8 @@ Supply-chain Levels for Software Artifacts (SLSA) is a security framework produc
 
 SLSA assigns two primary responsibilities to build platforms like {ProductName}:
 
-* Provenance to describe how the platform built each software artifact
-* Build isolation to prevent tampering with the build process
+* *Provenance* to describe how the platform built each software artifact
+* *Build isolation* to prevent tampering with the build process
 
 SLSA also includes three Build Levels, which provide you with increasing guarantees about how build platforms fulfill these responsibilities. Any build platform that generates provenance conforms to the SLSA framework’s Build Level 1 (L1) specifications. Build platforms produce artifacts with higher Build Levels by hardening provenance against forgery and by isolating the build process. As of the v1.0 specification, Build Level 3 (L3) is the highest Build Level. {ProductName} produces Build L3 artifacts.
 
