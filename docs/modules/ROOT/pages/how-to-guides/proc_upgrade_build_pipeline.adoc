@@ -1,20 +1,19 @@
 = Upgrading the build pipeline
 
-To reinforce the security of your application, and to customize the way that {ProductName} builds the components of your application, you must upgrade your build pipeline.
+By default, {ProductName} builds the components of your applications using, as the name suggests, the default build pipeline. This pipeline offers quick and easy containerized deployment. It also secures your supply chain, by conforming to the specification for SLSA Build Level 3.
 
-By default, {ProductName} builds the components of applications using, as the name suggests, the default build pipeline. This pipeline offers quick and easy containerized deployment. Default build pipelines also create, for each component, the same three container images as upgraded build pipelines: 
+However, there are three reasons you might want to upgrade your build pipeline to a custom build:
 
-* A business application container image, which runs when your component deploys
-* A signature image, to verify that the business application container image came from a trusted source
-* An attestation image, to verify who built the component, how it was built, and if it was built correctly
-
-However, the default build pipeline skips many tasks that {ProductName} can perform to further secure your application. Again, to perform these checks and scans on any given component, you must upgrade that component’s build pipeline.    
+* Customize: Upgrading the build pipeline enables you to tailor the build process that {ProductName} uses for the components of your application, to better meet your specific needs.
+* Reinforce security: When you upgrade, {ProductName} adds a variety of security checks and scans on your pipeline that get run on each build.  
+* Continuous integration: Upgraded build pipelines automatically rebuild your components every time a new commit is merged into the main branch of their repositories.
 
 .Prerequisites
 
 * You must have an application that {ProductName} has successfully built and deployed using the default build pipeline.  
 
 .Procedure
+
 To upgrade the build pipeline:
 
 . In the *Overview* tab of your application, scroll down and select *Manage build pipelines*.
@@ -32,13 +31,21 @@ If you want to restrict the GitHub application’s access to certain repositorie
 . Let {ProductName} complete another PipelineRun for the newly-upgraded build pipeline.
  
 .Verification
+
 Confirm that most of the build pipeline tasks that {ProductName} previously skipped are now included in the recent PipelineRun: 
 
 . Go to *Activity > Pipeline runs*. 
 . Select the most recent *PipelineRun*. 
 . View the build pipeline tasks and scroll down to view the vulnerabilities scan, which summarizes the results of the `clair-scan`. 
 
+.Updates
+
+If you upgrade your build pipeline for a component, then whenever we release a new `build-definition` for upgraded pipelines, the {ProductName} bot submits a pull request (PR) to the git repository of your component. These PRs only change the `.tekton` directory of the component repository; they do not alter the source code specific to your component in any way.
+
+When you see a PR from the {ProductName} bot, please merge it to keep your pipeline updated. If you do not merge these PRs, {ProductName} might not be able to build or test your components correctly.
+
 .Customization
+
 After upgrading the build pipeline, you can also customize it: 
 
 . Upgrade the build pipeline of your component, as previously described. 
