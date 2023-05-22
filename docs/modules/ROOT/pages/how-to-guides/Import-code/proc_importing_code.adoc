@@ -1,0 +1,220 @@
+//[id="proc_importing_code_{context}"]
+
+= Importing and configuring code
+
+[role="_abstract"]
+After you click **Create an application**, the **Grab some code** page opens. From here, choose one of the following source code options to begin building your application:
+
+* **Bring in your own code**
+* **Start with a sample**
+
+== Using a code sample
+
+. Optional: In the code sample **Search** field, begin typing the name of the code you want to work with. If {ProductName} has code samples in that language stack, the code sample results filter accordingly.
+. When you see a language stack or framework that you want to work with, click **Import sample**.   
+* Optional: If you click **Open Git repository**, a new tab opens to the GitHub repository for the code framework you chose.
+* When you click **Import sample**, {ProductName} creates and deploys a new application with the sample code you chose. Check out the open **Overview** tab to monitor your continuous integration/continuous deployment (CI/CD) activity.
+
+[NOTE]
+====
+When you create an application from a code sample, {ProductName} names your application for you.
+====
+
+== Importing code from your GitHub repository
+
+To use your own code to build your application, complete the following steps:
+
+. Enter the link to your repository in the **Git repository URL** field. Note that this should be a public repository. {ProductName} verifies your URL right away. You don’t even have to press **Enter**.
+. Optional: Add a **Git reference** to point to code in a specific branch, tag, or commit that you want to use to build your application.
+. Optional: Indicate a **Context directory** to specify the subdirectory for the source code you want to use. 
+
+[NOTE]
+====
+Make sure this path is correct. You might get an error if your build context folder is your root directory but your Dockerfile is in a subdirectory of that folder. If you have a Dockerfile, you can check its path in the **Build & deploy configuration** section.
+====
+[start=4]
+. Click **Import code**. 
+
+[IMPORTANT]
+====
+If you want to use a custom pipeline build, or to grant access to and install the {ProductName} GitHub app on the repository you indicated, you must have the necessary GitHub permissions. If you don't own that repository, or if you don't have the necessary GitHub permissions, you must fork that repository and then specify the new fork URL to add a new component. 
+====
+
+////
+[TIP]
+====
+If {ProductName} can’t access your Git repository, see <<Granting App Studio access to your Git repository>> for help.
+====
+////
+
+{ProductName} scans and analyzes your Git repository to determine how many components to add to your application and which runtime to use. The types of files in your repository, and also your Git directory file hierarchy, determine the number and type of components to add. For example, {ProductName} looks for devfiles and Dockerfiles, and also language-specific build configuration files like pom.xml for Java or package.json for Node.js.
+
+{ProductName} can build applications that are written in the following language stacks and frameworks:
+
+[cols=2*,options="header"]
+|===
+|Language
+|Framework
+
+|Java
+|Spring Boot, Quarkus
+
+|JavaScript
+|Node.js, Express
+
+|Python
+|Flask
+
+|Go
+|N/A
+|===
+
+//// 
+From JSese: May 15, 2023, Commenting out per Matt Reid and Christian V. Support for private repos is post-Summit.
+[discrete]
+== Granting App Studio access to your Git repository
+
+If {ProductName} can’t access your Git repository, the following message displays: “We can’t access your repository, probably because it’s either private or the URL is incorrect.” If your repository is private, choose one of the following two ways to allow {ProductName} to interact with your repository:
+
+[discrete]
+=== Granting App Studio access to your Git repository through GitHub OAuth
+
+. Under **Authorization**, click **Sign in**. **GitHub Authorize OAuth** opens in a new tab.
+. Click **Authorize _redhat-appstudio_**.
+
+[discrete]
+=== Granting App Studio access to your Git repository with a token
+
+. Under **Authorization**, click **Use a token instead**. The **Authenticate with API token** modal opens.
+. Enter your **Username**.
+. Enter an **API token**.
+. Click **Connect**.
+////
+
+.What's next
+**Configure your components for deployment** opens. From here, configure your components before you deploy them. You can also review or change any values that {ProductName} populated for you. When you're finished here, you're one click away from creating your application.
+
+//[id="proc_reviewing_configging_components_{context}"]
+
+== Reviewing and configuring components
+
+[role="_abstract"]
+If you imported your own code, from the **Review and configure for deployment** view, make sure to define, review, or change your application and component settings before you finish importing. You can rename a component here, too. 
+
+. Make sure that **Component name** is correct. Click the GitHub link under this field if you want to check your repository URL.
+. Confirm that {ProductName} detected the right **Runtime**. If so, you should notice that the suggested deployment options are appropriate. If you want to change your runtime, expand the menu next to your runtime name and make a selection.
+
+[IMPORTANT]
+====
+If you change the runtime, your component builds and deploys using the runtime devfile instead of the repository devfile or Dockerfile.
+====
+
+In the **Build & deploy configuration** section, look over these fields:
+
+[start=3]
+. **Target port**: Is it correct? If not, click in the field to modify it.
+. **Dockerfile**: If you specified **Dockerfile** as your runtime, make sure {ProductName} detected the right one. Click in the field if you need to modify it. 
+//Don't worry! {ProductName} hides this field if you chose a different runtime.
+. **Default build pipeline**: To specify how to trigger rebuilds, toggle to choose either the default build pipeline or a custom one.
+.. **Default build pipeline**: This runs faster because it makes only critical image checks. Consider starting here to make sure {ProductName} can successfully build and deploy your component.
+.. **Custom build pipeline**: This is triggered when you make commits to your source code repository. This pipeline runs more checks and security scans than the default pipeline, but it takes a bit more time because it's more thorough. **NOTE:** To use a custom pipeline, you must be the owner of your repository so that you can authorize the installation of our application in your GitHub instance and then grant the app access to your repository. If someone else owns your repository, fork it, then go back to the **Add components** page and start again.
+. **CPU**, **Memory**, and **Instances**: Choose how many of each of these you want for your application, and in what unit, depending on your deployment requirements. **Instances** refers to the number of instances of your system image.
+. In the **Environment variables** section, enter a variable name and value to customize how {ProductName} deploys your application. 
+
+When you’re satisfied with your component configuration settings, click **Create application**. 
+
+[NOTE]
+====
+After you create your application, you can adjust your configuration settings anytime you want from the **Application** view.
+====
+
+== Resolving issues with importing code
+
+[role="_abstract"]
+When you import code, {ProductName} analyzes your repository to determine the right runtime to use to build and deploy your application. In some cases, however, {ProductName} is unable to find the right runtime, and this can cause your code import to fail. These are the most common causes of issues with importing code to {ProductName}:
+
+* **Your repository contains a Dockerfile in an unexpected directory.**
++
+If {ProductName} finds a Dockerfile in your repository, it determines that a Dockerfile runtime is the most suitable for building and deploying you application. However, if the Dockerfile is not saved in one of the following expected locations, an error in determining the right runtime for your components can occur:
++
+[#expected Dockerfile locations]
+.Expected Dockerfile locations
+** Dockerfile
+** docker/Dockerfile
+** .docker/Dockerfile/build/Dockerfile
+** Containerfile
+** docker/Containerfile
+** .docker/Containerfile/build/Containerfile
++
+**Solutions** 
++
+** On the **Review and configure for deployment** page, make sure **Runtime** is set to **Dockerfile**, then verify that you saved your Dockerfile in one of the expected directories.
+** In the **Build & deploy configuration** section, in the **Dockerfile** field, confirm that the file path is correct.
++
+[TIP]
+====
+Test your Dockerfile in a local environment first to make sure it's valid.
+====
+
+[#repository requirements]
+* **Your repository does not contain a Dockerfile or devfile.**
++
+If your code import fails because your repository is missing either a Dockerfile or devfile, check one of the following readme files for guidance, depending on the runtime you want to build and deploy with. These readme files provide details like required ports, file locations, commands, and more. 
++
+**Solutions**
++
+** https://github.com/devfile-samples/devfile-sample-go-basic.git[Go]
+** https://github.com/nodeshift-starters/devfile-sample.git[Node.js]
+** https://github.com/devfile-samples/devfile-sample-python-basic.git[Python]
+** https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git[Quarkus]
+** https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git[Spring Boot]
+
+* **Your repository contains a devfile, a Dockerfile, and a Kubernetes YAML file.**
++
+{ProductName} looks for a devfile to get custom instructions for building and deploying your application. If your devfile references both a Dockerfile and a Kubernetes YAML file, your code import could fail if those two resources are not accessible at the file locations your devfile points to.
++
+**Solutions** 
++
+** Make sure that your `devfile.yaml` points to the correct directories for both your Dockerfile and your Kubernetes YAML file. 
+** Make sure that neither of these resources is in a private repository that requires access authentication.
+** Make sure that your devfile is in one of these expected locations:
++
+[#expected devfile locations] 
+.Expected devfile locations
+*** devfile.yaml
+*** .devfile.yaml
+*** .devfile/devfile.yaml
+*** .devfile/.devfile.yaml
+
+* **Your repository does not fit within the predefined {ProductName} supported runtime list.**
++
+Some repositories require custom build or deployment instructions; for example, a deployment that includes a Kubernetes resource other than a YAML file.
++
+**Solutions**
++
+[#custom build and deployment instructions]
+** **Configure a custom build.** Include a Dockerfile that can build your application, then save it to one of the <<expected Dockerfile locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
+** **Configure a custom deployment.** Include the following files in your repository to provide {ProductName} with custom deployment instructions:
+*** A standard Kubernetes YAML file
+*** A custom-build Dockerfile
+*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected devfile locations>>.
++
+[TIP]
+====
+For more information about devfile contents requirements, see the "What is outerloop?" section of link:https://devfile.io/docs/2.2.0/innerloop-vs-outerloop[Devfile.io: Innerloop versus outerloop].
+====
+
+* **{ProductName} couldn't detect a port number.**
++
+{ProductName} detects your application port number when it's looking for your repository components. 
++
+**Solution:** From the **Review and configure for deployment** view, in the **Build & deploy configuration** section, make sure your target port number is correct.
+
+* **{ProductName} couldn't detect the appropriate runtime.**
++
+**Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository requirements>> for the runtime you select, or configure your own <<custom build and deployment instructions>>.
+
+[role="_additional-resources"]
+.Additional resources
+For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started in the CLI
+].
