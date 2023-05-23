@@ -151,7 +151,5 @@ For more information on this topic, go to xref:how-to-guides/Secure-your-supply-
 == Great work!
 Congrats on creating your first application!
 
-////
 == What's next 
-Add in importing code link when ready
-////
+To keep exploring {ProductName}, we recommend going to xref:how-to-guides/Import-code/proc_importing_code.adoc[Importing and configuring code].
