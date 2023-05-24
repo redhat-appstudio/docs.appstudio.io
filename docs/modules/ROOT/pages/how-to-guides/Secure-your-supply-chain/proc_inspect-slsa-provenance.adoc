@@ -1,6 +1,6 @@
 = Downloading your SLSA provenance
 
-The Supply-chain Levels for Software Artifacts (SLSA) website states: “To make an external claim of meeting a SLSA level…there needs to be a way for external users to consume and verify your provenance.” Since we claim to meet SLSA Build Level 3, we have provided the following procedure for you to download the SLSA provenace that {ProductName} generates for each of your xref:../glossary/index.adoc#component[components], including both the attestation and its signature. 
+Since we claim to meet SLSA Build Level 3, we have provided the following procedure for you to download the SLSA provenace that {ProductName} generates for each of your xref:../glossary/index.adoc#component[components], including both the attestation and its signature. 
 
 .Prerequisites
 
