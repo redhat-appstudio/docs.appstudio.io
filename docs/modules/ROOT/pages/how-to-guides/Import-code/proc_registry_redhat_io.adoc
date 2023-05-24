@@ -1,0 +1,32 @@
+//[id="proc_importing_code_{context}"]
+
+= Use registry.redhat.io base images for builds
+
+
+* Retrieve the Red Hat Container Registry token
+. Navigate to https://access.redhat.com/terms-based-registry/#/ 
+. Create a new Registry Service account.
+. Retrieve the Service account token as a "Docker Configuration". Example, 
+
+
+    {
+    "auths": {
+        "registry.redhat.io": {
+        "auth": "MTEwNzAxOTl8-redacted-c2Jvc2U6ZZlNDQ="
+        }
+    }
+    }
+
+
+
+
+* Configure the Application/Component to use the above token.
+
+
+. On the "Component Settings" page, click add a new *Build Secret*.
+. In the *Create new Build Secret* modal, add the registry.redhat.io token to be used as a pull secret:
+..   Enter *.dockerconfigjson*. in the  *Key* input field.
+..   Enter *registry-redhat-io* in the *Select or Enter Name* input field.
+..   Copy-Paste the registry service account token retrieved in the previous.
+..  Click *Create*.
+.. From the command-line, run "oc secrets link appstudio-pipeline registry-redhat-io".
