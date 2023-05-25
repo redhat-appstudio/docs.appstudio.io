@@ -214,7 +214,38 @@ For more information about devfile contents requirements, see the "What is outer
 +
 **Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository requirements>> for the runtime you select, or configure your own <<custom build and deployment instructions>>.
 
+=== Using registry.redhat.io base images for builds 
+
+Retrieve the Red Hat Container Registry token and configure your application to use this token. Using this token improves the build process of your application. 
+
+.Procedure
+
+Retrieve the Red Hat Container Registry token by following these steps:
+
+. Go to link:https://access.redhat.com/terms-based-registry/#/[Registry service account]. 
+. Create a new Registry service account by selecting *New Service Account*.  
+. Retrieve the Registry service account token as a “Docker Configuration”:
+```
+   {
+    "auths": {
+        "registry.redhat.io": {
+        "auth": "MTEwNzAxOTl8-redacted-c2Jvc2U6ZZlNDQ="
+        }
+    }
+    }
+``` 
+.Procedure 
+
+Configure your application to use the Red Hat Container Registry token by following these steps: 
+
+. Go to *Component Settings*. 
+. Select *Create new build secret*.
+. In the *Create new build secret* modal, add the registry.redhat.io token to be used as a pull secret:
+.. In the *Key* input field, enter *.dockerconfigjson*.
+.. In the *Select or Enter Name* input field, enter *registry-redhat.io*. 
+.. Input the Registry Service account token and select *Create*.
+.. From your  command line, run `oc secrets link appstudio-pipeline registry-redhat-io`. 
+
 [role="_additional-resources"]
 .Additional resources
-For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started in the CLI
-].
+For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started in the CLI]. 
