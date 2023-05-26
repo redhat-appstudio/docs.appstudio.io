@@ -1,4 +1,4 @@
-= Creating a Custom Application Test with Test Pipelines
+= Creating a custom application test
 
 == How integration services use Tekton test pipelines and test scenarios
 

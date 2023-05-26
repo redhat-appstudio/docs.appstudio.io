@@ -11,20 +11,20 @@ Provides procedures on downloading SBOMS through the UI and using the CLI.
 
 .xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[**Configuring dependencies rebuild for Java applications**]
 
-Provides procedures on configuring dependencies rebuild for Java applications
+Provides procedures on configuring dependencies rebuild for Java applications.
 
 
 .xref:how-to-guides/proc_creating_your_own_environment.adoc[**Creating your own environment**]
 
 Provides procedures on creating your own environment.
 
-.xref:how-to-guides/creating_a_custom_application_test_with_test_pipelines.adoc[**Creating a Custom Application Test with Test Pipelines**]
+.xref:how-to-guides/testing_applications/creating_a_custom_application_test_with_test_pipelines.adoc[**Creating a Custom Application Test with Test Pipelines**]
 
-Provides procedures on how integration services use Tekton test pipelines and test scenarios.
+Provides procedures for creating your own Tekton test pipelines and test scenarios.
 
-.xref:how-to-guides/testing_applications/con_test-overview.adoc[**Testing applications**]
+.xref:how-to-guides/testing_applications/con_test-overview.adoc[**Overview of {ProductName} test components**]
 
-Provides information on {ProductName} test components and surface-level tests
+Provides information about {ProductName} test components and surface-level tests.
 
 .xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[**Managing compliance with the Enterprise Contract**]
 
