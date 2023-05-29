@@ -21,7 +21,7 @@ runtime:
     failure_level: warn
 site:
   title: App Studio Documentation
-  url: https://docs.github.io/
+  url: https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/
   start_page: Documentation::index.adoc
   robots: allow
 content:
