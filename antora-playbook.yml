@@ -26,7 +26,7 @@ site:
   robots: allow
 content:
   sources:
-    - url: https://github.com/redhat-appstudio/docs.appstudio.io.git
+    - url: .
       start_path: docs
       branches: HEAD
 ui:
