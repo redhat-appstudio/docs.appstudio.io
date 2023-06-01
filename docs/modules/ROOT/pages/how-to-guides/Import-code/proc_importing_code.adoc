@@ -216,14 +216,14 @@ For more information about devfile contents requirements, see the "What is outer
 
 === Creating a Red Hat Container Registry token
 
-To improve your application-building experience, configure a Red Hat Container Registry token.  
+After importing your code, configure a Red Hat Container Registry token to improve your application-building experience. You can access this token by creating Red Hat registry service accounts. The registry service accounts enable you to retrieve content from registry.redhat.io. Registry.redhat.io helps you manage the automation of your applications. 
 
 .Procedure
 
 Create the Red Hat Container Registry token by following these steps:
 
 . Go to link:https://access.redhat.com/terms-based-registry/#/[registry service accounts]. 
-. Create a new registry service account by clicking *New Service Account*. 
+. Create a registry service account by clicking *New Service Account*. 
 . Fill in the *Name* and *Description* field. 
 . Click *Create*. 
 . For *Token Information*, click *Docker Configuration*. 
@@ -240,7 +240,7 @@ Create the Red Hat Container Registry token by following these steps:
 
 === Configuring your application to use a Red Hat Container Registry token 
 
-After creating the Red Hat Container Registry token, configure your application to use it. 
+After creating the Red Hat Container Registry token, include the token in your application. When you application includes the Red Hat Container Registry token, you can access registry.redhat.io which improves your automation. 
 
 .Procedure  
 
