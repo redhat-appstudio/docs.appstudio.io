@@ -21,12 +21,12 @@ runtime:
     failure_level: warn
 site:
   title: App Studio Documentation
-  url: https://redhat-appstudio.github.io/docs.appstudio.io
+  url: https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main
   start_page: Documentation::index.adoc
   robots: allow
 content:
   sources:
-    - url: https://github.com/redhat-appstudio/docs.appstudio.io
+    - url: https://github.com/redhat-appstudio/docs.appstudio.io.git
       start_path: docs
       branches: HEAD
 ui:
