@@ -1,4 +1,4 @@
-* xref:how-to-guides/how-to-guide-landing-page.adoc[How-to guides]
+* How-to guides
 ** xref:how-to-guides/Import-code/proc_importing_code.adoc[Importing and configuring code]
 ** xref:how-to-guides/proc_upgrade_build_pipeline.adoc[Upgrading the build pipeline]
 ** Testing your application
