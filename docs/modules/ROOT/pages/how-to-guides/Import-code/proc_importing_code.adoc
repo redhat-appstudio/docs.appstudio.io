@@ -214,7 +214,45 @@ For more information about devfile contents requirements, see the "What is outer
 +
 **Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository requirements>> for the runtime you select, or configure your own <<custom build and deployment instructions>>.
 
+=== Creating a Red Hat Container Registry token
+
+After importing your code, configure a Red Hat Container Registry token to improve your application-building experience. You can access this token by creating Red Hat registry service accounts. The registry service accounts enable you to retrieve content from *registry.redhat.io*. *Registry.redhat.io* helps you manage the automation of your applications. 
+
+.Procedure
+
+Create the Red Hat Container Registry token by following these steps:
+
+. Go to link:https://access.redhat.com/terms-based-registry/#/[registry service accounts]. 
+. Create a registry service account by clicking *New Service Account*. 
+. Fill in the *Name* and *Description* field. 
+. Click *Create*. 
+. For *Token Information*, click *Docker Configuration*. 
+. Enter the following Dockerfile registry authentication code:
+```
+   {
+    "auths": {
+        "registry.redhat.io": {
+        "auth": "MTEwNzAxOTl8-redacted-c2Jvc2U6ZZlNDQ="
+        }
+    }
+    }
+``` 
+
+=== Configuring your application to use a Red Hat Container Registry token 
+
+After creating the Red Hat Container Registry token, include the token in your application. When your application includes the Red Hat Container Registry token, you can access *registry.redhat.io* which improves your automation. 
+
+.Procedure  
+
+. Go to *Component Settings*. 
+. Select *Create new build secret*.
+. In the *Create new build secret* modal, add the *registry.redhat.io* token that you want to use as a pull secret:
+.. In the *Key* field, enter *.dockerconfigjson*.
+.. In the *Select or Enter Name* field, enter *registry-redhat.io*. 
+.. Enter the registry service account token and click *Create*.
+.. From your  command line, run the `oc secrets link appstudio-pipeline registry-redhat-io` command. 
+
 [role="_additional-resources"]
 .Additional resources
-For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started in the CLI
-].
+
+For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started in the CLI]. 
