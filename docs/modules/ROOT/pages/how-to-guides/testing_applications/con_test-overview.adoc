@@ -1,4 +1,4 @@
-= Overview of {ProductName} Test components
+= Overview of {ProductName} tests
 
 == How {ProductName} testing helps you
 
@@ -33,16 +33,13 @@ These tests can be made mandatory as part of the link:https://redhat-appstudio.g
 
 ==== Custom tests
 
-Custom tests in {ProductName} are tests that are created and implemented by users and administrators. You can add tests to your environment as needed. Custom tests are written as tekton tasks and implemented into your pipeline.
-// NEW LINK REQUIRED For full instructions on creating and importing tests, please see our guide https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/testing_applications/adding_new_tests.html[Add a New Test].
+Custom tests in {ProductName} are tests that users and administrators create. To add a custom test to an individual component of an application, customize its build pipeline to include the test as another tekton task. Or, to add a test that runs on all components of an application, create a custom integration test.
 
-=== Integration service tests
+//Add two xrefs where appropriate in here ^^
 
-Integration tests occur after each component included in the build has passed testing. Integration testing ensures that all build components are able to work together at the same time. Images of all the application components are compiled into a Snapshot of the application. The Snapshot is then tested against user defined IntegrationTestScenarios, which refer to a link:https://tekton.dev/docs/pipelines/tekton-bundle-contracts/[Tekton bundle]. All images created are stored in a Quay.io repository. If all integration tests pass, a Release resource is created for each ReleasePlan. The Release resource will notify the Release service that the application is ready to be promoted to the next environment.
-// NEW LINK REQUIRED: The old link is commented out in nav-concepts.adoc https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release service]
+=== Integration tests
 
-////
-NEW LINKS REQUIRED: The old links are commented out in nav-concepts.adoc
+Integration tests ensure that all build components are able to work together at the same time. {ProductName} runs integration tests after it successfully builds the components of an application. As part of the build process, {ProductName} creates an image for each component and stores them in a Quay.io repository. Images of all the components are then compiled into a Snapshot of the application. {ProductName} tests the Snapshot against user-defined IntegrationTestScenarios, which refer to a GitHub repository. If all integration tests pass, a Release resource is created for each ReleasePlan. The Release resource notifies the https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release service] that the application is ready to be promoted to the next environment.
 
 == Additional resources
 
@@ -51,4 +48,3 @@ To learn about other {ProductName} components that help you with your containeri
 * https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release Service]
 * https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/enterprise-contract/con_enterprise-contract-overview.html[Enterprise Contract]
 * https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/pipelines/index.html[Pipeline Services]
-////
