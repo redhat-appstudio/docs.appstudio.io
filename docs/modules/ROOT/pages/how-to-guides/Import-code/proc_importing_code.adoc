@@ -240,7 +240,7 @@ Create the Red Hat Container Registry token by following these steps:
 
 === Configuring your application to use a Red Hat Container Registry token 
 
-After creating the Red Hat Container Registry token, include the token in your application. When you application includes the Red Hat Container Registry token, you can access *registry.redhat.io* which improves your automation. 
+After creating the Red Hat Container Registry token, include the token in your application. When your application includes the Red Hat Container Registry token, you can access *registry.redhat.io* which improves your automation. 
 
 .Procedure  
 
