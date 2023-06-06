@@ -1,0 +1,97 @@
+= Customizing the build pipeline
+
+To meet your specific needs, customize the way that {ProductName} builds components. You can customize in two ways:
+
+* Change the parameters of the build pipeline of a component.
+* Extend the pipeline with your own tasks (or deleting existing tasks).
+
+For example, you can change for how long {ProductName} saves the container images of component, by changing the value of the `image-expires-after` parameter. Or you can ensure that the container images it builds for a component are compliant with regulations for your industry, by adding a compliance check as a task to its build pipeline. 
+
+.Prerequisites
+To customize a build pipeline, you must first xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrade it]. 
+
+.Procedure
+
+To customize the build pipeline in any way, start by completing the following steps:
+
+. In your preferred IDE, navigate to the `.tekton` directory in the repository of your component.
+
+. Open both `.yaml` files in the repository.
+ 
+
+== Changing parameters
+
+.Procedure
+
+. In each `.yaml` file in the `.tekton` directory, customize the parameters of the build pipeline by changing the pipeline `params`:
+.. Pipeline params have the paths `.spec.params` and `.pipelineSpec.params`
+.. Change the default `value` of existing parameters. For example, you can set the value of `image-expires-after` to `2w`, instead of `5d` 
+.. Add parameters. New parameters must include a `name` and `value`.
+. Commit your changes to the repository of the component.
+
+
+== Extending the build pipeline with your own tasks
+
+.Procedure
+
+. In each `.yaml` file in the `.tekton` directory, add a new task under `tasks`. 
+
++ 
+Example task:
++
+[source]
+--
+name: example-task
+      params:
+      - name: example-param
+        value: “Example”
+      runAfter:
+      - build-container #You can be more specific by choosing another task
+      taskRef:
+        bundle: <path to container image> 
+        name: example-task
+      when:
+      - input: $(params.skip-checks)    #This references the pipeline parameters
+        operator: in
+        values:
+        - "false"
+--
++
+NOTE: If you want to define a task directly in this file, rather than using `taskRef`, you can use `taskSpec`. Visit the documentation linked in the <<additional-resources>> section.
+
++
+. Commit your changes to the repository of the component.
+
+
+== Verification
+
+When you commit changes to these `.yaml` files in your repository, {ProductName} automatically triggers a new build. Wait for {ProductName} to complete the new build, then verify your changes have been made by following these steps:
+
+. Navigate to *Activity > Pipeline runs*.
+. Select the most recent build pipeline run. 
+. In the *Details* tab, confirm that there are new tasks that you added in the pipeline visualization.
+. In the *Logs* tab, confirm the following:
+.. Any new tasks are in the navigation bar. 
+.. If you changed a parameter's value, and that value gets printed, the new value is in the log.
+
+== Troubleshooting
+
+If you experience any issues with your customized pipeline, try the following solutions:
+
+* If you believe that your desired parameter values are not being passed into the pipeline, make sure that your assignment of that value doesn't get overwritten later in the `.yaml` file.
+
+* If your new task is not appearing in the pipeline run, ensure the following:
+** You added it to the correct place in the `.yaml` files, so that it has the path `.spec.params` or `.pipelineSpec.params`. 
+** You specified a valid `runAfter` field, and that the task in that field completed successfully.
+
+* For problems with both parameters and tasks, make sure you committed your changes to the `.tekton` directory in the repository that {ProductName} references for the component.
+
+* If your build pipeline can no longer successfully run, your best option is to simply rebuild the `.tekton` directory:
+** Delete the `.tekton` directory in the repository of the component.
+** In the {ProductName} console, on the *Overview* tab for the relevant application, scroll down and select *Manage build pipelines*.
+** Select the three dots next to the relevant component and select *Roll back to default pipeline*.
+** Complete the steps for xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrading the build pipeline] of that component again.
+
+== Additional resources [[additional-resources]]
+* Visit the Tekton documentation that explainins link:https://tekton.dev/docs/pipelines/taskruns/#specifying-the-target-task[how to use `taskSpec`] in a task declaration.
+

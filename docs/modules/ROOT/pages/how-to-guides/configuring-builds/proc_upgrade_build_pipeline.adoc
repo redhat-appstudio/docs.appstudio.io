@@ -1,4 +1,4 @@
-= Upgrading the build pipeline
+= Upgrading to a custom build pipeline
 
 By default, {ProductName} builds the components of your applications using, as the name suggests, the default build pipeline. This pipeline offers quick and easy containerized deployment. It also secures your supply chain, by conforming to the specification for SLSA Build Level 3.
 
@@ -43,21 +43,6 @@ Confirm that most of the build pipeline tasks that {ProductName} previously skip
 If you upgrade your build pipeline for a component, then whenever we release a new `build-definition` for upgraded pipelines, the {ProductName} bot submits a pull request (PR) to the git repository of your component. These PRs only change the `.tekton` directory of the component repository; they do not alter the source code specific to your component in any way.
 
 When you see a PR from the {ProductName} bot, please merge it to keep your pipeline updated. If you do not merge these PRs, {ProductName} might not be able to build or test your components correctly.
-
-.Customization
-
-After upgrading the build pipeline, you can also customize it: 
-
-. Upgrade the build pipeline of your component, as previously described. 
-. Go to the component’s GitHub repository. 
-. Find the new `.tekton` directory, which is the result of upgrading the build pipeline. 
-. Modify the contents of this directory to change how {ProductName} builds the component. 
-
-[NOTE]
-====
-{ProductName} creates pull requests that contain updates to the pipeline definitions under the `.tekton` directory.
-Run the tests on these pull requests by creating a comment containing `/ok-to-test` and then merging the changes when the tests pass.
-====
 
 .Security
 To further reinforce the security of your custom build pipeline, complete the following steps:
