@@ -244,7 +244,7 @@ After creating and saving the Red Hat Container Registry token, you now need to 
 
 .Procedure  
 
-. Go to *Component Settings*. 
+. In the {ProductName} UI, go to your application components and click on *Edit component settings* in the kebab menu. 
 . Select *Create new build secret*.
 . In the *Create new build secret* modal, add the *registry.redhat.io* token that you want to use as a pull secret:
 .. In the *Key* field, enter *.dockerconfigjson*.
