@@ -226,8 +226,8 @@ Create the Red Hat Container Registry token by following these steps:
 . Create a registry service account by clicking *New Service Account*. 
 . Fill in the *Name* and *Description* field. 
 . Click *Create*. 
-. For *Token Information*, click *Docker Configuration*. 
-. Enter the following Dockerfile registry authentication code:
+. On the *Token Information* page, click *Docker Configuration* and download or *view its contents* to display the authentication. 
+. The Dockerfile registry authentication should looks similar to this:
 ```
    {
     "auths": {
@@ -240,7 +240,7 @@ Create the Red Hat Container Registry token by following these steps:
 
 === Configuring your application to use a Red Hat Container Registry token 
 
-After creating the Red Hat Container Registry token, include the token in your application. When your application includes the Red Hat Container Registry token, you can access *registry.redhat.io* which improves your automation. 
+After creating and saving the Red Hat Container Registry token, you now need to configure it in your application's builds. When your workspace includes the Red Hat Container Registry token, you can access *registry.redhat.io* container images, enabling you to build off of trusted base images. 
 
 .Procedure  
 
@@ -248,7 +248,7 @@ After creating the Red Hat Container Registry token, include the token in your a
 . Select *Create new build secret*.
 . In the *Create new build secret* modal, add the *registry.redhat.io* token that you want to use as a pull secret:
 .. In the *Key* field, enter *.dockerconfigjson*.
-.. In the *Select or Enter Name* field, enter *registry-redhat.io*. 
+.. In the *Select or Enter Name* field, enter *registry-redhat-io*. 
 .. Enter the registry service account token and click *Create*.
 .. From your  command line, run the `oc secrets link appstudio-pipeline registry-redhat-io` command. 
 
