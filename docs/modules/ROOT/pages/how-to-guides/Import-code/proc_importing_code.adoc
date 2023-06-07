@@ -250,6 +250,8 @@ After creating and saving the Red Hat Container Registry token, you now need to 
 .. In the *Key* field, enter *.dockerconfigjson*.
 .. In the *Select or Enter Name* field, enter *registry-redhat-io*. 
 .. Enter the registry service account token and click *Create*.
+... If you have not previously created a secret with this name then it should be successfully created. If you have already created a secret with the *registry-redhat-io* name, however, you will need to delete the current secret before being able to re-create it.
+... If you need to delete the secret, you can accomplish this from the command line by running the `oc delete secrets/registry-redhat-io` command.
 .. From your  command line, run the `oc secrets link appstudio-pipeline registry-redhat-io` command. 
 
 [role="_additional-resources"]
