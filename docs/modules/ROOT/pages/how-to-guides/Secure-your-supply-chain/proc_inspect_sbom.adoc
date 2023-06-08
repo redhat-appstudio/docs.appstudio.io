@@ -152,5 +152,5 @@ This information helps you verify that individual libraries are safely-sourced, 
 ----
 
 == Additional resources
-* You can implement an automated check that verifies the integrity and security of your SBOM, using the CyloneDX tool, by upgrading your build pipeline. 
+* You can implement an automated check that verifies the integrity and security of your SBOM, using the CycloneDX tool, by upgrading your build pipeline. 
 //Add xref here^^ once upgrade doc is ready
