@@ -69,8 +69,7 @@ If {ProductName} can’t access your Git repository, see <<Granting App Studio a
 |N/A
 |===
 
-////
-
+//// 
 From JSese: May 15, 2023, Commenting out per Matt Reid and Christian V. Support for private repos is post-Summit.
 [discrete]
 == Granting App Studio access to your Git repository
@@ -90,7 +89,6 @@ If {ProductName} can’t access your Git repository, the following message displ
 . Enter your **Username**.
 . Enter an **API token**.
 . Click **Connect**.
-
 ////
 
 .What's next
@@ -135,11 +133,12 @@ After you create your application, you can adjust your configuration settings an
 [role="_abstract"]
 When you import code, {ProductName} analyzes your repository to determine the right runtime to use to build and deploy your application. In some cases, however, {ProductName} is unable to find the right runtime, and this can cause your code import to fail. These are the most common causes of issues with importing code to {ProductName}:
 
-=== Your repository contains a Dockerfile in an unexpected directory.**
-
+* **Your repository contains a Dockerfile in an unexpected directory.**
++
 If {ProductName} finds a Dockerfile in your repository, it determines that a Dockerfile runtime is the most suitable for building and deploying you application. However, if the Dockerfile is not saved in one of the following expected locations, an error in determining the right runtime for your components can occur:
-
-==== Expected Dockerfile locations [[expected_Dockerfile_locations]]
++
+[#expected Dockerfile locations]
+.Expected Dockerfile locations
 ** Dockerfile
 ** docker/Dockerfile
 ** .docker/Dockerfile/build/Dockerfile
@@ -180,8 +179,8 @@ If your code import fails because your repository is missing either a Dockerfile
 ** Make sure that neither of these resources is in a private repository that requires access authentication.
 ** Make sure that your devfile is in one of these expected locations:
 +
-==== Expected devfile locations [[expected_devfile_locations]]
-
+[#expected devfile locations] 
+.Expected devfile locations
 *** devfile.yaml
 *** .devfile.yaml
 *** .devfile/devfile.yaml
@@ -194,12 +193,11 @@ Some repositories require custom build or deployment instructions; for example, 
 **Solutions**
 +
 [#custom build and deployment instructions]
-** **Configure a custom build.** Include a Dockerfile that can build your application, then save it to one of the <<expected_Dockerfile_locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
+** **Configure a custom build.** Include a Dockerfile that can build your application, then save it to one of the <<expected Dockerfile locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
 ** **Configure a custom deployment.** Include the following files in your repository to provide {ProductName} with custom deployment instructions:
 *** A standard Kubernetes YAML file
 *** A custom-build Dockerfile
-*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected_devfile_locations>>.
-
+*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected devfile locations>>.
 +
 [TIP]
 ====
