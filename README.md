@@ -1,26 +1,26 @@
-# Stonesoup documentation
+# App Studio documentation
 
-Stonesoup is an effort to automate build and delivery of Red Hat products. With Stonesoup, you have access to single, simple workflow for developing, testing, and releasing containerized applications while ensuring compliance with enterprise security standards.
+App Studio is an effort to automate build and delivery of Red Hat products. With App Studio, you have access to single, simple workflow for developing, testing, and releasing containerized applications while ensuring compliance with enterprise security standards.
 
-## Stonesoup documentation links
+## App Studio documentation links
 
-* [Getting-Started Guide](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/users/getting_started.html)
-* [User Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/users/index.html/120v38DZY6iuHlnyJJ2_k78vwhNiA38LqIZIzTT9j8aM)
-* [Developer Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/developers/index.html)
-* [Schema Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/schema/index.html)
-* [Architecture Overview](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/architecture/index.html)
+* [Getting started guide](https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/get-started)
+* [User documentation](https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main)
+* [Upstream landing page](https://redhat-appstudio.github.io/appstudio.docs.ui.io/)
+<!-- * [Schema Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/schema/index.html) -->
+<!-- * [Architecture Overview](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/architecture/index.html) -->
 
-## External Links
+## External links
 
-* [Stonesoup Console (Confluence)](https://docs.engineering.redhat.com/pages/viewpage.action?pageId=256849149)
-* [Stonesoup Project Status Dashboard](https://docs.google.com/document/d/1wzJu-wOYez5p875kl0QkgQ6b2i9x_T9983YdxTxBd-I/edit?usp=sharing)
+* [HACDOCS project in JIRA](https://issues.redhat.com/projects/HACDOCS/summary)
+* [HACBS hub on Confluence](https://docs.engineering.redhat.com/pages/viewpage.action?pageId=256849149)
 
-## Stonesoup Contact Information
+## App Studio contact information
 
-* [Stonesoup Documentation Home Page](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/)
-* [Stonesoup Documentation GitLab Repository](https://gitlab.cee.redhat.com/red-hat-hybrid-application-cloud-build-services-documentation/Stonesoup-documentation)
-* [Email: Stonesoup Development Team](mailto:Stonesoup@googlegroups.com)
-* [Google chat: Stonesoup Users](https://groups.google.com/g/Stonesoup)
+* [App Studio documentation home page](https://redhat-appstudio.github.io/appstudio.docs.ui.io/)
+* [App Studio documentation GitLab repository](https://gitlab.cee.redhat.com/red-hat-trusted-application-pipeline/red-hat-trusted-application-pipeline)
+<!-- * [Email: Stonesoup Development Team](mailto:Stonesoup@googlegroups.com) -->
+<!-- * [Google chat: Stonesoup Users](https://groups.google.com/g/Stonesoup) -->
 
 ## Notes
 
@@ -32,9 +32,9 @@ File Guide (The Source):
 
 ## References for documentation team
 
-* We used AsciiDoc to document Stonesoup (https://docs.asciidoctor.org/asciidoc/latest/#about-asciidoc).
+* We used AsciiDoc to document App Studio (https://docs.asciidoctor.org/asciidoc/latest/#about-asciidoc).
 * We created this website using Antora (https://docs.antora.org/antora/latest/). We use Antora because it provides a search capability that we can customize.
-* We manage documentation in GitLab. They are in a repository (<https://gitlab.cee.redhat.com/red-hat-hybrid-application-cloud-build-services-documentation/Stonesoup-documentation>). We use GitLab to manage publication - continuous integration settings in the repository automatically generate the web site when changes are merged and GitLab Pages is used to publish the website here <https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/>.
+* We manage documentation in GitLab. They are in a repository (<https://gitlab.cee.redhat.com/red-hat-trusted-application-pipeline/red-hat-trusted-application-pipeline>). We use GitLab to manage publication - continuous integration settings in the repository automatically generate the web site when changes are merged and GitLab Pages is used to publish the website here <https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/>.
 
 ### Required tools
 
@@ -230,4 +230,4 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 
 * On your system: After setup (to set up follow reference information) run the following command on your terminal: `npx antora --fetch antora-playbook.yml`
 
-* Merge you changes and refresh the Stonesoup documentation link, which is, <https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/>
+* Merge you changes and refresh the App Studio documentation link, which is, <https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main>

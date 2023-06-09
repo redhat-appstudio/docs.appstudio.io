@@ -76,9 +76,9 @@ IMPORTANT: If you are prompted for a password when you try to access GitHub, you
 
 Procedure
 
-Complete the following steps to fork the `docs.stonesoup.io` upstream repository and create a copy under your own GitHub ID: 
+Complete the following steps to fork the `docs.appstudio.io` upstream repository and create a copy under your own GitHub ID: 
 
-. Go to https://github.com/redhat-appstudio/docs.stonesoup.io. 
+. Go to https://github.com/redhat-appstudio/docs.appstudio.io. 
 . In the upper right corner, select *Fork*. 
 . In *Owner*, select your username. 
 . Enter a name and description.
@@ -100,22 +100,22 @@ Procedure
 
 Procedure
 
-After you have your fork checked out and cloned locally, add the `git@github.com:redhat-appstudio/docs.stonesoup.io.git` repository as a remote:
+After you have your fork checked out and cloned locally, add the `git@github.com:redhat-appstudio/docs.appstudio.io.git` repository as a remote:
 
 . List the current remote repositories:
 +
 [source,bash]
 ----
 $ git remote -v
-origin git@github.com:<username>/docs.stonesoup.io.git (fetch)
-origin git@github.com:<username>/docs.stonesoup.io.git (push)
+origin git@github.com:<username>/docs.appstudio.io.git (fetch)
+origin git@github.com:<username>/docs.appstudio.io.git (push)
 ----
 
 . Add the upstream as a remote repository and fetch its contents. This enables you to check out and work with the latest source code:
 +
 [source,bash]
 ----
-$ git remote add -f upstream  git@github.com:redhat-appstudio/docs.stonesoup.io.git
+$ git remote add -f upstream  git@github.com:redhat-appstudio/docs.appstudio.io.git
 ----
 
 . Verify that the new remote was added:
@@ -123,16 +123,16 @@ $ git remote add -f upstream  git@github.com:redhat-appstudio/docs.stonesoup.io.
 [source,bash]
 ----
 $ git remote -v
-origin git@github.com:<username>/docs.stonesoup.io.git (fetch)
-origin git@github.com:<username>/docs.stonesoup.io.git (push)
-upstream git@github.com:redhat-appstudio/docs.stonesoup.io.git (fetch)
-upstream git@github.com:redhat-appstudio/docs.stonesoup.io.git (push)
+origin git@github.com:<username>/docs.appstudio.io.git (fetch)
+origin git@github.com:<username>/docs.appstudio.io.git (push)
+upstream git@github.com:redhat-appstudio/docs.appstudio.io.git (fetch)
+upstream git@github.com:redhat-appstudio/docs.appstudio.io.git (push)
 ----
 . If the upstream repository is moved, you can change the upstream URL with the following command:
 +
 [source,bash]
 ----
-$ git remote set-url upstream git@github.com:redhat-appstudio/docs.stonesoup.io.git
+$ git remote set-url upstream git@github.com:redhat-appstudio/docs.appstudio.io.git
 ----
 
 Use the following commands any time that you need to fetch the latest source code locally:
@@ -151,7 +151,7 @@ Procedure
 Complete the following steps in your command line interface (CLI) before you make edits to the documentation: 
 
 . Run `cd [file location of your repo]`
-** For example, `cd ~/Documents/docs.stonesoup.io` 
+** For example, `cd ~/Documents/docs.appstudio.io` 
 . Run `git checkout main` to switch to the main branch.
 ** If you are already on the main branch, proceed to the following step.
 . Run `git fetch upstream` to download the data from the upstream, or main, repo.
@@ -182,7 +182,7 @@ Complete the following steps to make a change to the documentation in VS Code:
 . Open VS Code. 
 . Select *File > Open Folder*. 
 ** If you already have the proper folder open, proceed to step 4.
-. Navigate to *docs.stonesoup.io > docs > modules > ROOT > pages* and then select *Open*. 
+. Navigate to *docs.appstudio.io > docs > modules > ROOT > pages* and then select *Open*. 
 ** If you are editing different content in our repo, select the relevant folder. 
 . Open the file that you want to edit, or create a new file. 
 . Make changes to the document and reference the Ascii Doctor documentation if needed.
@@ -212,7 +212,7 @@ In the previous section, you created a pull request (PR). Next, we will find the
 
 Procedure
 
-. Navigate to https://github.com/redhat-appstudio/docs.stonesoup.io.
+. Navigate to https://github.com/redhat-appstudio/docs.appstudio.io.
 . Find your PR at the top of the window. 
 . Select *Compare & pull request*.
 . Enter a short description of your PR in *Description*. 
@@ -229,7 +229,7 @@ Procedure
 Complete the following steps only if you need to amend a PR:
 
 . Run `cd [file location of your repo]`.
-** For example, `cd ~/Documents/docs.stonesoup.io` 
+** For example, `cd ~/Documents/docs.appstudio.io` 
 . Run `git checkout main` to switch to the main branch.
 ** If you are already on the main branch, proceed to the following step.
 . Run `git fetch upstream` to download the data from the upstream, or main, repo.
@@ -365,7 +365,7 @@ NOTE: When building the local output, ensure to check the Build Warnings and Err
 +
 [source,bash]
 ----
-$ git commit -m "stonesoup-####: commit message"
+$ git commit -m "HACDOCS-####: commit message"
 ----
 [IMPORTANT]
  If there is a JIRA associated with this fix, be sure to prefix the commit message with the JIRA number. This makes it easy to trace back why a change was made to the topic.
