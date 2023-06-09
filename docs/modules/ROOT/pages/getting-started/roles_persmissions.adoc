@@ -1,231 +1,399 @@
 = Permissions and roles
 
-As a workspace owner, you can https://placeholder.com[invite] one or more collaborators to your workspace by adding their user ID, such as an external SSO ID. After https://placeholder.com[adding a user to a workspace], you assign them a specific role that determines the actions they can take in a workspace.
+As a workspace *Owner*, you can invite collaborators to your workspace by adding a user ID such as an external SSO ID. After you add a user to a workspace, you assign a specific role to designate what actions that user can perform.
 
-The roles available for a workspace, from least access to most access, are:
+The following list shows the roles that are available in a workspace:
 
-* *Contributor*: Ideal for users who actively push to your workspace.
+* *Contributor*: Ideal for users who actively push to your workspace
+* *Maintainer*: Ideal for users who need to manage the workspace, but who don't need access to sensitive actions like managing security or deleting a workspace
+* *Owner*: Ideal for users who need full access to the workspace, including sensitive actions like managing security or deleting a workspace
 
-* *Maintainer*: Ideal for users who need to manage the workspace without access to sensitive actions like managing security or deleting a workspace.
+NOTE: By default, any collaborator that you invite has the role of *Contributor*.
 
-* *Owner*: Ideal for users who need full access to the workspace, including sensitive and destructive actions like managing security or deleting a workspace.
+== Permissions by role
 
-NOTE: By default, the role for newly invited collaborators is *Contributor* but you can upgrade it to *Maintainer* or *Owner*.
+The role that you assign to a user determines the permissions that the user has in the workspace. The *Owner* role assigns all permissions. 
 
-== Permissions for each role
+The following table shows the actions that each type of collaborator can perform: 
 
-The role assigned to a user determines the permissions they have within a workspace, with the Owner role assigning all permissions.
-
-
-|===
-|Permissions for |Action |Contributor |Maintainer |Owner
-
-.4+|Workspace
-|View
-^|✔️
-^|✔️
-^|✔️
-
-|Create
-|
-|
-|
-|Update
-
-|
-|
-|
-|Delete
-|
-
-|
-|
-.4+|Applications
-|View
-^|✔️
-
-^|✔️
-^|✔️
-|Create
-|
-^|✔️
-
-^|✔️
-|Update
-|
-^|✔️
-^|✔️
-
-|Delete
-|
-|
-^|✔️
-.4+|Component
-
-|View
-^|✔️
-^|✔️
-^|✔️
-|Create
-
-|
-^|✔️
-^|✔️
-|Update
-|
-
-^|✔️
-^|✔️
-|
-|
-|
-
-^|✔️
-.4+|Environment
-|View
-^|✔️
-^|✔️
-
-^|✔️
-|Create
-|
-|
-^|✔️
-
-|Update
-|
-|
-^|✔️
-|Delete
-
-|
-|
-^|✔️
-.4+|IntegrationTestScenario
-|View
-
-^|✔️
-^|✔️
-^|✔️
-|Create
-|
-
-^|✔️
-^|✔️
-|Update
-|
-^|✔️
-
-^|✔️
-|Delete
-|
-^|✔️
-^|✔️
-
-.4+|EnterpriseContract
-|View
-^|✔️
-^|✔️
-^|✔️
-
-|Create
-|
-|
-^|✔️
-|Update
-
-|
-|
-^|✔️
-|Delete
-|
-
-|
-^|✔️
-.4+|ReleaseStrategy
-|View
-^|✔️
-
-^|✔️
-^|✔️
-|Create
-|
-|
-
-^|✔️
-|Update
-|
-|
-^|✔️
-
-|Delete
-|
-|
-^|✔️
-.4+|ReleasePlanAdmission
-
-|View
-^|✔️
-^|✔️
-^|✔️
-|Create
-
-|
-^|✔️
-^|✔️
-|Update
-|
-
-^|✔️
-^|✔️
-|Delete
-|
-^|✔️
-
-^|✔️
-.4+|User
-|View
-^|✔️
-^|✔️
-
-^|✔️
-|Create
-|
-^|✔️
-^|✔️
-
-|Update
-|
-^|✔️
-^|✔️
-|Delete
-
-|
-^|✔️
-^|✔️
-.4+|User Group
-|View
-
-^|✔️
-^|✔️
-^|✔️
-|Create
-|
-
-|
-^|✔️
-|Update
-|
-^|✔️
-
-^|✔️
-|Delete
-|
-^|✔️
-^|✔️
+.Permissions for each type of collaborator
 
 |===
+|Action |Contributor |Maintainer |Owner |Tenant Admin
 
-== Additional resources
+|*Workspace:* 
 
-* https://placeholder.com[Managing members of a project]
+View a workspace
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create a workspace
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Update a workspace
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete a workspace
+|
+|
+^.^|✔️
+^.^|✔️
+
+|*Application:*
+
+View an application
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create an application
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Update an application
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete an application
+|
+|
+^.^|✔️
+^.^|✔️
+
+
+|*Component:*
+
+View a component
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create a component
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update a component
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete a component
+|
+|
+^.^|✔️
+^.^|✔️
+
+
+|*Environment:*
+
+View an environment
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create an environment
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update an environment
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete an environment
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*Pipeline run:*
+
+View pipeline run
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create pipeline run
+^.^|✔️
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update pipeline run
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete pipeline run 
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*IntegrationTestScenario:*
+
+View IntegrationTestScenario
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create IntegrationTestScenario
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update IntegrationTestScenario
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete IntegrationTestScenario
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*Enterprise Contract:* 
+
+View Enterprise Contract
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create Enterprise Contract
+|
+|
+|
+^.^|✔️
+
+|Update Enterprise Contract
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Delete Enterprise Contract
+|
+|
+^.^|✔️
+^.^|✔️
+
+|*Release strategy:*
+
+View Release strategy
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create Release strategy
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update Release strategy
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete Release strategy
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*Release Admission Plan:*
+View Release Admission Plan
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create Release Admission Plan
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update Release Admission Plan
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete Release Admission Plan
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*User:*
+
+View a user
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create a user
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update a user
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete a user
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*User group:*
+
+View a user group
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create a user group
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Update a user group
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete a user group
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|*Custom role:*
+
+View a custom role
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create a custom role
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Update a custom role
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Delete a custom role
+|
+|
+^.^|✔️
+^.^|✔️
+
+
+|*Tenant:*
+
+View tenant
+
+|
+|
+^.>|✔️
+^.>|✔️
+
+|Create tenant
+|
+|
+^.>|✔️
+^.>|✔️
+
+|Update tenant
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Delete tenant
+|
+|
+^.^|✔️
+^.^|✔️
+
+|*Organization:*
+
+View organization
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create organization
+|
+|
+^.^|✔️
+^.^|✔️
+
+|Update organization
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Delete organization
+|
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|===
