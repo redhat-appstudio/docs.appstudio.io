@@ -18,7 +18,7 @@ By default, {ProductName} performs Surface-level and Product Security tests. You
 
 ==== Surface-level tests
 
-Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Surface-level tests can be link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/concepts/testing_applications/surface-level_tests.html[found here].
+Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Surface-level tests can be link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/testing_applications/surface-level_tests[found here].
 
 ==== Product Security tests
 
