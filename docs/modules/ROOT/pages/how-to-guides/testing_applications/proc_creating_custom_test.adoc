@@ -1,0 +1,103 @@
+= Creating a custom integration test
+
+In {ProductName}, you can create your own integration tests to run on all components of a given application before they are deployed. 
+
+.Procedure
+
+To create any custom test, complete the following steps:
+
+. In your preferred IDE, create a Tekton pipeline in a `.yaml` file. 
+. Within that pipeline, create tasks, which define the actual steps of the test that {ProductName} executes against images before deploying them.
+. Commit the `.yaml` file to a GitHub repo and add it as an integration test in {ProductName}.
+
+.Procedure with example
+
+To create a custom test that prints “Hello world!”, complete the following steps:
+
+. In your preferred IDE, create a new `.yaml` file, with a name of your choosing.
+. Define a new Tekton pipeline. The following example is the beginning of a pipeline that prints “Hello world!”.
+
++
+Example pipeline file:
+
++
+[source]
+----
+kind: Pipeline
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: example-pipeline
+spec:
+  params:
+  - name: username
+    default: world 
+  tasks: 
+----
+
+. In the `.pipeline.spec` path, declare a new task. For any valid task, the fields in the following example are all required, except `params`. 
+
++
+Example task declaration:
+
++
+[source]
+----
+tasks:
+  - name: task-1
+    params:
+    - name: username
+      value: $(params.username)
+    taskSpec:
+      params:
+      - name: username
+      steps:
+      - image: alpine:3.15
+        script: |
+          echo "hello $(params.username)"
+
+----
+
+. Save the `.yaml` file. 
+.. If you haven’t already, commit this file to a GitHub repository that {ProductName} can access.
+
++
+Complete example file:
+
++
+[source]
+----
+kind: Pipeline
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: example-pipeline
+spec:
+  params:
+  - name: username
+    default: world 
+  tasks:
+  - name: task-1
+    params:
+    - name: username
+      value: $(params.username)
+    taskSpec:
+      params:
+      - name: username
+      steps:
+      - image: alpine:3.15
+        script: |
+          echo "Hello $(params.username)!" 
+----
+
+. Add your new custom test as an integration test in {ProductName}.
+.. For additional instructions on adding an integration test, see this document: xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test].
+
+.Verification
+
+After adding the integration test to an application, you need to trigger a new build of its components to make {ProductName} run the integration test. Make a commit to the GitHub repositories of your components to trigger a new build.
+
+When the new build is finished, complete the following steps in the {ProductName} console:
+
+. Go to the *Integration tests* tab and select the highlighted name of your test.
+. Go to the *Pipeline runs* tab of that test and select the most recent run.
+. On the *Details* page, see if the test succeeded for that component. Select the other tabs to view more details.
+.. If you used our example script, switch to the *Logs* tab and verify that the test printed “Hello world!”.  
