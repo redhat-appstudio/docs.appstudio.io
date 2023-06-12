@@ -4,6 +4,7 @@
 ** Testing your application
 *** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} Test components]
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level test]
+*** xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test]
 ** Securing your supply chain
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[Inspecting SBOMs]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect-slsa-provenance.adoc[Downloading your SLSA provenance]
