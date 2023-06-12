@@ -7,7 +7,7 @@ The following list shows the three roles that are available in a workspace:
 * *Owner*: Ideal for users who need full access to the workspace, including sensitive actions like managing security or deleting a workspace
 
 == Adding a user
-We currently do not support adding users in the user interface (UI). To add a collaborator, you can send us a message in the https://dn.dev/DevNationSlack[DevNation workspace] in the link:https://rhdevnation.slack.com/archives/C04LXT1EU7K[#software-supply-chain-security] channel and we will process your request.
+We currently do not support adding users in the user interface (UI). To add a collaborator, you can send us a Slack message in the https://rhdevnation.slack.com/archives/C04LXT1EU7K[#software-supply-chain-security] channel and we will process your request.
 
 Or, send a message in the chat feature in the {ProductName} application. 
 
