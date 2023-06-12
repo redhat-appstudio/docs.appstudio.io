@@ -97,7 +97,7 @@ Custom build pipelines are pipelines as code, set on your component's repository
 
 By customizing your build pipeline, you can change the tasks that are included, control when those tasks update to newer versions, and accept any changes to the pipeline when you're ready for them.
 
-To get started, click *Manage build pipelines* from the *Overview* page. For more information on this topic, go to xref:how-to-guides/proc_upgrade_build_pipeline.adoc[Upgrading your build pipeline].
+To get started, click *Manage build pipelines* from the *Overview* page. For more information on this topic, go to xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading your build pipeline].
 
 === Viewing your activity 
 You can view your latest commits, as well as your pipeline runs. 

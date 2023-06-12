@@ -1,6 +1,8 @@
 * How-to guides
 ** xref:how-to-guides/Import-code/proc_importing_code.adoc[Importing and configuring code]
-** xref:how-to-guides/proc_upgrade_build_pipeline.adoc[Upgrading the build pipeline]
+** Configuring your builds
+*** xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading to a custom build pipeline]
+*** xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[Customizing the pipeline] 
 ** Testing your application
 *** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} Test components]
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level test]
