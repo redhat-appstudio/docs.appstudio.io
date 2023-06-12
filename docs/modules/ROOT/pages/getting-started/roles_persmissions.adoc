@@ -1,30 +1,28 @@
 = Permissions and roles
 
-As a workspace *Owner*, you can invite collaborators to your workspace by adding a user ID such as an external SSO ID. After you add a user to a workspace, you assign a specific role to designate what actions that user can perform.
-
-The following list shows the roles that are available in a workspace:
+The following list shows the three roles that are available in a workspace:
 
 * *Contributor*: Ideal for users who actively push to your workspace
 * *Maintainer*: Ideal for users who need to manage the workspace, but who don't need access to sensitive actions like managing security or deleting a workspace
 * *Owner*: Ideal for users who need full access to the workspace, including sensitive actions like managing security or deleting a workspace
 
-NOTE: By default, any collaborator that you invite has the role of *Contributor*.
+== Adding a user
+We currently do not support adding users in the user interface (UI). To add a collaborator, you can send us a message in the https://dn.dev/DevNationSlack[DevNation workspace] in the link:https://rhdevnation.slack.com/archives/C04LXT1EU7K[#software-supply-chain-security] channel and we will process your request.
+
+Or, send a message in the chat feature in the {ProductName} application. 
 
 == Permissions by role
-
-The role that you assign to a user determines the permissions that the user has in the workspace. The *Owner* role assigns all permissions. 
 
 The following table shows the actions that each type of collaborator can perform: 
 
 .Permissions for each type of collaborator
 
 |===
-|Action |Contributor |Maintainer |Owner |Tenant Admin
+|Action |Contributor |Maintainer |Owner
 
 |*Workspace:* 
 
 View a workspace
-^.>|✔️
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
@@ -33,18 +31,15 @@ View a workspace
 |
 |
 ^.^|✔️
-^.^|✔️
 
 |Update a workspace
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
 |Delete a workspace
 |
 |
-^.^|✔️
 ^.^|✔️
 
 |*Application:*
@@ -53,17 +48,14 @@ View an application
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create an application
 |
 |
 ^.^|✔️
-^.^|✔️
 
 |Update an application
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -71,13 +63,10 @@ View an application
 |
 |
 ^.^|✔️
-^.^|✔️
-
 
 |*Component:*
 
 View a component
-^.>|✔️
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
@@ -86,11 +75,9 @@ View a component
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Update a component
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -98,8 +85,6 @@ View a component
 |
 |
 ^.^|✔️
-^.^|✔️
-
 
 |*Environment:*
 
@@ -108,11 +93,9 @@ View an environment
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create an environment
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -120,11 +103,9 @@ View an environment
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete an environment
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -135,10 +116,8 @@ View pipeline run
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create pipeline run
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 ^.^|✔️
@@ -147,11 +126,9 @@ View pipeline run
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete pipeline run 
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -162,11 +139,9 @@ View IntegrationTestScenario
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create IntegrationTestScenario
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -174,11 +149,9 @@ View IntegrationTestScenario
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete IntegrationTestScenario
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -188,24 +161,20 @@ View Enterprise Contract
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create Enterprise Contract
 |
 |
 |
-^.^|✔️
 
 |Update Enterprise Contract
 |
 |
 ^.^|✔️
-^.^|✔️
 
 |Delete Enterprise Contract
 |
 |
-^.^|✔️
 ^.^|✔️
 
 |*Release strategy:*
@@ -215,11 +184,9 @@ View Release strategy
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create Release strategy
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -227,11 +194,8 @@ View Release strategy
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
-
 |Delete Release strategy
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -241,11 +205,9 @@ View Release Admission Plan
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create Release Admission Plan
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -253,11 +215,9 @@ View Release Admission Plan
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete Release Admission Plan
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -267,11 +227,9 @@ View a user
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create a user
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -279,11 +237,9 @@ View a user
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete a user
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -294,23 +250,19 @@ View a user group
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create a user group
 |
 |
-^.^|✔️
 ^.^|✔️
 
 |Update a user group
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete a user group
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
@@ -321,26 +273,21 @@ View a custom role
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create a custom role
 |
 |
-^.^|✔️
 ^.^|✔️
 
 |Update a custom role
 |
 |
 ^.^|✔️
-^.^|✔️
 
 |Delete a custom role
 |
 |
 ^.^|✔️
-^.^|✔️
-
 
 |*Tenant:*
 
@@ -349,24 +296,20 @@ View tenant
 |
 |
 ^.>|✔️
-^.>|✔️
 
 |Create tenant
 |
 |
-^.>|✔️
 ^.>|✔️
 
 |Update tenant
 |
 |
 ^.^|✔️
-^.^|✔️
 
 |Delete tenant
 |
 |
-^.^|✔️
 ^.^|✔️
 
 |*Organization:*
@@ -376,23 +319,19 @@ View organization
 ^.>|✔️
 ^.>|✔️
 ^.>|✔️
-^.>|✔️
 
 |Create organization
 |
 |
-^.^|✔️
 ^.^|✔️
 
 |Update organization
 |
 ^.^|✔️
 ^.^|✔️
-^.^|✔️
 
 |Delete organization
 |
-^.^|✔️
 ^.^|✔️
 ^.^|✔️
 
