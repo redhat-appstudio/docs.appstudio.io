@@ -25,7 +25,7 @@ To release an application to a managed environment:
 
 . The development team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releaseplan_object[`ReleasePlan`] object in the developer workspace. The `ReleasePlan` object includes a reference to the application that the development team wants to release, along with the namespace and workspace where the application is suppose to release.
 
-. The Managed environment team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releasestrategy_object[`ReleaseStrategy`] object to ensure that the release of an application meets link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/ec-policies/index.html[enterprise contract].
+. The Managed environment team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releasestrategy_object[`ReleaseStrategy`] object to ensure that the release of an application meets link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_managing-compliance-with-the-enterprise-contract[enterprise contract].
 
 . The Managed environment team creates a xref:how-to-guides/proc_release_application.adoc#_creating_a_releaseplanadmission_object[`ReleasePlanAdmission`] object in the managed workspace.
 

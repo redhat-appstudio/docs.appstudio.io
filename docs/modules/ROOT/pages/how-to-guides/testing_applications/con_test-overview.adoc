@@ -18,7 +18,7 @@ By default, {ProductName} performs Surface-level and Product Security tests. You
 
 ==== Surface-level tests
 
-Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Surface-level tests can be link:https://redhat-appstudio.github.io/docs.stonesoup.io/Documentation/main/concepts/testing_applications/surface-level_tests.html[found here].
+Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Surface-level tests can be link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/testing_applications/surface-level_tests[found here].
 
 ==== Product Security tests
 
@@ -28,15 +28,21 @@ Product Security tests in {ProductName} ensure a product is secure and keep your
 * Anti Virus Scanning via ClamAV
 * Code scanning via SAST tools
 
-These tests can be made mandatory as part of the link:https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/enterprise-contract/con_enterprise-contract-overview.html[Enterprise Contract]
+These tests can be made mandatory as part of the link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_managing-compliance-with-the-enterprise-contract[Enterprise Contract]
+// The link used to point to concepts/release-services/con_release-services-overview which is no longer available. A new link probably doesn't make sense because the linked doc doesn't mention prodsec tests listed above.
 
 ==== Custom tests
 
-Custom tests in {ProductName} are tests that are created and implemented by users and administrators. You can add tests to your environment as needed. Custom tests are written as tekton tasks and implemented into your pipeline. For full instructions on creating and importing tests, please see our guide https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/testing_applications/adding_new_tests.html[Add a New Test].
+Custom tests in {ProductName} are tests that are created and implemented by users and administrators. You can add tests to your environment as needed. Custom tests are written as tekton tasks and implemented into your pipeline.
+// NEW LINK REQUIRED For full instructions on creating and importing tests, please see our guide https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/testing_applications/adding_new_tests.html[Add a New Test].
 
 === Integration service tests
 
-Integration tests occur after each component included in the build has passed testing. Integration testing ensures that all build components are able to work together at the same time. Images of all the application components are compiled into a Snapshot of the application. The Snapshot is then tested against user defined IntegrationTestScenarios, which refer to a link:https://tekton.dev/docs/pipelines/tekton-bundle-contracts/[Tekton bundle]. All images created are stored in a Quay.io repository. If all integration tests pass, a Release resource is created for each ReleasePlan. The Release resource will notify the https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release service] that the application is ready to be promoted to the next environment.
+Integration tests occur after each component included in the build has passed testing. Integration testing ensures that all build components are able to work together at the same time. Images of all the application components are compiled into a Snapshot of the application. The Snapshot is then tested against user defined IntegrationTestScenarios, which refer to a link:https://tekton.dev/docs/pipelines/tekton-bundle-contracts/[Tekton bundle]. All images created are stored in a Quay.io repository. If all integration tests pass, a Release resource is created for each ReleasePlan. The Release resource will notify the Release service that the application is ready to be promoted to the next environment.
+// NEW LINK REQUIRED: The old link is commented out in nav-concepts.adoc https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release service]
+
+////
+NEW LINKS REQUIRED: The old links are commented out in nav-concepts.adoc
 
 == Additional resources
 
@@ -45,3 +51,4 @@ To learn about other {ProductName} components that help you with your containeri
 * https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release Service]
 * https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/enterprise-contract/con_enterprise-contract-overview.html[Enterprise Contract]
 * https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/pipelines/index.html[Pipeline Services]
+////

@@ -1,26 +1,21 @@
-# Stonesoup documentation
+# App Studio documentation
 
-Stonesoup is an effort to automate build and delivery of Red Hat products. With Stonesoup, you have access to single, simple workflow for developing, testing, and releasing containerized applications while ensuring compliance with enterprise security standards.
+App Studio is an effort to automate build and delivery of Red Hat products. With App Studio, you have access to single, simple workflow for developing, testing, and releasing containerized applications while ensuring compliance with enterprise security standards.
 
-## Stonesoup documentation links
+## App Studio documentation links
 
-* [Getting-Started Guide](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/users/getting_started.html)
-* [User Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/users/index.html/120v38DZY6iuHlnyJJ2_k78vwhNiA38LqIZIzTT9j8aM)
-* [Developer Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/developers/index.html)
-* [Schema Documentation](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/schema/index.html)
-* [Architecture Overview](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/architecture/index.html)
+* [Getting started guide](https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/get-started)
+* [User documentation](https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main)
+* [Upstream landing page](https://redhat-appstudio.github.io/appstudio.docs.ui.io/)
 
-## External Links
+## External links
 
-* [Stonesoup Console (Confluence)](https://docs.engineering.redhat.com/pages/viewpage.action?pageId=256849149)
-* [Stonesoup Project Status Dashboard](https://docs.google.com/document/d/1wzJu-wOYez5p875kl0QkgQ6b2i9x_T9983YdxTxBd-I/edit?usp=sharing)
+* [HACDOCS project in JIRA](https://issues.redhat.com/projects/HACDOCS/summary)
+* [HACBS hub on Confluence](https://docs.engineering.redhat.com/pages/viewpage.action?pageId=256849149)
 
-## Stonesoup Contact Information
-
-* [Stonesoup Documentation Home Page](https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/)
-* [Stonesoup Documentation GitLab Repository](https://gitlab.cee.redhat.com/red-hat-hybrid-application-cloud-build-services-documentation/Stonesoup-documentation)
-* [Email: Stonesoup Development Team](mailto:Stonesoup@googlegroups.com)
-* [Google chat: Stonesoup Users](https://groups.google.com/g/Stonesoup)
+<!-- ## App Studio contact information -->
+<!-- * [Email: Stonesoup Development Team](mailto:Stonesoup@googlegroups.com) -->
+<!-- * [Google chat: Stonesoup Users](https://groups.google.com/g/Stonesoup) -->
 
 ## Notes
 
@@ -32,9 +27,8 @@ File Guide (The Source):
 
 ## References for documentation team
 
-* We used AsciiDoc to document Stonesoup (https://docs.asciidoctor.org/asciidoc/latest/#about-asciidoc).
+* We used AsciiDoc to document App Studio (https://docs.asciidoctor.org/asciidoc/latest/#about-asciidoc).
 * We created this website using Antora (https://docs.antora.org/antora/latest/). We use Antora because it provides a search capability that we can customize.
-* We manage documentation in GitLab. They are in a repository (<https://gitlab.cee.redhat.com/red-hat-hybrid-application-cloud-build-services-documentation/Stonesoup-documentation>). We use GitLab to manage publication - continuous integration settings in the repository automatically generate the web site when changes are merged and GitLab Pages is used to publish the website here <https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/>.
 
 ### Required tools
 
@@ -68,13 +62,13 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 
 - **New:** on your queue but you haven’t started yet.
 
-- **Refinement:** research it, read up on it, talk to SMEs about it. In a Jira comment, you can recap your research and SME conversations. You understand it enough to make a GDoc or Merge Request (MR).
+- **Refinement:** research it, read up on it, talk to SMEs about it. In a Jira comment, you can recap your research and SME conversations. You understand it enough to make a GDoc or Pull Request (PR).
 - For bigger doc tasks, like creating entirely new documents, writing abstracts, developing procedures, etc., you might find it best to start  in a GDoc.
-- In the GDoc, you can receive reviews quickly and address reviews quickly. Once the doc is in good shape, you can take the content from the GDoc, and put in an ascii doc file and make a MR. This way, the MR is opened and closed quicker.
+- In the GDoc, you can receive reviews quickly and address reviews quickly. Once the doc is in good shape, you can take the content from the GDoc, and put in an ascii doc file and make a PR. This way, the PR is opened and closed quicker.
 -  **In Progress:** you’re now writing or making a file update. You have something to share beyond a Jira comment or status update.
-- **Review:** you’ve elicited a peer review from docs, devs, and QE. You address the review as it comes. During the review stage, your content can be in either a GDoc or MR.
+- **Review:** you’ve elicited a peer review from docs, devs, and QE. You address the review as it comes. During the review stage, your content can be in either a GDoc or PR.
 - Depending on the task, you might not need a review from all three: dev, doc, QE. For instance, fixing a broken link might only require a QE review. Changing a grammatical error might only require a doc review. Use your best judgment.
-- **Closed:** reviews are complete and addressed. The MR is merged and the content is published.
+- **Closed:** reviews are complete and addressed. The PR is merged and the content is published.
 
 ## Docs workflow with Dev and QE
 
@@ -90,21 +84,21 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 
 3. Review.
 
-- If in a GDoc, add comments and update the GDoc until the content is ready to be converted into an ascii doc and shared in a MR.
-- When the MR is created, the engineers review it and provide:
+- If in a GDoc, add comments and update the GDoc until the content is ready to be converted into an ascii doc and shared in a PR.
+- When the PR is created, the engineers review it and provide:
 - Technical accuracy of content, not grammatical and language review.
 - Provide user perspective.
-- Writer responds to the review. Updates the Gdoc or MR and repeats until the review is complete and the doc is ready be published.
+- Writer responds to the review. Updates the Gdoc or PR and repeats until the review is complete and the doc is ready be published.
 
 ## Git workflow
 
-### Forking and cloning Git Lab repository
+### Forking and cloning GitHub repository
 
-1. Fork the git lab repository from the git lab user interface  (UI).
+1. Fork the GitHub repository from the GitHub user interface  (UI).
 2. On the command line interface (CLI) on your local machine, run the following commands:
-3. `git clone git@gitlab.com<your-gitlab-username>/<gitlab repository you’re cloning>`
-4. `cd <gitlab repository>`
-5. `git remote add -f upstream <git@gitlab.com>/<gitlab repository>`
+3. `git clone git@github.com:<your-github-username>/<github repository you’re cloning>.git`
+4. `cd <github repository>`
+5. `git remote add -f upstream <git@github.com>/<github repository>`
 6. `git checkout main`
 7. `git remote -v`
 
@@ -113,10 +107,10 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 8. Now you’re ready to start contributing!
 
 
-### Making a merge request (MR)
+### Making a pull request (PR)
 
 1. `cd <name of place where you stored the cloned repo/<name of repo>`
-    Ex: cd documents/Stonesoup-documentation/
+    Ex: cd documents/docs.appstudio.io/
 2. `git checkout main`
 3. `git fetch upstream`
     Git data from upstream repo (the main repo)
@@ -169,17 +163,17 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 
 13. `git push -u origin <feature branch>`
 
-- This command creates the MR, and the MR is asking to merge your feature branch into the main repository.
+- This command creates the PR, and the PR is asking to merge your feature branch into the main repository.
 
 - You don’t need `git push -upstream origin <feature branch>` remember, origin is the default. Like in step 
 5, it’s superfluous. You’re already on feature branch and staged the commit, so simply push it!
 
-14. Go to GL to make the MR
+14. Go to GitHub to make the PR
 
-15. Tag people, write messages, do what you must to receive peer reviews of your newly created MR.
+15. Tag people, write messages, do what you must to receive peer reviews of your newly created PR.
 
 
-### Making commits for a MR
+### Making commits for a PR
 
 1. `cd <location of repo>/<name of repo>`
 2. `git checkout main`
@@ -212,17 +206,15 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 
 13. `git commit --amend`
 
-- This will add any updates to your previous commit within the MR. If you do want to create a 2nd commit in the MR, run the command: `git commit -m <name of commit message>`
+- This will add any updates to your previous commit within the PR. If you do want to create a 2nd commit in the PR, run the command: `git commit -m <name of commit message>`
 
 14. `git push`
 
-- After you make a MR, you ought to be able to simply run `git push` to make a new commit. If you get any error messages, try `git push -u origin <feature branch>`
+- After you make a PR, you ought to be able to simply run `git push` to make a new commit. If you get any error messages, try `git push -u origin <feature branch>`
 
-15. Go to MR to ensure the commit has been made.
+15. Go to PR to ensure the commit has been made.
 
 - Tag reviewers, direct their attention to specific areas of content or whatever you see fit.
-
-
 
 
 
@@ -230,4 +222,4 @@ For convenience there is also the `dev` script, that can be run with `npm run de
 
 * On your system: After setup (to set up follow reference information) run the following command on your terminal: `npx antora --fetch antora-playbook.yml`
 
-* Merge you changes and refresh the Stonesoup documentation link, which is, <https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/>
+* Merge you changes and refresh the App Studio documentation link, which is, <https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main>
