@@ -1,0 +1,54 @@
+:_content-type: PROCEDURE
+:myfunctionone: hermetic_builds
+
+[id="hermetic-builds_{context}"]
+= Enabling hermetic builds
+
+Hermetic builds refer to a controlled build process in which a build system knows all the required resources and dependencies. This enhanced dependency visibility allows the build system to capture and produce a more precise record of the build's origin, dependencies, and modifications than it would otherwise be possible.
+
+In {ProductName}, hermetic builds are achieved by blocking network access to the build process. Therefore, you must pre-fetch all dependencies before the build can start.
+
+IMPORTANT: Hermetic builds disable network access, so the builds that require dependencies outside its Git repository could fail.
+
+
+.Prerequisites
+
+* You have an link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_upgrade_build_pipeline/[upgraded build pipeline].
+
+.Procedure
+
+To create a hermetic build for a component, complete the following steps:
+
+. Go to the `.tekton` directory in the repository of your component and locate the *.yaml* files related to the *pull-request* and *push* processes.
+
+. Configure the hermetic pipeline by adding the following hermetic pipeline parameters in both the *.yaml* files:
+
++
+[source,yaml]
+----
+spec:
+    params:
+        -   ...
+        -   name: hermetic
+            value: “true”
+----
+
++
+[NOTE]
+====
+* In a non-java application, that is a link:https://github.com/redhat-appstudio/build-definitions/blob/main/task/buildah/0.1/buildah.yaml[Buildah] task, adding the parameter mentioned above automatically isolates the build from the network, restricting it to only build from dependencies listed in your Git repository. If you need to pull in dependencies from a package manager for one of the xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc#supported-languages[supported languages], see xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching the package manager dependencies for the Hermetic build].
+
+* When adding the parameters mentioned above, you can safely ignore the default values for the link:https://github.com/burrsutter/partner-catalog-stage/blob/e2ebb05ba8b4e842010710898d555ed3ba687329/.tekton/partner-catalog-stage-wgxd-pull-request.yaml#L87[`pipelineSpec.params`] in the *.yaml* files.
+====
+. Create a pull request (PR) by committing your changes to the repository of the component.
+
+. Review and merge the PR.
+
+include::../partials/con_hermetic_verification.adoc[]
+
+[role="_additional-resources"]
+.Additional resources
+
+* For more information on the importance of provenance, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/concepts/slsa/con_slsa-conformity/[Supply chain security through SLSA conformity].
+
+* For more information on prefetching package manager dependencies, see the xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching package manager dependencies for hermetic build]

@@ -110,3 +110,7 @@ i.fa.icon-caution::before {
 aside.toc.sidebar {
     overflow-block: scroll;
 }
+
+.image {
+    border: 1px solid #000000 !important;
+}
