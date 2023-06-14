@@ -137,7 +137,7 @@ When you import code, {ProductName} analyzes your repository to determine the ri
 +
 If {ProductName} finds a Dockerfile in your repository, it determines that a Dockerfile runtime is the most suitable for building and deploying you application. However, if the Dockerfile is not saved in one of the following expected locations, an error in determining the right runtime for your components can occur:
 +
-[#expected Dockerfile locations]
+[#expected-dockerfile-locations]
 .Expected Dockerfile locations
 ** Dockerfile
 ** docker/Dockerfile
@@ -156,7 +156,7 @@ If {ProductName} finds a Dockerfile in your repository, it determines that a Doc
 Test your Dockerfile in a local environment first to make sure it's valid.
 ====
 
-[#repository requirements]
+[#repository-requirements]
 * **Your repository does not contain a Dockerfile or devfile.**
 +
 If your code import fails because your repository is missing either a Dockerfile or devfile, check one of the following readme files for guidance, depending on the runtime you want to build and deploy with. These readme files provide details like required ports, file locations, commands, and more. 
@@ -179,7 +179,7 @@ If your code import fails because your repository is missing either a Dockerfile
 ** Make sure that neither of these resources is in a private repository that requires access authentication.
 ** Make sure that your devfile is in one of these expected locations:
 +
-[#expected devfile locations] 
+[#expected-devfile-locations] 
 .Expected devfile locations
 *** devfile.yaml
 *** .devfile.yaml
@@ -192,12 +192,12 @@ Some repositories require custom build or deployment instructions; for example, 
 +
 **Solutions**
 +
-[#custom build and deployment instructions]
-** **Configure a custom build.** Include a Dockerfile that can build your application, then save it to one of the <<expected Dockerfile locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
+[#custom-build]
+** **Configure a custom build.** Include a Dockerfile that can build your application, then save it to one of the <<expected-dockerfile-locations,expected Dockerfile locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
 ** **Configure a custom deployment.** Include the following files in your repository to provide {ProductName} with custom deployment instructions:
 *** A standard Kubernetes YAML file
 *** A custom-build Dockerfile
-*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected devfile locations>>.
+*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected-devfile-locations,expected devfile locations>>.
 +
 [TIP]
 ====
@@ -212,7 +212,7 @@ For more information about devfile contents requirements, see the "What is outer
 
 * **{ProductName} couldn't detect the appropriate runtime.**
 +
-**Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository requirements>> for the runtime you select, or configure your own <<custom build and deployment instructions>>.
+**Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository-requirements,repository requirements>> for the runtime you select, or configure your own <<custom-build,custom build and deployment instructions>>.
 
 === Creating a Red Hat Container Registry token
 
