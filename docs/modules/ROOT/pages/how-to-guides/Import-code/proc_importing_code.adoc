@@ -257,4 +257,4 @@ After creating the Red Hat Container Registry token, include the token in your a
 [role="_additional-resources"]
 .Additional resources
 
-For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started in the CLI]. 
+For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started with CLI]. 
