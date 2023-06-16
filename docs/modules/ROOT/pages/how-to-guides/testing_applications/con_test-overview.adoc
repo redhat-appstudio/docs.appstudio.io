@@ -1,54 +1,36 @@
-= Overview of {ProductName} Test components
+= Overview of {ProductName} tests
 
-== How {ProductName} testing helps you
+You can ensure that your applications are stable, secure, compliant, and mutually compatible by implementing tests for {ProductName} to run on their components. There are currently 4 types of tests in {ProductName}:
 
-{ProductName} has multiple components, one of which is the Test component. The Test component works throughout the pipeline process to ensure your application and its components comply with basic tests, like surface-level, security, or tests you add to the application. The Test component ensures all application components work in congruence with integration testing. Furthermore, administrator defined Enterprise Contract (EC) uses the information provided by the Test component to ensure your application complies with organizational and legal standards. For both component and integration testing, you can create your own tests to ensure your application meets your standards and needs.
+* Surface-level tests
+* Product security tests
+* Custom tests
+* Integration tests
 
-== Test types
+The following sections explain each of these test types in greater detail.
 
-=== Component tests
+== Surface-level tests
 
-There are currently 3 types of image tests in {ProductName}.
+Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of Tekton xref:glossary/index.adoc#task[tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} surface-level tests is available in this document: xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level tests].
 
-* Surface-level Tests
-* Product Security Tests
-* Custom Tests.
+For {ProductName} to perform our predefined surface-level tests on a given component, you must xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrade its build pipeline].
 
-By default, {ProductName} performs Surface-level and Product Security tests. You specifically create the Custom tests for your application.
+== Product security tests
 
-==== Surface-level tests
-
-Surface-level tests in {ProductName} ensure the stability of the application, the build pipeline, its components, and the environment in which it is being tested. The surface-level tests used in {ProductName} are executed in the form of link:https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is link:https://www.conftest.dev/[conftest]. A full listing of {ProductName} Surface-level tests can be link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/testing_applications/surface-level_tests[found here].
-
-==== Product Security tests
-
-Product Security tests in {ProductName} ensure a product is secure and keep your image, application, and build pipeline up to date. Product Security tests include:
+Product security tests in {ProductName} ensure a product is secure and keep your image, application, and build pipeline up to date. Product Security tests include:
 
 * Vulnerability scanning via Clair
-* Anti Virus Scanning via ClamAV
+* Anti-virus scanning via ClamAV
 * Code scanning via SAST tools
 
-These tests can be made mandatory as part of the link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_managing-compliance-with-the-enterprise-contract[Enterprise Contract]
-// The link used to point to concepts/release-services/con_release-services-overview which is no longer available. A new link probably doesn't make sense because the linked doc doesn't mention prodsec tests listed above.
+For {ProductName} to perform our predefined product security tests on a given component, you also must xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrade its build pipeline].
 
-==== Custom tests
+== Custom tests
 
-Custom tests in {ProductName} are tests that are created and implemented by users and administrators. You can add tests to your environment as needed. Custom tests are written as tekton tasks and implemented into your pipeline.
-// NEW LINK REQUIRED For full instructions on creating and importing tests, please see our guide https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/testing_applications/adding_new_tests.html[Add a New Test].
+Custom tests in {ProductName} are tests that users and administrators create. To add a custom test to an individual component, xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[customize its build pipeline] to include the test as another Tekton task. Or, to add a test that runs on all components of an application, xref:how-to-guides/testing_applications/proc_creating_custom_test.adoc[create a custom integration test].
 
-=== Integration service tests
+== Integration tests
 
-Integration tests occur after each component included in the build has passed testing. Integration testing ensures that all build components are able to work together at the same time. Images of all the application components are compiled into a Snapshot of the application. The Snapshot is then tested against user defined IntegrationTestScenarios, which refer to a link:https://tekton.dev/docs/pipelines/tekton-bundle-contracts/[Tekton bundle]. All images created are stored in a Quay.io repository. If all integration tests pass, a Release resource is created for each ReleasePlan. The Release resource will notify the Release service that the application is ready to be promoted to the next environment.
-// NEW LINK REQUIRED: The old link is commented out in nav-concepts.adoc https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release service]
+Integration tests ensure that all build components are able to work together at the same time. You can xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[add an integration test], simply by giving {ProductName} the address to a GitHub repo, and the path within that repo to the `.yaml` file that defines the test.
 
-////
-NEW LINKS REQUIRED: The old links are commented out in nav-concepts.adoc
-
-== Additional resources
-
-To learn about other {ProductName} components that help you with your containerized development needs, see:
-
-* https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/release-services/con_release-services-overview.html[Release Service]
-* https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/enterprise-contract/con_enterprise-contract-overview.html[Enterprise Contract]
-* https://red-hat-stone-soup.pages.redhat.com/stonesoup-documentation/concepts/pipelines/index.html[Pipeline Services]
-////
+{ProductName} runs integration tests after it successfully builds the components of an application. As part of the build process, {ProductName} creates an image for each component and stores them in a Quay.io repository. Images of all the components are then compiled into a snapshot of the application. {ProductName} tests the snapshot against user-defined IntegrationTestScenarios, which, again, refer to a GitHub repository. 
