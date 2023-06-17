@@ -303,7 +303,7 @@ To fix failed builds, first look at the build logs and figure out why it failed.
 . Pick the object you are interested in. Generally each `DependencyBuild` will have multiple pipeline
 runs, named using the pattern `<dependency-build-name>-build-<n>`. 
 
-. View he logs using the command `tkn pr logs <name>`:
+. View the logs using the command `tkn pr logs <name>`:
 
 [source]
 ----
@@ -325,9 +325,9 @@ If there are no builds at all, then the analyser could not find a build file to 
 
 . Build from the fork. 
 
-For an example, see: https://github.com/jvm-build-service-code/cs-au-dk-dk.brics.automaton.
+For an example, check this Java package project on GitHub: https://github.com/jvm-build-service-code/cs-au-dk-dk.brics.automaton[dk.brics.automaton].
 
-The 1.11-8 release had no build file, so the project was forked and one was added. This was then added to the SCM information at https://github.com/redhat-appstudio/jvm-build-data/blob/30a00905314ca5bf20d653af1a59c39c93b9aadb/scm-info/dk/brics/_artifact/automaton/scm.yaml#L6.
+The 1.11-8 release had no build file, so the project was forked and one was added. This was then added to the SCM information, see the link:https://github.com/redhat-appstudio/jvm-build-data/blob/30a00905314ca5bf20d653af1a59c39c93b9aadb/scm-info/dk/brics/_artifact/automaton/scm.yaml#L6[scm.yaml file of the package].
 
 ==== Tweaking Build Parameters
 
