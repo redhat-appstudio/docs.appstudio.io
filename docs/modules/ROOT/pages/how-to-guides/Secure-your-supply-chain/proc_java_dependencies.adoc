@@ -163,7 +163,7 @@ NAME                             URL                                            
 080dbba8b3ffba35739ebe5bce69a2be https://github.com/apache/commons-logging.git    LOGGING_1_2        DependencyBuildStateComplete
 ----
 
-The `PipelineRun` objects associated with these builds start with the build name, so you can view the logs for a build under the appropriate `PipelineRun`.
+The `PipelineRun` objects associated with these builds start with the build name, so you can view the logs for a build for the appropriate `PipelineRun`.
 
 ==== Re-Running Builds [[rebuilding_artifacts]]
 
