@@ -163,7 +163,7 @@ NAME                             URL                                            
 080dbba8b3ffba35739ebe5bce69a2be https://github.com/apache/commons-logging.git    LOGGING_1_2        DependencyBuildStateComplete
 ----
 
-The `PipelineRun` objects associated with these builds start with the build name, so you can view the logs for a build for the appropriate `PipelineRun`.
+The names of the `PipelineRun` objects begin with the build name. This enables you to view logs for each `PipelineRun`.
 
 ==== Re-Running Builds [[rebuilding_artifacts]]
 
@@ -303,7 +303,7 @@ To fix failed builds, first look at the build logs and figure out why it failed.
 . Pick the object you are interested in. Generally each `DependencyBuild` will have multiple pipeline
 runs, named using the pattern `<dependency-build-name>-build-<n>`. 
 
-. View the logs using the command `tkn pr logs <name>`:
+. View the logs by using the command `tkn pr logs <name>`:
 
 [source]
 ----
@@ -325,9 +325,9 @@ If there are no builds at all, then the analyser could not find a build file to 
 
 . Build from the fork. 
 
-For an example, check this Java package project on GitHub: https://github.com/jvm-build-service-code/cs-au-dk-dk.brics.automaton[dk.brics.automaton].
+To see an example, go to https://github.com/jvm-build-service-code/cs-au-dk-dk.brics.automaton[this Java package project] on GitHub.
 
-The 1.11-8 release had no build file, so the project was forked and one was added. This was then added to the SCM information, see the link:https://github.com/redhat-appstudio/jvm-build-data/blob/30a00905314ca5bf20d653af1a59c39c93b9aadb/scm-info/dk/brics/_artifact/automaton/scm.yaml#L6[scm.yaml file of the package].
+Because the 1.11-8 release had no build file, we forked the project and added a file. We then added this file to link:https://github.com/redhat-appstudio/jvm-build-data/blob/30a00905314ca5bf20d653af1a59c39c93b9aadb/scm-info/dk/brics/_artifact/automaton/scm.yaml#L6[the SCM information].
 
 ==== Tweaking Build Parameters
 
