@@ -1,14 +1,15 @@
 = Surface-level tests
+// :table-caption!: Uncomment this attribute if you want labels "Table N" to be removed from table titles.
 
 == Scope
 This document covers the surface-level tests (formerly known as "sanity tests") that {ProductName} runs as part of its component build pipeline. These surface-level tests automatically check all application images to ensure that they're up-to-date, correctly formatted, and protected from security vulnerabilities.
 
 == Surface-level tests
-The {ProductName} component build pipeline supports several types of tests, including surface-level tests. The surface-level tests used in {ProductName} are run in the form of https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is https://www.conftest.dev/[Conftest]. Currently implemented surface-level tests are listed below. 
+The {ProductName} component build pipeline supports several types of tests, including surface-level tests. The surface-level tests used in {ProductName} are run in the form of https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is https://www.conftest.dev/[Conftest]. The following tables show the currently implemented surface-level tests: 
 
 === Label checks
 
-==== Required label checks
+.Required label checks
 |===
 |Test name |Label name |Description |Failure message
 
@@ -27,7 +28,7 @@ The {ProductName} component build pipeline supports several types of tests, incl
 
 |===
 
-==== Deprecated label checks
+.Deprecated label checks
 |===
 |Test name |Label name |Description |Failure message
 
@@ -42,7 +43,7 @@ The {ProductName} component build pipeline supports several types of tests, incl
 
 |===
 
-==== Inherited label checks 
+.Inherited label checks 
 |===
 |Test name |Label name |Description |Failure message
 
@@ -54,7 +55,7 @@ The {ProductName} component build pipeline supports several types of tests, incl
 
 |===
 
-==== Optional label checks
+.Optional label checks
 |===
 |Test name |Label name |Description |Failure message
 
@@ -62,14 +63,14 @@ The {ProductName} component build pipeline supports several types of tests, incl
 |summary_label_required |summary |A short description of the image |The 'summary' label should be defined
 |===
 
-=== Deprecated image checks
+.Deprecated image checks
 |===
 |Test name |Label name |Description |Failure message
 
 |image_repository_deprecated |N/A |Deprecated images are no longer maintained and will accumulate security issues without releasing a fixed version | The container image should not be built from a repository which is marked as 'Deprecated' in COMET
 |===
 
-=== Unsigned RPM check
+.Unsigned RPM check
 |===
 |Test name |Label name |Description |Failure message
 
