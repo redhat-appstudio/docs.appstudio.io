@@ -5,7 +5,7 @@
 This document covers the surface-level tests (formerly known as "sanity tests") that {ProductName} runs as part of its component build pipeline. These surface-level tests automatically check all application images to ensure that they're up-to-date, correctly formatted, and protected from security vulnerabilities.
 
 == Surface-level tests
-The {ProductName} component build pipeline supports several types of tests, including surface-level tests. The surface-level tests used in {ProductName} are run in the form of https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is https://www.conftest.dev/[Conftest]. Currently implemented surface-level tests are listed in the tables below. 
+The {ProductName} component build pipeline supports several types of tests, including surface-level tests. The surface-level tests used in {ProductName} are run in the form of https://tekton.dev/docs/pipelines/tasks/#overview[Tekton tasks]. The utility used for validating container information is https://www.conftest.dev/[Conftest]. The following tables show the currently implemented surface-level tests: 
 
 === Label checks
 
