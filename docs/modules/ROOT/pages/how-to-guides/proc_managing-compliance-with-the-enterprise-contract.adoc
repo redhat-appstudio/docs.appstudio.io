@@ -17,8 +17,8 @@ The Enterprise Contract (EC) is an artifact verifier and customizable policy che
 . Open an existing application and go to the *Integration tests* tab.
 . Select *Add integration test*.
 . In the *Integration test name* field, enter a name of your choosing.
-. In the *GitHub URL* field, enter: *https://github.com/redhat-appstudio/build-definitions*
-. In the *Path in repository* field, enter: */pipelines/enterprise-contract.yaml*
+. In the *GitHub URL* field, enter *https://github.com/redhat-appstudio/build-definitions*
+. In the *Path in repository* field, enter */pipelines/enterprise-contract.yaml*
 . Optional: If passing the this test is optional, and you do not want to prevent the application from being deployed or released, then select *Mark as optional for release*.
 . Select *Add Integration test*.
 . Trigger a new build by commiting a change in the GitHub repository of the application you are working with.
