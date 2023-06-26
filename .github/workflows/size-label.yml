@@ -28,39 +28,21 @@ jobs:
       - name: Add label
         run: |
           if [ $size -gt 100 ]; then
-            echo "Adding size: XXL"
-            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-              -d '{"labels": ["size: XXL"], "color": "000000"}'
-          elif [ $size -gt 50 ]; then
-            echo "Adding size: XL"
-            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-              -d '{"labels": ["size: XL"], "color": "FF0000"}'
-          elif [ $size -gt 30 ]; then
             echo "Adding size: L"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-              -d '{"labels": ["size: L"], "color": "FFA500"}'
-          elif [ $size -gt 10 ]; then
+              --data '["size: L"]'
+          elif [ $size -gt 30 ]; then
             echo "Adding size: M"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-              -d '{"labels": ["size: M"], "color": "FFFF00"}'
-          elif [ $size -gt 5 ]; then
+              --data '["size: M"]'
+          else
             echo "Adding size: S"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-              -d '{"labels": ["size: S"], "color": "00FF00"}'
-          else
-            echo "Adding size: XS"
-            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
-              -d '{"labels": ["size: XS"], "color": "0000FF"}'
+              --data '["size: S"]'
           fi
