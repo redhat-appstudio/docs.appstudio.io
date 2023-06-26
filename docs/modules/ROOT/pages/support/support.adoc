@@ -1,13 +1,1 @@
 = Support for {ProductName}
-
-
-To get support, you can engage with us using the following options:
-
-
-* Join us on Slack: add the link:https://dn.dev/DevNationSlack[DevNation workspace] and find us in the link:https://rhdevnation.slack.com/archives/C04LXT1EU7K[#software-supply-chain-security] channel.
-
-
-* Email us at link:mailto:sscs@redhat.com[sscs@redhat.com].
-
-
-* Select *Raise an issue* in the banner of any page.
