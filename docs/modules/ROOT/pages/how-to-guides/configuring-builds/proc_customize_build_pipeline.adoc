@@ -1,6 +1,6 @@
 = Customizing the build pipeline
 
-To meet your specific needs, customize the way that {ProductName} builds components. You can customize in two ways:
+To meet your specific needs, customize the way that {ProductName} builds components. You can customize it in two ways:
 
 * Change the parameters of the build pipeline of a component.
 * Extend the pipeline with your own tasks (or deleting existing tasks).
