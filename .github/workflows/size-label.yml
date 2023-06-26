@@ -13,10 +13,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Calculate size
         run: |
-          git fetch
-          git fetch --update-shallow
-          git diff --stat HEAD~1
-          size=$(cat .git/FETCH_HEAD | wc -l)
+          if git rev-parse HEAD~1 >/dev/null 2>&1; then
+            git fetch origin main --update-shallow
+            git diff --stat HEAD~1
+            size=$(cat .git/FETCH_HEAD | wc -l)
+          else
+            echo "No previous comments"
+            size=0
+          fi
       - name: Add label
         run: |
           if [ $size -gt 100 ]; then
@@ -28,5 +32,4 @@ jobs:
           else
             echo "Adding size: S"
             hub label add ${{ github.head_repo.full_name }} ${{ github.head_ref }} "size: S"
-          fi
-          
+          fi         
