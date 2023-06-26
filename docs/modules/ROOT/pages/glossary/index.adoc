@@ -1,7 +1,5 @@
 = Glossary
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
+
 
 == Build pipeline customization 
 The ability to update and manage build pipelines for each component in an application. 
