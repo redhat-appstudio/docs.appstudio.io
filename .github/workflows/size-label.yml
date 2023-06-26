@@ -22,18 +22,27 @@ jobs:
             git diff --stat HEAD~1
             size=$(cat .git/FETCH_HEAD | wc -l)
           else
-            echo "No previous comments"
+            echo "No previous commits"
             size=0
           fi
       - name: Add label
         run: |
           if [ $size -gt 100 ]; then
             echo "Adding size: L"
-            hub label add ${{ github.head_repo.full_name }} ${{ github.head_ref }} "size: L"
+            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
+              --data '["size: L"]'
           elif [ $size -gt 30 ]; then
             echo "Adding size: M"
-            hub label add ${{ github.head_repo.full_name }} ${{ github.head_ref }} "size: M"
+            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
+              --data '["size: M"]'
           else
             echo "Adding size: S"
-            hub label add ${{ github.head_repo.full_name }} ${{ github.head_ref }} "size: S"
-          fi         
+            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
+              --data '["size: S"]'
+          fi
