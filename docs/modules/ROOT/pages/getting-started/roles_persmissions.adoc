@@ -1,6 +1,6 @@
 = Permissions and roles
 
-As a workspace owner, you can https://placeholder.com[invite] one or more collaborators to your workspace by adding their user ID, such as an external SSO ID. After https://placeholder.com[adding a user to a workspace], you assign them a specific role that determines the actions they can take in a workspace.
+As a workspace owner, you can https://placeholder.com[invite] one or more collaborators to your workspace by adding their user ID, such as an external SSO ID. After https://placeholder.com[adding a user to a workspace],  assign them a specific role that determines the actions they can take in a workspace.
 
 The roles available for a workspace, from least access to most access, are:
 
