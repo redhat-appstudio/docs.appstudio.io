@@ -1,28 +1,66 @@
 name: labeler
 
-on: [pull_request]
+on: 
+  pull_request:
+    types:
+      - opened
+      - synchronise
 
 jobs:
-  labeler:
+  analyze:
     runs-on: ubuntu-latest
     name: Label the PR size
     steps:
-      - uses: codelytv/pr-size-labeler@v1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          xs_label: 'size/xs'
-          xs_max_size: '10'
-          s_label: 'size/s'
-          s_max_size: '100'
-          m_label: 'size/m'
-          m_max_size: '500'
-          l_label: 'size/l'
-          l_max_size: '1000'
-          xl_label: 'size/xl'
-          fail_if_xl: 'false'
-          message_if_xl: >
-            This PR exceeds the recommended size of 1000 lines.
-            Please make sure you are NOT addressing multiple issues with one PR.
-            Note this PR might be rejected due to its size.
-          github_api_url: 'api.github.com'
-          files_to_ignore: ''
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Antora
+      run: npx antora antora-playbook.yml
+
+    - name: Analyze changes
+      id: changes
+      run: |
+        SIZE=$(git diff --no-color --numstat origin/main...HEAD -- _site | awk '{ sum += $1 } END { printf "%.0f", sum }')
+        echo "::set-output name=size_changes::$SIZE"
+  label:
+    needs: analyze
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set PR label
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const sizeChanges = parseInt(process.env.SIZE_CHANGES);
+          const context = github.context.payload.pull_request;
+          const owner = context.base.repo.owner.login;
+          const repo = context.base.repo.name;
+          const pull_number = context.number;
+          let labelName = '';
+
+          if (sizeChanges < 10) {
+            labelName = 'Size: XS';
+          } else if (sizeChanges < 50) {
+            labelName = 'Size: S';
+          } else if (sizeChanges < 100) {
+            labelName = 'Size: M';
+          } else if (sizeChanges < 500) {
+            labelName = 'Size: XL';
+          } else {
+            labelName = 'Size: XXL';
+          }
+
+          github.issues.addLabels({
+            owner: owner,
+            repo: repo,
+            issue_number: pull_number,
+            labels: [labelName]
+          });
