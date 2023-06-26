@@ -13,6 +13,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Calculate size
         run: |
+          git fetch --depth=0
           git fetch --update-shallow
           git diff --stat HEAD~1
           size=$(cat .git/FETCH_HEAD | wc -l)
