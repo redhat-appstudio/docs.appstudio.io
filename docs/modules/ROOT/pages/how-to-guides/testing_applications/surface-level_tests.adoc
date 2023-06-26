@@ -1,5 +1,4 @@
 = Surface-level tests
-// :table-caption!: Uncomment this attribute if you want labels "Table N" to be removed from table titles.
 
 == Scope
 This document covers the surface-level tests (formerly known as "sanity tests") that {ProductName} runs as part of its component build pipeline. These surface-level tests automatically check all application images to ensure that they're up-to-date, correctly formatted, and protected from security vulnerabilities.
