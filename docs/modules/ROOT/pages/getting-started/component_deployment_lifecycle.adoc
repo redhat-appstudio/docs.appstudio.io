@@ -8,16 +8,7 @@ CP Development Team <cp-devel@redhat.com>
 == Scope
 Learn how to track the lifecycle of a component's deployment in the {ProductName} web console.
 
-== Web console visualization
-In the *Overview* tab, {ProductName} shows the stages of a component deployment lifecycle. This visualization also shows the status of these stages, whether they are complete, running, or pending. 
 
-image::new_lifecycle_screenshot.png[alt=Component deployment lifecycle visualization]
-
-== Build pipeline customization
-The lifecycle visualization is currently read-only. However, to customize the build pipelines that {ProductName} executes during this lifecycle, start by using the *Actions* drop-down menu to select *Customize build pipelines*. For detailed instructions on what to do next, visit the xref:getting-started/build_service.adoc[Build pipeline customization] page.
-
-== Logs
-To access the logs for a PipelineRun that occurs during a lifecycle, navigate to the *Components* tab and select *View logs*.
 
 == Task run status list
 In the *Overview* tab, the web console uses various symbols to visualize the component deployment lifecycle. The following table explains the meaning of those symbols:
