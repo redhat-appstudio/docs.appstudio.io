@@ -25,39 +25,40 @@ jobs:
             echo "No previous commits"
             size=0
           fi
+          echo "::set-env name=SIZE::$size"
       - name: Add label
         run: |
-          if [ $size -gt 100 ]; then
+          if [ ${{ env.size }} -gt 100 ]; then
             echo "Adding size: XXL"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
               -d '["size: XXL"]'
-          elif [ $size -gt 50 ]; then
+          elif [ ${{ env.size }} -gt 50 ]; then
             echo "Adding size: XL"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
               -d '["size: XL"]'
-          elif [ $size -gt 30 ]; then
+          elif [ ${{ env.size }} -gt 30 ]; then
             echo "Adding size: L"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
               -d '["size: L"]'
-          elif [ $size -gt 15 ]; then
+          elif [ ${{ env.size }} -gt 15 ]; then
             echo "Adding size: M"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
               -d '["size: M"]'
-          elif [ $size -gt 7 ]; then
+          elif [ ${{ env.size }} -gt 5 ]; then
             echo "Adding size: S"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
               -d '["size: S"]'
-          else [ $size -gt 2 ]
+          else
             echo "Adding size: XS"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
