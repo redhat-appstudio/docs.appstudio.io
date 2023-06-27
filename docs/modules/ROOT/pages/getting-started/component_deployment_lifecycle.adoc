@@ -1,9 +1,4 @@
 = Component deployment lifecycle
-CP Development Team <cp-devel@redhat.com>
-:toc: left
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
 
 == Scope
 Learn how to track the lifecycle of a component's deployment in the {ProductName} web console.
