@@ -3,6 +3,8 @@
 ** Configuring your builds
 *** xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading to a custom build pipeline]
 *** xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[Customizing the pipeline] 
+*** xref:how-to-guides/proc_hermetic-builds.adoc[Enabling hermetic builds]
+*** xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching package manager dependencies for hermetic build]
 ** Testing your application
 *** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} tests]
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level tests]
@@ -14,7 +16,7 @@
 *** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps in the CLI]
 ** xref:how-to-guides/proc_creating_your_own_environment.adoc[Creating your own environment]
 ** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
-** xref:how-to-guides/proc_delete_application.adoc[Deleting an application].
+** xref:how-to-guides/proc_delete_application.adoc[Deleting an application]
 
 
 ////

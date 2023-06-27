@@ -1,0 +1,16 @@
+.Verification
+
+. On your application, go to the *Activity > Pipeline runs* tab.
+
+ifdef::myfunctionone[]
+
+. Go to the pipeline run with *Type* as *Build* and confirm the `build-container` stage displays a green check mark indicating that the build process has successfully fetched all the dependencies.
+
+endif::[]
+
+ifdef::myfunctiontwo[]
+
+. For a pipeline run with *Type* as *Build* and confirm the `pre-fetch dependencies` stage displays a green check mark indicating that the build process has successfully pre-fetched all the dependencies.
+
+endif::[]
+
