@@ -3,7 +3,7 @@
 = Importing and configuring code
 
 [role="_abstract"]
-After you click **Create an application**, the **Grab some code** page opens. From here, choose one of the following source code options to begin building your application:
+After you click **Create application**, the **Grab some code** page opens. From here, choose one of the following source code options to begin building your application:
 
 * **Bring in your own code**
 * **Start with a sample**
