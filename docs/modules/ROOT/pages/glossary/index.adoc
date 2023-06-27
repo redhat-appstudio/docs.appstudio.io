@@ -1,20 +1,8 @@
 = Glossary
-:icons: font
-:numbered:
-:source-highlighter: highlightjs
+
 
 == Build pipeline customization 
-The ability to update and manage build pipelines for each component in an application. 
-
-== Cluster
-A Kubernetes deployment with nodes that run containerized applications and a control plane that manages the nodes.
-
-== Commit 
-A change to one or more files. In {ProductName}, commits that you make to a linked repository move through the pipeline and automatically get published.
-
-== Component 
-An image that {ProductName} builds from source code in a repository. One or more components that run together form an application.
-
+The ability to up
 == Conftest 
 A utility for testing structured configuration data. Use Conftest to validate container information.
 
