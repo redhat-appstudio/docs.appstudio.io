@@ -40,12 +40,10 @@ Make sure this path is correct. You might get an error if your build context fol
 If you want to use a custom pipeline build, or to grant access to and install the {ProductName} GitHub app on the repository you indicated, you must have the necessary GitHub permissions. If you don't own that repository, or if you don't have the necessary GitHub permissions, you must fork that repository and then specify the new fork URL to add a new component. 
 ====
 
-////
 [TIP]
 ====
-If {ProductName} can’t access your Git repository, see <<Granting App Studio access to your Git repository>> for help.
+If {ProductName} can’t access your Git repository, see <<importing-code-from-private-repo,Importing code from a private GitHub repository>> for help.
 ====
-////
 
 {ProductName} scans and analyzes your Git repository to determine how many components to add to your application and which runtime to use. The types of files in your repository, and also your Git directory file hierarchy, determine the number and type of components to add. For example, {ProductName} looks for devfiles and Dockerfiles, and also language-specific build configuration files like pom.xml for Java or package.json for Node.js.
 
@@ -69,27 +67,25 @@ If {ProductName} can’t access your Git repository, see <<Granting App Studio a
 |N/A
 |===
 
-//// 
-From JSese: May 15, 2023, Commenting out per Matt Reid and Christian V. Support for private repos is post-Summit.
 [discrete]
-== Granting App Studio access to your Git repository
+[#importing-code-from-private-repo]
+=== Importing code from a private GitHub repository
 
-If {ProductName} can’t access your Git repository, the following message displays: “We can’t access your repository, probably because it’s either private or the URL is incorrect.” If your repository is private, choose one of the following two ways to allow {ProductName} to interact with your repository:
+To use your code from a private repository to build your application, complete the following steps:
 
-[discrete]
-=== Granting App Studio access to your Git repository through GitHub OAuth
+. Enter the link to your private repository in the **Git repository URL** field. {ProductName} displays the following message: “Looks like your repository is private, so we're not able to access it.” 
+. Grant {ProductName} access to your repository.
+.. On the **Grab some code** page, enter the URL to your repository. After {ProductName} detects that it needs access, the **Authorization** section opens.
+.. Under **Authorization**, click **Sign in**. The **OAuth Redirection** page opens in a new tab and redirects you to  **GitHub Authorize OAuth**.
 
-. Under **Authorization**, click **Sign in**. **GitHub Authorize OAuth** opens in a new tab.
-. Click **Authorize _redhat-appstudio_**.
-
-[discrete]
-=== Granting App Studio access to your Git repository with a token
-
-. Under **Authorization**, click **Use a token instead**. The **Authenticate with API token** modal opens.
-. Enter your **Username**.
-. Enter an **API token**.
-. Click **Connect**.
-////
+[NOTE]
+====
+If you’re not already logged in to GitHub, follow the login prompt. If you configured two-factor authentication, GitHub might prompt you to enter a one-time authentication code.
+====
+[start=3]
+.. Click **Authorize _redhat-appstudio_**. A **Login successful** page opens, which you can close.
+.. On the **Grab some code** page, enter your repository URL again. {ProductName} checks its access to your repository. 
+.. After {ProductName} validates access, click **Import code**.
 
 .What's next
 **Configure your components for deployment** opens. From here, configure your components before you deploy them. You can also review or change any values that {ProductName} populated for you. When you're finished here, you're one click away from creating your application.
@@ -136,9 +132,8 @@ When you import code, {ProductName} analyzes your repository to determine the ri
 
 * **Your repository contains a Dockerfile in an unexpected directory.**
 +
-If {ProductName} finds a Dockerfile in your repository, it determines that a Dockerfile runtime is the most suitable for building and deploying you application. However, if the Dockerfile is not saved in one of the following expected locations, an error in determining the right runtime for your components can occur [[expected-dockerfile-locations, expected Dockerfile locations]]:
+If {ProductName} finds a Dockerfile in your repository, it determines that a Dockerfile runtime is the most suitable for building and deploying you application. However, if the Dockerfile is not saved in one of the following expected locations, an error in determining the right runtime for your components can occur:
 +
-.Expected Dockerfile locations 
 [#expected-dockerfile-locations]
 .Expected Dockerfile locations
 ** Dockerfile
@@ -158,8 +153,6 @@ If {ProductName} finds a Dockerfile in your repository, it determines that a Doc
 Test your Dockerfile in a local environment first to make sure it's valid.
 ====
 +
-* Your repository does not contain a Dockerfile or devfile. [[repository-requirements]]
-
 [#repository-requirements]
 * **Your repository does not contain a Dockerfile or devfile.**
 +
@@ -181,9 +174,8 @@ If your code import fails because your repository is missing either a Dockerfile
 +
 ** Make sure that your `devfile.yaml` points to the correct directories for both your Dockerfile and your Kubernetes YAML file. 
 ** Make sure that neither of these resources is in a private repository that requires access authentication.
-** Make sure that your devfile is in one of these expected locations [[expected-devfile-locations, expected devfile locations]]:
+** Make sure that your devfile is in one of these expected locations:
 +
-.Expected devfile locations 
 [#expected-devfile-locations] 
 .Expected devfile locations
 *** devfile.yaml
@@ -197,13 +189,12 @@ Some repositories require custom build or deployment instructions; for example, 
 +
 **Solutions**
 +
-** Configure a custom build. [[custom-build, custom build and deployment instructions]] Include a Dockerfile that can build your application, then save it to one of the <<expected-dockerfile-locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
 [#custom-build]
 ** **Configure a custom build.** Include a Dockerfile that can build your application, then save it to one of the <<expected-dockerfile-locations,expected Dockerfile locations>>. **Note:** If your build is custom but your deployment is not, you do not have to include a `devfile.yaml` file in your repository.
 ** **Configure a custom deployment.** Include the following files in your repository to provide {ProductName} with custom deployment instructions:
 *** A standard Kubernetes YAML file
 *** A custom-build Dockerfile
-*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected-devfile-locations>>.
+*** A devfile that points to your Kubernetes YAML file and Dockerfile. **Note:** Make sure that your devfile is in one of the <<expected-devfile-locations,expected devfile locations>>.
 +
 [TIP]
 ====
@@ -218,7 +209,6 @@ For more information about devfile contents requirements, see the "What is outer
 
 * **{ProductName} couldn't detect the appropriate runtime.**
 +
-**Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository-requirements>> for the runtime you select, or configure your own <<custom-build>>.
 **Solution:** Select a predefined runtime type from the **Review and configure for deployment** view. Make sure you meet all of the {ProductName} <<repository-requirements,repository requirements>> for the runtime you select, or configure your own <<custom-build,custom build and deployment instructions>>.
 
 === Creating a Red Hat Container Registry token
@@ -263,5 +253,4 @@ After creating the Red Hat Container Registry token, include the token in your a
 
 [role="_additional-resources"]
 .Additional resources
-For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/[Getting started with CLI
-].
+For information about importing and configuring code to {ProductName} using the CLI, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/#getting-started-in-the-cli[Getting started with CLI].
