@@ -3,6 +3,7 @@
 ** Configuring your builds
 *** xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading to a custom build pipeline]
 *** xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[Customizing the pipeline] 
+*** xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[Creating secrets for your builds]
 *** xref:how-to-guides/proc_hermetic-builds.adoc[Enabling hermetic builds]
 *** xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching package manager dependencies for hermetic build]
 ** Testing your application
