@@ -1,30 +1,110 @@
 = Configuring dependencies rebuild for Java applications
 
-For Java applications in {ProductName}, you can configure the Java Virtual Machine (JVM) build service either with the dependencies rebuild feature enabled or with that feature disabled. This document outlines, for each scenario, why and how you would configure the JVM build service.  
+For Java applications in {ProductName}, you can configure the Java Virtual Machine (JVM) build service either with the dependencies rebuild feature enabled or with that feature disabled.
 
-== Configuring Java builds with enabled dependencies rebuild
+== JVM Build Service overview
 
-Java applications download all their dependencies as pre-compiled binaries from repositories, such as Maven Central. While these pre-compiled binaries are convenient, they do not assure the origin of the dependency, and you cannot ensure that the binary artifact matches the open source code. Therefore, Java is different from languages like golang which use source code-based dependencies.
+The Java Virtual Machine Build Service (JBS or JVM Build Service) is a controller that rebuilds Java and other JVM Language based dependencies from source.
 
-The JVM build service addressed this concern by allowing you to rebuild your application dependencies from the source automatically. By rebuilding, you can be sure that your dependencies match the source code and were compiled in a clean and trusted environment.
+The Java ecosystem uses a binary distribution model, where binary jar files are downloaded from central repositories, such as Maven Central. This distribution model means that the only way to ensure an application is completely built from source is to rebuild all its component libraries from source in a trusted environment. Due to the Java ecosystem, you would need to manually rebuild the component libraries.
 
-.*Workflow*
+Although the Java binary distribution model is very convenient, it does mean that you will inevitably use untrusted dependencies with unknown provenance maintained by external communities. In general, you don't know who has uploaded these artifacts, the environment that was used to build them, or how that build environment might be compromised. Building from source in a secure environment means that you can be be completely sure as to where the code you are running has come from.
 
-* The system builds your application by using community dependencies.
+JBS automates this process as much as possible, making it much less time-consuming to create builds that are build from source in a controlled environment.
 
-* The JVM Build Service analyzes your application and determines the dependencies that the system needs to be rebuilt.
+=== Workflow Description
 
-* The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
+When using the JVM Build Service the end user workflow is as follows:
 
-* The system analyzes the repository and uses the results to find a build strategy. For example, if the system cannot find the JDK version to use, the system uses all versions to determine the most effective version to use.  
+- The system builds your application by using community dependencies.
 
-* The system attempts to build all the dependencies and stores them in container images in an image registry, and `quay.io` is the default.
+- The JVM Build Service analyzes your application and determines the dependencies that the system needs to rebuild.
 
-* When the system has completed all its builds, you can rebuild your application.
+- The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
 
-* If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
+- The system analyzes the repository and uses the results to find a build strategy. For example, if the system cannot find the JDK version to use, the system uses all versions to determine the most effective version to use.
 
-.*Procedure*
+- The system attempts to build all the dependencies and stores them in container images in an image registry, and `quay.io` is the default.
+
+- When the system has completed all its builds, you can rebuild your application.
+
+- If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
+
+== Setup
+
+=== Logging into the Server
+
+All interactions with the JVM Build Service require you to be logged into the OpenShift namespace used for your builds.
+
+.Procedure
+
+Copy the login command from: https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/
+
+=== Setting up the CLI
+
+Many of the commands below can be setup using the JVM Build Service CLI.
+
+The CLI is currently distributed as a docker image. To use the docker image, create the following alias:
+
+```
+alias jbs='docker run --mount type=bind,source=$HOME/.kube/config,target=/kube --mount type=bind,source=$HOME/.github,target=/root/.github --env KUBECONFIG=/kube  -it --rm   quay.io/redhat-appstudio/hacbs-jvm-cli:latest'
+```
+
+To update the latest version, create an update alias. You can run this alias to pull the latest version of the docker image:
+
+```
+alias update-jbs='docker  pull quay.io/redhat-appstudio/hacbs-jvm-cli:latest'
+```
+
+The CLI supports tab completion and all the commands have a --help option to show usage.
+
+Note that this CLI also requires you to be logged in as described above.
+
+To use commands that modify build recipes (i.e. commands that are used to fix failing builds) you will need to create a `$HOME/.github` file as specified at  https://github-api.kohsuke.org/[].
+
+== Configuring The JVM Rebuild Service
+
+There are three ways to setup the JVM Build Service, they are listed below.
+
+=== Setting up using the CLI
+
+If you do not require explicit quay.io configuration, and you have setup the CLI this is the simplest way to setup the JVM Build Service. To do this run the `setup rebuilds` command in the CLI:
+
+[source]
+----
+jbs> setup rebuilds
+Working...
+found .dockerconfigjson secret with appropriate token keys in namespace sdouglas1-tenant, rebuilds are possible
+Rebuilds setup successfully
+----
+
+This will automatically perform the steps detailed below and setup rebuilds for you. The JVM Build Service will automatically create a quary repository to store your rebuilt artifacts.
+
+=== Manual Setup Without Quay.io Configuration*
+
+If you do not want to use the CLI this method creates the Kubernetes objects to setup the JVM Build Service directory using `kubectl`.
+
+. Create a file, for example, `config.yaml`.
+
+. In the `config.yaml` file, create a `JBSConfig` resource with the following data:
+
++
+[source,yaml]
+----
+apiVersion: jvmbuildservice.io/v1alpha1
+kind: JBSConfig
+metadata:
+  name: jvm-build-config
+spec:
+  enableRebuilds: "true"
+----
+
+. Run `kubectl apply -f config.yaml`
+
+
+=== Manual Procedure With Explicit Quay.io Config
+
+This is required if you want to specify where the rebuilt artifacts are stored. It is more complex you must also provision a secret to allow the JVM Build Service to push to the repository.
 
 . Create a file, for example, `config.yaml`.
 
@@ -132,7 +212,7 @@ kubectl label secret jvm-build-service-upload spi.appstudio.redhat.com/upload-se
 
 Once these steps are completed the secret should disappear, and the system is ready to use.
 
-=== Examining the System State
+== Examining the System State
 
 After you have run your first java build with rebuilds enabled you can use `kubectl` to view the state of the rebuilds.
 
@@ -165,7 +245,7 @@ NAME                             URL                                            
 
 The names of the `PipelineRun` objects begin with the build name. This enables you to view logs for each `PipelineRun`.
 
-==== Re-Running Builds [[rebuilding_artifacts]]
+=== Re-Running Builds [[rebuilding_artifacts]]
 
 To rebuild an artifact, you need to annotate the `ArtifactBuild` object with `jvmbuildservice.io/rebuild=true`. For example, to rebuild the `zookeeper.3.6.3-8fc126b0` `ArtifactBuild`, you would run:
 
@@ -183,7 +263,7 @@ kubectl annotate artifactbuild --all jvmbuildservice.io/rebuild=failed
 
 Generally, when you are trying to fix a failure, you must manually run the builds yourself.
 
-=== Dealing With Failed Builds
+== Dealing With failed Builds
 
 In order to see why the build failed, look at the results from the JVM Build Service.
 
@@ -223,7 +303,7 @@ status:
 
 You need to deal with the failure states:  `ArtifactBuildMissing` and `ArtifactBuildFailed`.
 
-==== Dealing With Missing Artifacts (`ArtifactBuildMissing`) [[missing_artifacts]]
+=== Dealing with missing artifacts (`ArtifactBuildMissing`) [[missing_artifacts]]
 
 If your build has ended up in the state,`ArtifactBuildMissing`, you must add some SCM information into your build data repository.
 
@@ -290,7 +370,7 @@ legacyRepos: <6>
 After adding this information, re-running the build should resolve this information, moving it to the  state `ArtifactBuildBuilding`, and eventually to `ArtifactBuildComplete`.
 
 
-==== Identifying why a build failed [[failed_builds]]
+=== Identifying why a build failed [[failed_builds]]
 
 To fix failed builds, first look at the build logs and figure out why it failed.
 
@@ -313,7 +393,7 @@ tkn pr logs e8f6f6126f222a021fedfaee3bd3f980-build-0
 The builds are performed from lowest JDK to highest JDK. Although some JDKs may be skipped if the analyser can determine they
 are not relevant. If a build has failed because of a JDK version issue, you might need to look at a later build.
 
-==== Unknown Build Systems
+=== Unknown build systems
 
 If there are no builds at all, then the analyser could not find a build file to use. 
 
@@ -329,7 +409,7 @@ To see an example, go to https://github.com/jvm-build-service-code/cs-au-dk-dk.b
 
 Because the 1.11-8 release had no build file, we forked the project and added a file. We then added this file to link:https://github.com/redhat-appstudio/jvm-build-data/blob/30a00905314ca5bf20d653af1a59c39c93b9aadb/scm-info/dk/brics/_artifact/automaton/scm.yaml#L6[the SCM information].
 
-==== Tweaking Build Parameters
+=== Tweaking build parameters
 
 Tweak build parameters to get them to pass. Tweak build paramaters by adding a `build.yaml` file to the build
 data repository. For our databind example, the file would go in one of the following locations:
