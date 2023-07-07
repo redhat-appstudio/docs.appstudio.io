@@ -18,7 +18,7 @@ When using the JVM Build Service, the user workflow is as follows:
 
 * The system builds your application by using community dependencies.
 
-* The JVM Build Service analyzes your application and determines the dependencies that the system needs to rebuild.
+* The JVM Build Service analyzes your application and determines which dependencies the system needs to rebuild.
 
 * The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
 
@@ -50,7 +50,7 @@ Many of the commands can be setup using the JVM Build Service CLI. The CLI is cu
 
 .Procedure
 
-. To use the docker image, create the following alias:
+. To use the Docker image, create the following alias:
 
 +
 ```
@@ -58,7 +58,7 @@ alias jbs='docker run --mount type=bind,source=$HOME/.kube/config,target=/kube -
 ```
 
 . To update the latest version, create an updated alias. 
-. To pull the latest version of the docker image, run the updated alias: 
+. To pull the latest version of the Docker image, run the updated alias: 
 
 +
 ```
@@ -78,7 +78,7 @@ You can set up the JVM Build Service in the following ways:
 
 === Setting up with the CLI
 
-If you do not require explicit quay.io configuration, you can simply set up the JVM Build Service. The JVM Build service automatically creates rebuilds for you and creates a quary repository to store your rebuilt artifacts. 
+If you do not require explicit quay.io configuration, you can simply set up the JVM Build Service. The JVM Build service automatically creates rebuilds for you and creates a query repository to store your rebuilt artifacts. 
 
 .Prerequisite 
 
@@ -96,7 +96,7 @@ found .dockerconfigjson secret with appropriate token keys in namespace sdouglas
 Rebuilds setup successfully
 ----
 
-The `setup rebuilds` command automatically performs the steps detailed below and creates rebuilds for you. The JVM Build Service automatically creates a quary repository to store your rebuilt artifacts.
+The `setup rebuilds` command automatically performs the steps detailed below and creates rebuilds for you. The JVM Build Service automatically creates a query repository to store your rebuilt artifacts.
 
 === Setting up without Quay.io configuration*
 
