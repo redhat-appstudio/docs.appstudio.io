@@ -8,27 +8,27 @@ The Java Virtual Machine Build Service (JBS or JVM Build Service) is a controlle
 
 The Java ecosystem uses a binary distribution model, where binary jar files are downloaded from central repositories, such as Maven Central. This distribution model means that the only way to ensure an application is completely built from source is to rebuild all its component libraries from source in a trusted environment. Due to the Java ecosystem, you would need to manually rebuild the component libraries.
 
-Although the Java binary distribution model is very convenient, it does mean that you will inevitably use untrusted dependencies with unknown provenance maintained by external communities. In general, you don't know who has uploaded these artifacts, the environment that was used to build them, or how that build environment might be compromised. Building from source in a secure environment means that you can be be completely sure as to where the code you are running has come from.
+The Java binary distribution model relies on dependencies with unknown provenance maintained by external communities. This means that you can't be sure who uploaded these artifacts or the build environment, so you can't be sure of their flaws or vulnerabilities. The only way to know that you're building from clean, logical code in a secure environment is to build from source code.
 
 JBS automates this process as much as possible, making it much less time-consuming to create builds that are build from source in a controlled environment.
 
 === Workflow Description
 
-When using the JVM Build Service the end user workflow is as follows:
+When using the JVM Build Service, the user workflow is as follows:
 
-- The system builds your application by using community dependencies.
+* The system builds your application by using community dependencies.
 
-- The JVM Build Service analyzes your application and determines the dependencies that the system needs to rebuild.
+* The JVM Build Service analyzes your application and determines which dependencies the system needs to rebuild.
 
-- The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
+* The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
 
-- The system analyzes the repository and uses the results to find a build strategy. For example, if the system cannot find the JDK version to use, the system uses all versions to determine the most effective version to use.
+* The system analyzes the repository and uses the results to find a build strategy. For example, if the system cannot find the JDK version to use, the system uses all versions to determine the most effective version to use.
 
-- The system attempts to build all the dependencies and stores them in container images in an image registry, and `quay.io` is the default.
+* The system attempts to build all the dependencies and stores them in container images in an image registry, and `quay.io` is the default.
 
-- When the system has completed all its builds, you can rebuild your application.
+* When the system has completed all its builds, you can rebuild your application.
 
-- If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
+* If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
 
 == Setup
 
@@ -38,37 +38,55 @@ All interactions with the JVM Build Service require you to be logged into the Op
 
 .Procedure
 
-Copy the login command from: https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/
+* Copy the login command from: https://registration-service-toolchain-host-operator.apps.stone-prd-host1.wdlc.p1.openshiftapps.com/
 
 === Setting up the CLI
 
-Many of the commands below can be setup using the JVM Build Service CLI.
+Many of the commands can be setup using the JVM Build Service CLI. The CLI is currently distributed as a docker image.
 
-The CLI is currently distributed as a docker image. To use the docker image, create the following alias:
+.Prerequisite 
 
+* Log into your OpenShift namespace. 
+
+.Procedure
+
+. To use the Docker image, create the following alias:
+
++
 ```
 alias jbs='docker run --mount type=bind,source=$HOME/.kube/config,target=/kube --mount type=bind,source=$HOME/.github,target=/root/.github --env KUBECONFIG=/kube  -it --rm   quay.io/redhat-appstudio/hacbs-jvm-cli:latest'
 ```
 
-To update the latest version, create an update alias. You can run this alias to pull the latest version of the docker image:
+. To update the latest version, create an updated alias. 
+. To pull the latest version of the Docker image, run the updated alias: 
 
++
 ```
 alias update-jbs='docker  pull quay.io/redhat-appstudio/hacbs-jvm-cli:latest'
 ```
 
-The CLI supports tab completion and all the commands have a --help option to show usage.
-
-Note that this CLI also requires you to be logged in as described above.
-
-To use commands that modify build recipes (i.e. commands that are used to fix failing builds) you will need to create a `$HOME/.github` file as specified at  https://github-api.kohsuke.org/[].
+. To show the usage, run commands with  `--help` option. 
+. To modify build recipes, like commands that fix failing builds, create a file like, `$HOME/.github`, that is specified at  https://github-api.kohsuke.org/[].
 
 == Configuring The JVM Rebuild Service
 
-There are three ways to setup the JVM Build Service, they are listed below.
+You can set up the JVM Build Service in the following ways: 
 
-=== Setting up using the CLI
+* Setting up with the CLI
+* Setting up without Quay.io configuration 
+* Setting up with Quay.io configuration 
 
-If you do not require explicit quay.io configuration, and you have setup the CLI this is the simplest way to setup the JVM Build Service. To do this run the `setup rebuilds` command in the CLI:
+=== Setting up with the CLI
+
+If you do not require explicit quay.io configuration, you can simply set up the JVM Build Service. The JVM Build service automatically creates rebuilds for you and creates a query repository to store your rebuilt artifacts. 
+
+.Prerequisite 
+
+* You have setup the CLI. 
+
+.Procedure
+
+* In the CLI, run the `setup rebuilds` commmand:
 
 [source]
 ----
@@ -78,14 +96,15 @@ found .dockerconfigjson secret with appropriate token keys in namespace sdouglas
 Rebuilds setup successfully
 ----
 
-This will automatically perform the steps detailed below and setup rebuilds for you. The JVM Build Service will automatically create a quary repository to store your rebuilt artifacts.
+The `setup rebuilds` command automatically performs the steps detailed below and creates rebuilds for you. The JVM Build Service automatically creates a query repository to store your rebuilt artifacts.
 
-=== Manual Setup Without Quay.io Configuration*
+=== Setting up without Quay.io configuration*
 
-If you do not want to use the CLI this method creates the Kubernetes objects to setup the JVM Build Service directory using `kubectl`.
+If you do not want to use the CLI, use the `kubectl` command to create the Kubernetes objects to set up the JVM Build Service directory. 
+
+.Procedure
 
 . Create a file, for example, `config.yaml`.
-
 . In the `config.yaml` file, create a `JBSConfig` resource with the following data:
 
 +
@@ -102,12 +121,13 @@ spec:
 . Run `kubectl apply -f config.yaml`
 
 
-=== Manual Procedure With Explicit Quay.io Config
+=== Setting up with explicit Quay.io configuration 
 
-This is required if you want to specify where the rebuilt artifacts are stored. It is more complex you must also provision a secret to allow the JVM Build Service to push to the repository.
+If you want to specify where the rebuilt artfiacts are stored, you must use the Quay.io configuration to configure your JVM Build Service. You must also provision a secret to allow the JVM Build Service to push to the repository.
+
+.Procedure 
 
 . Create a file, for example, `config.yaml`.
-
 . In the `config.yaml` file, create a *JBSConfig* resource with the following data:
 
 +
@@ -128,19 +148,16 @@ spec:
     maven-repository-302-confluent: "https://packages.confluent.io/maven"
 
 ----
-<1> To enable and configure the rebuild dependencies function you need to add enable-rebuilds: "true" to the `JBSConfig` object.
+<1> To enable and configure the rebuild dependencies function, add enable-rebuilds: "true" to the `JBSConfig` object.
 <2> The URL of the registry that holds the images of your rebuild dependencies.
 <3> The organization ID.
 <4> The repository to store the images in.
 <5> List any additional Maven repositories here.
 
-. Run `kubectl apply -f config.yaml` while logged into the build namespace.
-
-Now we have added the configuration we need to setup the Quay.io credentials to be able to push to our repository. The JVM
-Build Service uses the https://github.com/redhat-appstudio/service-provider-integration-operator[Service Provider Integration Operator] to store credentials in AWS Secrets Manager.
-
-To upload our secret first we need to run a command to get the name of the `SPIAccessToken` we need to update, to do this
-run the following command:
+. While logged into the build namespace, run `kubectl apply -f config.yaml`.
+. Add the configuration to set up the Quay.io credentials to be able to push to the repository. To store credentials in AWS Secrets Manager, the JVM
+Build Service uses the https://github.com/redhat-appstudio/service-provider-integration-operator[Service Provider Integration Operator]. 
+. To upload the secret first, run a command to get the name of the `SPIAccessToken` that you need to update. Run the following command:
 
 ----
 kubectl get spiaccesstokenbindings.appstudio.redhat.com jvm-build-image-secrets -o yaml`
@@ -189,30 +206,34 @@ status:
 ----
 <1> This is the name of the APIAccessToken we need to upload the secret
 
-Record the name of the `linkedAccessTokenName` (in this case `generated-spi-access-token-px5w8`), this
-will be referred to as $ACCESS_TOKEN in the examples below.
+. Record the name of the `linkedAccessTokenName`. In this case, `generated-spi-access-token-px5w8`. This is referenced as 
+ $ACCESS_TOKEN in the examples below.
 
-Now we need to create a secret with specific config that will be uploaded to AWS Secrets Manager.
+==== Creating a secret with specific configuration 
 
-For the next step we need a quay.io username and password. The best way to get these is to log in
-and create a robot account, and record the username and password after account creation. For the purposes
-of the examples below these will be referred to as $QUAY_USERNAME and $QUAY_PASSWORD.
+Create a secret with specific configuration that uploads to AWS Secrets Manager. You need a quay.io username and password. The best way to get a username and password is to log in,
+create a robot account, and then record the username and password. For the purposes
+of the examples below, the username and password are referred to as $QUAY_USERNAME and $QUAY_PASSWORD.
 
-Create a secret with the following command:
+.Procedure 
 
+. Create a secret with the following command:
+
++
 ----
 kubectl create secret generic jvm-build-service-upload --from-literal=userName=$QUAY_USERNAME --from-literal=tokenData=$QUAY_PASSWORD --from-literal=providerUrl=quay.io --from-literal=spiTokenName=$ACCESS_TOKEN
 ----
 
-Then we need to add a special label to the secret so that the SPI knows to store it in AWS Secrets Manager:
+. Add a special label to the secret so that the SPI knows to store it in AWS Secrets Manager:
 
++
 ----
 kubectl label secret jvm-build-service-upload spi.appstudio.redhat.com/upload-secret=token
 ----
 
-Once these steps are completed the secret should disappear, and the system is ready to use.
+After you complete these steps, the secret should disappear, and the system is ready to use.
 
-== Examining the System State
+== Examining the system state
 
 After you have run your first java build with rebuilds enabled you can use `kubectl` to view the state of the rebuilds.
 
@@ -245,7 +266,7 @@ NAME                             URL                                            
 
 The names of the `PipelineRun` objects begin with the build name. This enables you to view logs for each `PipelineRun`.
 
-=== Re-Running Builds [[rebuilding_artifacts]]
+=== Rerunning builds [[rebuilding_artifacts]]
 
 To rebuild an artifact, you need to annotate the `ArtifactBuild` object with `jvmbuildservice.io/rebuild=true`. For example, to rebuild the `zookeeper.3.6.3-8fc126b0` `ArtifactBuild`, you would run:
 
@@ -263,7 +284,7 @@ kubectl annotate artifactbuild --all jvmbuildservice.io/rebuild=failed
 
 Generally, when you are trying to fix a failure, you must manually run the builds yourself.
 
-== Dealing With failed Builds
+== Dealing wth failed builds
 
 In order to see why the build failed, look at the results from the JVM Build Service.
 
@@ -377,12 +398,9 @@ To fix failed builds, first look at the build logs and figure out why it failed.
 *Procedure*
 
 . Identify the correct `DependencyBuild` object. 
-
 . Run `kubectl get dependencybuilds` to list the objects. 
-
 . Pick the object you are interested in. Generally each `DependencyBuild` will have multiple pipeline
 runs, named using the pattern `<dependency-build-name>-build-<n>`. 
-
 . View the logs by using the command `tkn pr logs <name>`:
 
 [source]
@@ -400,9 +418,7 @@ If there are no builds at all, then the analyser could not find a build file to 
 *Procedure*
 
 . Create a fork of the repository. 
-
 . Change the build system to Maven. 
-
 . Build from the fork. 
 
 To see an example, go to https://github.com/jvm-build-service-code/cs-au-dk-dk.brics.automaton[this Java package project] on GitHub.
@@ -464,7 +480,6 @@ which allows the namespace administrator to control where dependencies come from
 .*Procedure*
 
 . Browse to an appropriate directory and create a file, for example, `config.yaml`.
-
 . In the `config.yaml` file, create a *ConfigMap* resource with the following data:
 
 +
@@ -483,7 +498,7 @@ spec:
 ----
 <1> To add a maven repository the key in the map must follow a set pattern, which is, maven-repository-$priority-$name: $repo-url. Additionally, Maven central has a priority of 200; therefore the system tries anything with a lower priority before maven central. The rebuilt artifacts if they are in use have a priority of 100.
 
-=== Clearing the Cache
+=== Clearing the cache
 
 If for some reason you need to clear the cache you can do it by applying an annotation to the `JBSConfig` object:
 
