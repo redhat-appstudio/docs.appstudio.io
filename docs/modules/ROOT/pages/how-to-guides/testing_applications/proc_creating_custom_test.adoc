@@ -91,6 +91,28 @@ spec:
 . Add your new custom test as an integration test in {ProductName}.
 .. For additional instructions on adding an integration test, see this document: xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test].
 
+.Data injected into integration PipelineRun
+
+In the integration test created above, integration-service adds the following Parameters/Labels automatically to the integration PipelineRun.
+
+Parameters:
+
+ . `SNAPSHOT` containing the https://github.com/redhat-appstudio/application-api/blob/main/api/v1alpha1/snapshot_types.go[Snapshot] as a json string e.g. https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[An example of Snapshot json string]
+ . `NAMESPACE` containing the namespace where the snapshot will be deployed
+
+[NOTE]
+====
+The NAMESPACE parameter only gets added if the IntegrationTestScenario uses ephemeral environments to deploy the Snapshot that's being tested
+====
+
+Labels:
+
+ . `appstudio.openshift.io/application` containing the name of application
+ . `appstudio.openshift.io/component` containing the name of component
+ . `appstudio.openshift.io/snapshot` containing the name of snapshot
+ . `test.appstudio.openshift.io/optional` for optional flag of IntegrationTestScenario
+ . `test.appstudio.openshift.io/scenario` containing the name of IntegrationTestScenario
+
 .Verification
 
 After adding the integration test to an application, you need to trigger a new build of its components to make {ProductName} run the integration test. Make a commit to the GitHub repositories of your components to trigger a new build.
