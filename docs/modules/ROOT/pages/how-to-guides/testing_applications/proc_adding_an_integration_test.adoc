@@ -24,7 +24,8 @@ Complete the following steps in the {ProductName} console:
 .Params added by integration-service automatically to the integration PipelineRun
 .. A param containing the Snapshot as a json string
 .. A param containing the DeploymentTarget connection details and Environment name
-.Some labels added by integration-service automatically to the integration PipelineRun
+
+.Labels added by integration-service automatically to the integration PipelineRun
 .. The type of the PipelineRun, i.e. "test"
 .. Optional flag of the IntegrationTestScenario
 .. The name of both application , component and IntegrationTestScenario
