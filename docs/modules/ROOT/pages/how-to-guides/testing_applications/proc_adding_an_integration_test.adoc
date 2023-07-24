@@ -20,7 +20,8 @@ Complete the following steps in the {ProductName} console:
 . Start a new build for any component you want to test.
 .. For components using the default build pipeline, go to the *Components* tab, select the three dots next to the name of the component, and select *Start new build*.
 .. For components with an upgraded build pipeline, make a commit to their GitHub repository.
-.Some params added by integration-service automatically to the integration PipelineRun
+
+.Params added by integration-service automatically to the integration PipelineRun
 .. A param containing the Snapshot as a json string
 .. A param containing the DeploymentTarget connection details and Environment name
 .Some labels added by integration-service automatically to the integration PipelineRun
