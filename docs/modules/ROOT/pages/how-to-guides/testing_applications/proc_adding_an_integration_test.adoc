@@ -28,6 +28,7 @@ Complete the following steps in the {ProductName} console:
 .. The type of the PipelineRun, i.e. "test"
 .. Optional flag of the IntegrationTestScenario
 .. The name of both application , component and IntegrationTestScenario
+
 .Verification
 When the new build is finished:
 
