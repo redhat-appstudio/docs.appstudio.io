@@ -7,24 +7,19 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
       - name: Size label
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install hub
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y hub
       - name: Calculate size
         run: |
-          if git rev-parse HEAD~1 >/dev/null 2>&1; then
-            git fetch origin main --update-shallow
-            git diff --stat HEAD~1
-            size=$(cat .git/FETCH_HEAD | wc -l)
-          else
-            echo "No previous commits"
-            size=0
-          fi
+          additions=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" | jq '.additions')
+          deletions=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" | jq '.deletions')
+          size=$((additions + deletions))
           echo "SIZE=$size" >> $GITHUB_ENV
       - name: Add label
         run: |
@@ -65,3 +60,4 @@ jobs:
               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels \
               -d '["size: XS"]'
           fi
+          
