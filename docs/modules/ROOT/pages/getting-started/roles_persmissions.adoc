@@ -1,15 +1,51 @@
 = Permissions and roles
 
+== Getting started 
+
+When the administrators at {ProductName} create a workspace for you, you automatically have the role of *Admin*. 
+
+== Types of roles
+
 The following list shows the three roles that are available in a workspace:
 
 * *Contributor*: Ideal for users who actively push to your workspace
 * *Maintainer*: Ideal for users who need to manage the workspace, but who don't need access to sensitive actions like managing security or deleting a workspace
-* *Owner*: Ideal for users who need full access to the workspace, including sensitive actions like managing security or deleting a workspace
+* *Admin*: Ideal for users who need full access to the workspace, including sensitive actions like managing security or deleting a workspace
 
-== Adding a user
+== Adding or changing users 
+
 We currently do not support adding users in the user interface (UI). To add a collaborator, you can send us a Slack message in the https://rhdevnation.slack.com/archives/C04LXT1EU7K[#software-supply-chain-security] channel and we will process your request.
 
 Or, send a message in the chat feature in the {ProductName} application. 
+
+////
+
+To begin adding, editing, or removing users from a workspace, complete the following steps:
+. In the side bar, select *Workspaces*. 
+. Select the tab *Access*. 
+
+=== Adding a user to a workspace
+
+. In *Find by username*, enter the users that you want to grant access to. 
+* Optionally, change *Username* to the search option of your choice. 
+. Select *Grant Access*. 
+. In *Assign role*, select either *Contributor*, *Maintainer*, or *Admin*. 
+* To view the permissions for each role, select *Show list*. 
+. Select *Save*. 
+
+=== Removing a user from a workspace
+. Select the three dots next to the user that you want to remove. 
+. Select *Remove access*.
+. To confirm, select *Remove*. 
+
+=== Editing the access of a user
+. Select the three dots next to the user that you want to edit. 
+. Select *Edit access*. 
+. In *Assign roles*, change the drop-down to the new role that you want. 
+* To view the permissions for each role, select *Show list*. 
+. Select *Save changes*. 
+
+////
 
 == Permissions by role
 
@@ -18,7 +54,7 @@ The following table shows the actions that each type of collaborator can perform
 .Permissions for each type of collaborator
 
 |===
-|Action |Contributor |Maintainer |Owner
+|Action |Contributor |Maintainer |Admin
 
 |*Workspace:* 
 
