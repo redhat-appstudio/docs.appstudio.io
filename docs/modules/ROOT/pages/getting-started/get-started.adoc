@@ -5,7 +5,7 @@
 == Signing up
 Let’s get you signed up!
 
-. Go to https://console.redhat.com/beta/hac/application-pipeline[{ProductName}]. 
+. Go to https://console.redhat.com/preview/hac/application-pipeline[{ProductName}]. 
 . Click *Join waitlist*. 
 
 == Creating your first application
@@ -112,7 +112,7 @@ To view your recent commits, go to the *Activity* tab and click *Latest commits*
 
 Didn’t fork your repo? Fret not! You can also view your activity by pipeline runs. A pipeline run is a collection of TaskRuns that are arranged in a specific order of execution. 
 
-To view your pipeline runs, go to the *Activity* tab and click *Pipeline runs*. 
+To view your pipeline runs, go to the *Activity*, click *Pipeline runs*, and then select one of the hyperlinks in *Name*. 
 
 The following image shows the *Pipeline run details*:
 
@@ -134,7 +134,7 @@ The Enterprise Contract (EC) is an artifact verifier and customizable policy che
 For more information about EC, refer to xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract].
 
 === Deploying your app 
-Check the status of your application in *Environments*. You can view information about your environment such as its type, strategy, and deployment status:
+Check the status of your application in *Environments*. You can view information about your environment such as its type, deployment status, and cluster type:
 
 image::Environments.png[The Environments tab shows the type of your environment, its deployment strategy, the cluster type, the application status, the last deploy, and the applications deployed. In this example, the type is Default, the strategy is Automatic, the cluster type is OpenShift, the Application status is Missing, the Last deploy is -, and there are 3 applications deployed.]
 
