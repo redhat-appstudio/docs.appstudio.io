@@ -70,7 +70,7 @@ NOTE: If you want to define a task directly in this file, rather than using `tas
 
 == Exchanging the build pipeline build task with higher memory limits
 
-Task `buildah` for building components from Dockerfile has a memory limit set to 4 GB. For components with higher memory requirements, there are tasks prepared:
+The `buildah` task, which builds components from a Dockerfile, has a memory limit of 4 GB. To build components with memory requirements greater than 4 GB, use the following tasks:
 
 * link:https://quay.io/repository/redhat-appstudio-tekton-catalog/task-buildah-6gb?tab=tags[quay.io/redhat-appstudio-tekton-catalog/task-buildah-6gb]
 * link:https://quay.io/repository/redhat-appstudio-tekton-catalog/task-buildah-8gb?tab=tags[quay.io/redhat-appstudio-tekton-catalog/task-buildah-8gb]
@@ -78,9 +78,12 @@ Task `buildah` for building components from Dockerfile has a memory limit set to
 
 .Procedure
 
-. In each `.yaml` file in the `.tekton` directory, locate a task named `build-container` under `tasks`:
-.. Set under `.taskRef.params` `name` to `buildah-6gb`
-.. Set under `.taskRef.params` `bundle` to `quay.io/redhat-appstudio-tekton-catalog/task-buildah-6gb:0.1`
+To exchange the build task with a memory limit of 6 GB, complete the following steps. For a memory limit of 8 or 10 GB, replace the references to 6 GB with the appropriate values.
+
+. Go to the GitHub repo of your component.
+. In each .yaml file in the .tekton directory, under tasks, locate the task named build-container:
+.. Under `.taskRef.params`, set `name` to `buildah-6gb`.
+.. Under `.taskRef.params`, set `bundle` to `quay.io/redhat-appstudio-tekton-catalog/task-buildah-6gb:0.1`.
 
 == Verification
 
