@@ -102,7 +102,7 @@ Parameters:
 
 Labels:
 
-* `appstudio.openshift.io/application`: contains the name of the application.
+* *`appstudio.openshift.io/application`*: contains the name of the application
 * *`appstudio.openshift.io/component`*: contains the name of the component
 * `appstudio.openshift.io/snapshot`: contains the name of the snapshot.
 * `test.appstudio.openshift.io/optional`: contains the optional flag, which specifies whether or not components must pass the integration test before deployment.  
