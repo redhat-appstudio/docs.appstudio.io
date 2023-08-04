@@ -97,14 +97,14 @@ When you create a custom integration test, {ProductName} automatically adds cert
 
 Parameters:
 
-* *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot json string]
-* *`NAMESPACE`*:  adds the `namespace` parameter to indicate which namespace it uses for deployment only if your integration test specifies that {ProductName} should deploy a snapshot to an ephemeral environment during testing. This parameter can help you query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods. 
+* *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot JSON string].
+* *`NAMESPACE`*:  indicates which namespace {ProductName} uses for temporary deployment, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. This parameter can help you query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods. 
 
 Labels:
 
-* *`appstudio.openshift.io/application`*: contains the name of the application
-* *`appstudio.openshift.io/component`*: contains the name of the component
-* *`appstudio.openshift.io/snapshot`*: contains the name of the snapshot
+* *`appstudio.openshift.io/application`*: contains the name of the application.
+* *`appstudio.openshift.io/component`*: contains the name of the component.
+* *`appstudio.openshift.io/snapshot`*: contains the name of the snapshot.
 * `test.appstudio.openshift.io/optional`: contains the optional flag, which specifies whether or not components must pass the integration test before deployment.  
 * `test.appstudio.openshift.io/scenario`: contains the name of the integration test (this label ends with "scenario," because each test is technically a custom resource called an `IntegrationTestScenario`). 
 
