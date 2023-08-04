@@ -91,6 +91,23 @@ spec:
 . Add your new custom test as an integration test in {ProductName}.
 .. For additional instructions on adding an integration test, see this document: xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test].
 
+.Data injected into the PipelineRun of the integration test
+
+When you create a custom integration test, {ProductName} automatically adds certain parameters and labels to the PipelineRun of the integration test. This section explains what those parameters and labels are, and how they can help you.
+
+Parameters:
+
+* *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot JSON string].
+* *`NAMESPACE`*:  indicates which namespace {ProductName} uses for temporary deployment, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. This parameter can help you query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods. 
+
+Labels:
+
+* *`appstudio.openshift.io/application`*: contains the name of the application.
+* *`appstudio.openshift.io/component`*: contains the name of the component.
+* *`appstudio.openshift.io/snapshot`*: contains the name of the snapshot.
+* *`test.appstudio.openshift.io/optional`*: contains the optional flag, which specifies whether or not components must pass the integration test before deployment.  
+* *`test.appstudio.openshift.io/scenario`*: contains the name of the integration test (this label ends with "scenario," because each test is technically a custom resource called an `IntegrationTestScenario`). 
+
 .Verification
 
 After adding the integration test to an application, you need to trigger a new build of its components to make {ProductName} run the integration test. Make a commit to the GitHub repositories of your components to trigger a new build.
