@@ -15,9 +15,7 @@ Complete the following steps in the {ProductName} console:
 . In the *GitHub URL* field, enter the URL of the GitHub repository that contains the test you want to use.
 . Optional: If you want to use a branch, commit, or version other than the default, specify the branch name, commit SHA, or tag in the *Revisions* field
 . In the *Path in repository* field, enter the path to the `.yaml` file that defines the test you want to use.
-. Optional: If you want to run this test in parallel with other integration tests, use the drop-down menu in the *Environment* field to select *development*. 
-.. Running integration tests in parallel allows your components to progress through the testing pipeline faster. 
-.. This selection configures {ProductName} to clone the development environment, and run the integration test in that environment.
+. Optional: If you need to deploy your application as part of the test, use the drop-down menu in the *Environment* field to select *development*. {ProductName} then deploys your application to a temporary clone of that environment during testing.
 . Optional: If you do not want the test to prevent the application from being deployed, then select *Mark as optional for release*. 
 . Select *Add integration test*.
 . Start a new build for any component you want to test.
