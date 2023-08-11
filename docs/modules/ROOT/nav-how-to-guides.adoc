@@ -11,11 +11,13 @@
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level tests]
 *** xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test]
 *** xref:how-to-guides/testing_applications/proc_creating_custom_test.adoc[Creating a custom integration test]
+** Managing environments
+*** xref:how-to-guides/managing-environments/con_overview_of_environments.adoc[Overview of {ProductName} environments]
+*** xref:how-to-guides//managing-environments/proc_creating_your_own_environment.adoc[Creating your own environment]
 ** Securing your supply chain
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[Inspecting SBOMs]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect-slsa-provenance.adoc[Downloading your SLSA provenance]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps in the CLI]
-** xref:how-to-guides/proc_creating_your_own_environment.adoc[Creating your own environment]
 ** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
 ** xref:how-to-guides/proc_delete_application.adoc[Deleting an application]
 

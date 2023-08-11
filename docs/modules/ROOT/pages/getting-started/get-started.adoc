@@ -140,7 +140,7 @@ image::Environments.png[The Environments tab shows the type of your environment,
 
 An environment is a set of compute resources that you can use to develop, test, and stage your applications. There is a development environment included for you so that you can explore {ProductName}.
 
-For information about creating an application with your own cluster, refer to xref:how-to-guides/proc_creating_your_own_environment.adoc[Creating your own environment].
+For information about creating an application with your own cluster, refer to xref:how-to-guides/managing-environments/proc_creating_your_own_environment.adoc[Creating your own environment].
 
 === Examining your SBOM
 
