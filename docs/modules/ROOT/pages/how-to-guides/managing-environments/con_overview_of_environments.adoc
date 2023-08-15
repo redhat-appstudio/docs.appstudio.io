@@ -9,7 +9,7 @@ The following sections further explain these different environments and how you 
 
 == Static environments
 
-By default, {ProductName} deploys your application to AWS through Red Hat OpenShift Service on AWS (ROSA). This default static environment runs your application for as long as you wish. But you can host your application in a different static environment, using a bring your own cluster (BYOC) option.
+By default, {ProductName} deploys your application to AWS through Red Hat OpenShift Service on AWS (ROSA). This default static environment runs your application for as long as you want. But you can host your application in a different static environment, using a bring your own cluster (BYOC) option.
 
 Currently, with the BYOC option, you can use a static environment hosted by any of the major cloud providers — AWS, Azure, GCP, etc.  
 
@@ -19,7 +19,7 @@ You might want to deploy your application as part of a custom integration test. 
 
 Normally, {ProductName} runs integration tests in the static development environment. But to deploy your application during a test, you need a new environment. The static development environment might already host the latest version of your application. 
 
-This is where temporary environments come in. You can configure {ProductName} to deploy your application to a temporary clone of the development environment. You can perform this configuration when adding an integration test. {ProductName} then clones the environment each time it performs the test. The temporary environment disappears after testing. 
+This is the use case for temporary environments. You can configure {ProductName} to deploy your application to a temporary clone of the development environment. You can perform this configuration when adding an integration test. {ProductName} then clones the environment each time it performs the test. The temporary environment disappears after testing. 
 
 == Additional resources
 
