@@ -34,7 +34,7 @@ partner-catalog-ec-pz7b      18d   True     OK       Updated
 +
 [source]
 --
-oc get component <component name> -ojson | jq ‘.status.containerImage’
+oc get component <component name> -ojson | jq '.status.containerImage'
 --
 
 +
@@ -42,11 +42,12 @@ Example:
 +
 [source]
 --
-`oc get component partner-catalog-build-ucmg -ojson | jq ‘.status.containerImage’
+oc get component partner-catalog-build-ucmg -ojson | jq '.status.containerImage'
 --
 
-. For convenience, save the image path to a local variable:
-
+. For convenience, save the image path to a local variable.
++
+Example:
 +
 [source]
 --
