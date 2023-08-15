@@ -11,7 +11,7 @@ The following sections further explain these different environments and how you 
 
 By default, {ProductName} deploys your application to AWS through Red Hat OpenShift Service on AWS (ROSA). This default static environment runs your application for as long as you wish. But you can host your application in a different static environment, using a bring your own cluster (BYOC) option.
 
-Currently, with the BYOC option, you can use a static environment hosted by any of the major cloud providers—AWS, Azure, GCP, etc.  
+Currently, with the BYOC option, you can use a static environment hosted by any of the major cloud providers — AWS, Azure, GCP, etc.  
 
 == Temporary environments   
 
