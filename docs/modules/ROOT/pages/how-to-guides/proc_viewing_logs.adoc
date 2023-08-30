@@ -96,4 +96,18 @@ You can start a new build pipeline for your components and {ProductName} will ge
 
 == Privacy notice
 
-There is currently no limitation on the data retention period.
+{ProductName} stores pod logs on an OpenShift cluster until pods are pruned.
+
+For PipelineRuns and TaskRuns, we forward logs data to several locations:
+
+* Logs are stored on an OpenShift cluster and in its persistent storage volumes until pods are pruned. On the cluster, we store logs for the 10 most recent PipelineRuns executed in the namespace.
+* Logs are sent to Amazon Relational Database Service (Amazon RDS). We store Tekton Results there that are a data source for logs, so you can access logs after they are pruned from the cluster. These logs are not automatically deleted.
++
+[NOTE]
+====
+Deleting an application or a component will not delete its logs from the cluster or RDS. However, deleting a workspace will delete these logs.
+====
+
+* Logs are sent to Amazon Simple Storage Service (Amazon S3), Amazon CloudWatch, and Splunk, where we store them according to our data retention policy. These logs are for internal Red Hat usage, for support and security purposes. They are not pruned or deleted when a workspace is deleted.
+
+Logs data is also part of our back ups that we create for disaster recovery purposes.
