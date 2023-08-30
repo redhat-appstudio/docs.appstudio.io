@@ -1,0 +1,99 @@
+= Viewing logs 
+
+{ProductName} generates logs when it builds, checks, and deploys components of your application. Reading logs can be your first step to understand why the build or checks failed.
+
+You can access pod and Task logs using both the UI and CLI, you can also download any logs to your local machine. We store logs for the 10 most recent PipelineRuns executed in the namespace but you can start a new build pipeline and {ProductName} will generate a new set of logs for you.
+
+== Types of logs
+
+* *Pod logs* show health and status of a running Kubernetes pod within your application. {ProductName} creates pod logs when it starts your application in a pod on an OpenShift cluster so you can watch how it boots your application in real time.
+* *Task logs* are generated for all Tasks of a build pipeline. Both default and custom build pipelines have PipelineRuns of types *Build* and *Test*.
++
+Logs for *Test* PipelineRuns are the same for all pipelines, they log how a build is verified with an Enterprise Contract (EC). However logs for *Build* PipelineRuns differ for default and custom build pipelines:
+
+** Logs for default build pipelines log how {ProductName} clones a Git repository with your code or our sample code, builds container images with your application, checks the images, and generates a SBOM.
+** Custom build pipelines have PipelineRuns that run on opening pull requests and on push to the Git repository, and logs for different PipelineRuns differ. On-push PipelineRuns clone a Git repo and build a container image with a component. On-pull-request PipelineRuns also run several advanced checks.
+
+== Viewing pod logs in the web UI
+
+.Prerequisites
+
+* You have created an application in {ProductName}.   
+
+.Procedure
+
+To view pod logs for a component: 
+
+* Navigate to the *Components* tab > *View pod logs*. 
+** A pop-up window allows you to view pod logs in the UI or download them to your machine using the *Download* button.
+
+== Viewing Task logs in the web UI
+
+In the UI you can view Task logs all together on one screen or choose to view each Task log separately, together with other Task details.
+
+.Prerequisites
+
+* You have created an application in {ProductName}.
+
+.Procedure
+
+To view all Task logs displayed together on one screen:
+
+. Navigate to the *Activity* tab > *Pipeline runs*.
+. Select a PipelineRun you need > Navigate to the *Logs* tab.
+
+To view logs for a particular Task:
+
+. Navigate to the *Activity* tab > *Pipeline runs*.
+. Select a PipelineRun you need. You have 2 options from here:
+.. Navigate to the *Details* tab. In a graphic representation of a pipeline called *Pipeline run details* select a Task you need. A side panel will open that includes the *Logs* tab.
++
+OR
++
+.. Navigate to the *Task runs* tab > Select a TaskRun you need > Navigate to the *Logs* tab.
+
+== Viewing Task logs with the Tekton CLI
+
+.Prerequisites
+
+* You have installed the link:https://tekton.dev/docs/cli[Tekton CLI].
+* You have created an application in {ProductName}.
+
+.Procedure
+
+To view Task logs with the Tekton CLI:
+
+. List the existing PipelineRuns: 
++
+[source]
+--
+tkn pr list
+--
+
+. Copy a name of a PipelineRun you need logs for.
+. Access logs for a particular PipelineRun:
++
+[source]
+--
+tkn pr logs <pipelinerun-name>
+--
+
+[NOTE]
+====
+In the Tekton CLI you can use `pr` as a shortcut for the PipelineRun commands. 
+====
+
+== Troubleshooting
+
+{ProductName} allows you to view logs for the 10 most recent PipelineRuns executed in the namespace. When logs aren't available any longer you see the following message instead of logs:
++
+[source]
+--
+Logs are no longer accessible for <task-name>.
+--
+
+You can start a new build pipeline for your components and {ProductName} will generate a new set of logs.
+
+== Privacy notice
+
+There is currently no limitation on the data retention period.
