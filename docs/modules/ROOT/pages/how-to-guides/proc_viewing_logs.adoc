@@ -80,13 +80,13 @@ tkn pr logs <pipelinerun-name>
 
 [NOTE]
 ====
-In the Tekton CLI you can use `pr` as a shortcut for the PipelineRun commands. 
+In the Tekton CLI you can use `__pr__` as a shortcut for the PipelineRun commands. 
 ====
 
 == Troubleshooting
 
 {ProductName} allows you to view logs for the 10 most recent PipelineRuns executed in the namespace. When logs aren't available any longer you see the following message instead of logs:
-+
+
 [source]
 --
 Logs are no longer accessible for <task-name>.
