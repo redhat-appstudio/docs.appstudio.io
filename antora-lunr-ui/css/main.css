@@ -114,3 +114,29 @@ aside.toc.sidebar {
 .image {
     border: 1px solid #000000 !important;
 }
+
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.popuptext {
+    visibility: hidden;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.popup:hover .popuptext {
+    visibility: visible;
+}
