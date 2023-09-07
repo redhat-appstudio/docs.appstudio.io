@@ -6,21 +6,22 @@ When the administrators at {ProductName} create a workspace for you, you automat
 
 == Types of roles
 
-The following list shows the three roles that are available in a workspace:
+Invite other users to collaborate in your workspace by entering their {ProductName} username. You can assign one of the following roles to a collaborator:
 
-* *Contributor*: for users who actively push to your workspace
-* *Maintainer*: for users who need to manage the workspace, but who don't need access to sensitive actions like managing security or deleting a workspace
-* *Admin*: for users who need full access to the workspace, including sensitive actions like managing security or deleting a workspace
+* *Contributor*: For users who regularly push to your workspace
+* *Maintainer*: For users who need to manage the workspace but who don't need access to sensitive actions like managing security or deleting a workspace
+* *Admin*: For users who need full access to the workspace and who need to perform sensitive actions like managing security or deleting a workspace
 
 == Managing users 
 
 To begin adding, editing, or removing users from a workspace, complete the following steps:
+
 . In the side bar, select *Workspaces*. 
 . Select the tab *Access*. 
 
 === Adding a user to a workspace
 
-. In *Find by username*, enter the Red Hat Trusted Application username that you want to grant access to. 
+. In *Find by username*, enter the {ProductName} username that you want to grant access to. 
 . Select *Grant Access*. 
 . In *Assign role*, select either *Contributor*, *Maintainer*, or *Admin*. 
 * To view the permissions for each role, select *Show list*. 
@@ -46,28 +47,6 @@ The following table shows the actions that each type of collaborator can perform
 
 |===
 |Action |Contributor |Maintainer |Admin
-
-|*Workspace:* 
-
-View a workspace
-^.>|✔️
-^.>|✔️
-^.>|✔️
-
-|Create a workspace
-|
-|
-^.^|✔️
-
-|Update a workspace
-|
-^.^|✔️
-^.^|✔️
-
-|Delete a workspace
-|
-|
-^.^|✔️
 
 |*Application:*
 
@@ -255,7 +234,7 @@ View a user
 ^.>|✔️
 ^.>|✔️
 
-|Create a user
+|Add a user to a workspace
 |
 ^.^|✔️
 ^.^|✔️
@@ -265,99 +244,7 @@ View a user
 ^.^|✔️
 ^.^|✔️
 
-|Delete a user
-|
-^.^|✔️
-^.^|✔️
-
-|*User group:*
-
-View a user group
-
-^.>|✔️
-^.>|✔️
-^.>|✔️
-
-|Create a user group
-|
-|
-^.^|✔️
-
-|Update a user group
-|
-^.^|✔️
-^.^|✔️
-
-|Delete a user group
-|
-^.^|✔️
-^.^|✔️
-
-|*Custom role:*
-
-View a custom role
-
-^.>|✔️
-^.>|✔️
-^.>|✔️
-
-|Create a custom role
-|
-|
-^.^|✔️
-
-|Update a custom role
-|
-|
-^.^|✔️
-
-|Delete a custom role
-|
-|
-^.^|✔️
-
-|*Tenant:*
-
-View tenant
-
-|
-|
-^.>|✔️
-
-|Create tenant
-|
-|
-^.>|✔️
-
-|Update tenant
-|
-|
-^.^|✔️
-
-|Delete tenant
-|
-|
-^.^|✔️
-
-|*Organization:*
-
-View organization
-
-^.>|✔️
-^.>|✔️
-^.>|✔️
-
-|Create organization
-|
-|
-^.^|✔️
-
-|Update organization
-|
-^.^|✔️
-^.^|✔️
-
-|Delete organization
+|Delete a user from a workspace
 |
 ^.^|✔️
 ^.^|✔️
