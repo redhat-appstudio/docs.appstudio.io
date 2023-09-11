@@ -19,6 +19,7 @@ When you create an application, {ProductName} stores the link to your GitHub rep
 == Secrets for sensitive data are available
 
 With {ProductName}, you can use build and deployment secrets to store sensitive data such as your credentials, API and encryption keys, access tokens, and more. Using secrets helps to secure your environments. We store secrets using AWS Secrets Manager.
+
 *Note:* Use secrets to store sensitive data. Do not enter any sensitive data in environment variables because App Studio stores such variables in a public GitOps repository.
 
 To create secrets, see the link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds[Creating secrets for your builds] guide.
