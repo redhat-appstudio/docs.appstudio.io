@@ -16,8 +16,10 @@ When you create an application, {ProductName} stores the link to your GitHub rep
 
 *Note:* There is no functionality to store the application configuration in a private GitOps repository. The artifacts created by {ProductName} are public and visible to anyone who is viewing the GitOps repository.
 
-== Data in deployment variables is public 
+== Secrets for sensitive data are available
 
-Developers often use deployment variables, also called environment variables, to store runtime configurations. These variables could contain sensitive data, such as database connections or credential information.
+With {ProductName}, you can use build and deployment secrets to secure your environments and store sensitive data such as your credentials, API and encryption keys, access tokens, and more. We store secrets using AWS Secrets Manager.
 
-*Note:* There is no functionality to secure sensitive data within a deployment variable. {ProductName} stores deployment variables in a public GitOps repository. Therefore, do not enter any sensitive data in deployment variables at all.
+*Note:* Use secrets to store sensitive data. Do not enter any sensitive data in environment variables because {ProductName} stores such variables in a public GitOps repository. To create secrets, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds[Creating secrets for your builds].
+
+// TODO add more secrets links when published
