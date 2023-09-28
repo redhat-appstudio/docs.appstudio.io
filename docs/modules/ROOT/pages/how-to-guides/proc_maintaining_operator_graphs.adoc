@@ -1,0 +1,243 @@
+:_content-type: PROCEDURE
+:myfunctionone: maintaining_operator_graphs
+
+[id="maintaining_operator_graphs_{context}"]
+= Maintaining an Operator graph
+
+{ProductName} uses file-based catalogs (FBCs) instead of SQLite-based catalogs as the packaging format for Operator catalogs. FBCs provide a simpler way to store and share metadata about Operator graphs written for Operator Lifecycle Manager (OLM). With {ProductName}, you can easily build, test, and release multiple FBC components from a single Operator catalog repository.
+
+{ProductName} only supports use of FBCs to store the Operator graphs because of the following benefits and because they have been supported since OpenShift Container Platform (OCP) 4.11:
+
+* *Centralized graph updates:* FBCs consolidate graph updates into a single catalog file, eliminating the need for iterative updates and simplifying the management of complex graphs.
+
+* *Convenient management and flexibility:* Compared to the deprecated SQLite-based catalog format, FBCs offer a more convenient solution for managing graph updates. Users can define all updates in one place using FBCs, and this centralized management capability streamlines the process and improves overall efficiency.
+
+* *Improved ownership and analysis:* FBCs provides users with improved ownership and control over their graphs through clean and declarative templates for comprehensive analysis and surface level checks. This simplifies upgrade possibilities determination and error state recovery, eliminating the need to rely on limited configuration options found in localized ClusterServiceVersion (CSV) files.
+
+For additional information, see link:https://olm.operatorframework.io/docs/reference/file-based-catalogs/[File-based Catalogs].
+
+== Setting up an FBC-compatible Git repository
+
+An FBC-compatible Git repository has the following directory structure:
+
+----
+Project Root
+│
+├─ Dockerfile (for example, catalog.Dockerfile)
+│
+├─ Directory for the targeted OCP version (for example, 4.12)
+│   ├─ devfile.yaml
+│   └─ catalog
+|      └─ catalog.yaml
+│
+└─ README.md
+----
+
+* *`catalog.Dockerfile`*: This file contains the instructions for building the FBC image. It should specify a parent image, such as `registry.redhat.io/openshift4/ose-operator-registry`. The Dockerfile should also have a tag corresponding to the target OpenShift Container Platform (OCP) version. 
+
++	
+*Example:*
+
++
+[source,dockerfile]
+----
+# The base image is expected to contain
+# /bin/opm (with a serve subcommand) and /bin/grpc_health_probe
+FROM registry.redhat.io/openshift4/ose-operator-registry:v4.12
+
+# Configure the entrypoint and command
+ENTRYPOINT ["/bin/opm"]
+CMD ["serve", "/configs", "--cache-dir=/tmp/cache"]
+
+# Copy declarative config root into image at /configs and pre-populate serve cache
+ADD catalog /configs
+RUN ["/bin/opm", "serve", "/configs", "--cache-dir=/tmp/cache", "--cache-only"]
+
+# Set DC-specific label for the location of the DC root directory
+# in the image
+LABEL operators.operatorframework.io.index.configs.v1=/configs
+----
+
+* *`catalog.yaml`*: This file contains important metadata about the Operator. There should be a `catalog.yml` file for each FBC image that is produced.
+
++
+*Example:*
+
++
+[source,yaml]
+----
+schema: olm.composite.catalogs
+catalogs:
+  - name: "4.13" <1>
+    destination:
+      baseImage: registry.redhat.io/openshift4/ose-operator-registry:v4.13 <2>
+      workingDir: .
+    builders:
+      - olm.builder.basic
+  - name: "4.12"
+    destination:
+      baseImage: registry.redhat.io/openshift4/ose-operator-registry:v4.12
+      workingDir: .
+    builders:
+      - olm.builder.basic
+----
+<1> The OCP version.
+<2> The parent image that the system uses to build the FBC fragments.
+
+
+* *`devfile.yaml`*: This file is used by {ProductName} to detect the type of component and to set up a build. You must set the `language: FBC` parameter to ensure that the build process runs successfully. 
+
++	
+*Example:*
+
++
+[source,yaml]
+----
+schemaVersion: 2.2.0
+metadata:
+  name: fbc-4.12
+  displayName: FBC 4.12
+  description: 'File based catalog'
+  language: fbc <1>
+  provider: Red Hat
+components:
+  - name: image-build
+    image:
+      imageName: ""
+      dockerfile:
+        uri: catalog.Dockerfile <2>
+        buildContext: "4.12" <3>
+  - name: kubernetes
+    kubernetes:
+      inlined: placeholder
+    attributes:
+      deployment/container-port: 50051
+      deployment/cpuRequest: "100m"
+      deployment/memoryRequest: 512Mi
+      deployment/replicas: 1
+      deployment/storageRequest: "0"
+commands:
+  - id: build-image
+    apply:
+      component: image-build"
+----
+<1> Indicates to {ProductName} that the component being build is an FBC component. It is a required parameter since auto-detection does not work to identify FBC components.
+<2> Specifies the Dockerfile as defined earlier.
+<3> Specifies the context directory needed to specify the FBC component corresponding to the OCP version being targeted, according to the referenced Dockerfile.
+
+
+== Adding a component
+Users should manage all the FBC components through a single application. This centralized management enables synchronized updates for graphs across all OCP versions.
+
+.Prerequisites
+
+* You have access to link:https://console.redhat.com/beta/hac/application-pipeline[App Studio].
+* You have a Git repository with FBC components.
+* You have link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/Import-code/proc_importing_code/#creating-a-red-hat-container-registry-token[created a Red Hat Container Registry token].
+
+.Procedures
+
+. Go to App Studio and select *Create application*.
+. In the *Git repository URL* field, enter the URL of your FBC-compatible Git repository.
+. Select *Import code*. The system displays the Configure your components for deployment page.
+. Disable the Default build pipeline.
+. In the Secrets section, select *Add secret*.
+. From the *Secret type* dropdown list, select *Image pull secret*.
+. In the *Select or enter name*, enter *registry-redhat-io-docker*. 
+. In the *Value* field, copy and paste or upload the downloaded secret.
+. Select *Create*.
+. Select *Create application*. The system displays a Manage build pipelines pop-up and tries to send a pull request.
+. If you have not already installed the App Studio GitHub application, select *Install GitHub application* on the Manage build pipelines popup page.
+
++
+NOTE: If you want to restrict the GitHub application’s access to certain repositories only, use the *Only select repositories* option in GitHub during the installation.
+
+. Returning to the Manage build pipelines page in {ProductName}, select *Send pull request*.
+. Select *Merge in GitHub*.
+. In GitHub, merge the pull request from the `red-hat-trusted-app-pipeline` bot.
+. Let {ProductName} complete PipelineRun for the upgraded build pipeline.
+
+.Verification
+
+. Go to *Activity > Pipeline* runs.
+
+. Select the most recent *PipelineRun*.
+
+. View the `fbc-validate` and the `fbc-related-image-check` task within the build pipeline. Ensure that the build process is executing these tasks as part of the build process and that they are not indicating a “skip checks” status. 
+
++
+If these tasks display a green checkmark, it indicates that the build process has successfully validated the FBC components against an existing link:https://enterprisecontract.dev/docs/ec-policies/release_policy.html#labels_package[Enterprise Contract] policy. However, if they do not show a green checkmark, it indicates some potential issues with the FBC components.
+
++
+NOTE: The `fbc-validate` task checks the existence and functionality of binaries, and runs validation on configurations within an FBC image. 
+
+.Next steps
+
+The application image is now available, and the next step is to release it by setting up the workspace.
+
+== Setting up workspaces to release an FBC application
+
+Two teams work together to release an application:
+
+* *Development team* - The team that develops and supports the application in a pre-production environment.
+* *Managed environment team* - The team that supports the production instance of that application.
+
+To release an application to a managed environment, the development team creates a `ReleasePlan` object in the developer workspace. The `ReleasePlan` object includes a reference to the application that the development team wants to release, along with the namespace and workspace where the application is supposed to release.
+
+=== Creating a ReleasePlan object
+
+.Prerequisites
+
+* You have an existing development and managed workspace.
+* You have installed the OpenShift CLI (`oc`).
+* You have completed the steps listed in the link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/[Getting started in the CLI] page. 
+
+.Procedures
+
+. Create a `release_plan.yaml` file locally.
+
++
+**Example `release_plan.yaml` file:**
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan <1>
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: 'true'
+    release.appstudio.openshift.io/standing-attribution: 'true'
+name: manual-fbc-release <2>
+spec:
+  application: fbc-example <3>
+  displayName: manual-fbc-release 
+  target: managed-release-team-tenant <4>
+----
+<1> The name of the resource that you are creating.
+<2> The name of the release plan.
+<3> The name of the application that you want to deploy to the managed workspace.
+<4> The workspace to which the system deploys the application. This workspace is created by the Managed environment team (for example, your organization’s SRE team).
+
+. In the development workspace, add the `release_plan.yaml` file by running the following command:
+
++
+[source,terminal]
+----
+$ oc apply -f releaseplan.yaml -n dev
+----
+
++
+This command adds the required configuration to your workspace that is needed to execute a release pipeline in a managed workspace.
+
++
+NOTE: Each `ReleasePlan` object must have a corresponding `ReleasePlanAdmission` in the managed environment where you want to release an FBC application.
+
+.Verification
+
+. Browse to the application you are creating and select the **Deployments** tab. The **Deployment** tab lists all the `ReleasePlan` objects that you created.
+. Review the appropriate `ReleasePlan` object for more information about the `ReleasePlan` objects you created. 
+
+
+== Additional information
+For information about releasing an application to production, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_release_application/[Releasing an application].
