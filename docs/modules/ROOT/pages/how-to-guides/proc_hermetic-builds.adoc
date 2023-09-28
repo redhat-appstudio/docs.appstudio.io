@@ -21,7 +21,7 @@ To create a hermetic build for a component, complete the following steps:
 
 . Go to the `.tekton` directory in the repository of your component and locate the *.yaml* files related to the *pull-request* and *push* processes.
 
-. Configure the hermetic pipeline by adding the following hermetic pipeline parameters in both the *.yaml* files:
+. To configure the hermetic pipeline in both the *.yaml* files, add the following hermetic pipeline parameters to the `spec.params` section:
 
 +
 [source,yaml]
@@ -38,7 +38,7 @@ spec:
 ====
 * In a non-java application, that is a link:https://github.com/redhat-appstudio/build-definitions/blob/main/task/buildah/0.1/buildah.yaml[Buildah] task, adding the parameter mentioned above automatically isolates the build from the network, restricting it to only build from dependencies listed in your Git repository. If you need to pull in dependencies from a package manager for one of the xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc#supported-languages[supported languages], see xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching the package manager dependencies for the Hermetic build].
 
-* When adding the parameters mentioned above, you can safely ignore the default values for the link:https://github.com/burrsutter/partner-catalog-stage/blob/e2ebb05ba8b4e842010710898d555ed3ba687329/.tekton/partner-catalog-stage-wgxd-pull-request.yaml#L87[`pipelineSpec.params`] in the *.yaml* files.
+* Do not add these parameters to the link:https://github.com/burrsutter/partner-catalog-stage/blob/e2ebb05ba8b4e842010710898d555ed3ba687329/.tekton/partner-catalog-stage-wgxd-pull-request.yaml#L87[`pipelineSpec.params`] section, as it should always display the default values for hermetic builds.
 ====
 . Create a pull request (PR) by committing your changes to the repository of the component.
 

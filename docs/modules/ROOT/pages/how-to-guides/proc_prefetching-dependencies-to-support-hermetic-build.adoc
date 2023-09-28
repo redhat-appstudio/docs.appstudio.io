@@ -33,7 +33,7 @@ To create a hermetic build for a component, complete the following steps:
 
 . Go to the `.tekton` directory in the repository of your component and locate the *.yaml* files related to the *pull-request* and *push* processes.
 
-. Configure the hermetic pipeline by adding the following hermetic pipeline parameters in both the *.yaml* files:
+. To configure the hermetic pipeline in both the *.yaml* files, add the following hermetic pipeline parameters to the `spec.params` section:
 
 +
 [source,yaml]
@@ -47,7 +47,7 @@ spec:
 <1> The `prefetch-input` parameter specifies the path to the directory that has the lockfile and the package metadata files. In the above example, the `.` indicates that the package manager lock file is located in the root of the repository. Additionally, if you have multiple directories, you can provide the path to those directories in the JSON array format. For example, `[{"path": ".", "type": "gomod"}, {"path": "subpath/to/the/other/directory", "type": "gomod"}]`.
 
 +
-NOTE: When adding the parameters mentioned above, you can safely ignore the default values for the link:https://github.com/burrsutter/partner-catalog-stage/blob/e2ebb05ba8b4e842010710898d555ed3ba687329/.tekton/partner-catalog-stage-wgxd-pull-request.yaml#L90[`pipelineSpec.params`] in the *.yaml* files.
+NOTE: Do not add these parameters to the link:https://github.com/burrsutter/partner-catalog-stage/blob/e2ebb05ba8b4e842010710898d555ed3ba687329/.tekton/partner-catalog-stage-wgxd-pull-request.yaml#L87[`pipelineSpec.params`] section, as it should always display the default values for hermetic builds.
 
 . Create a pull request (PR) by committing your changes to the repository of the component.
 
