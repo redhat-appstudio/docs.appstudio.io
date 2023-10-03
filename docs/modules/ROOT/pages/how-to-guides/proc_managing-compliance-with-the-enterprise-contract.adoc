@@ -3,9 +3,11 @@
 [id="managing-compliance-with-the-enterprise-contract_{context}"]
 = Managing compliance with the Enterprise Contract
 
-The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use Enterprise Contract to keep your software supply chain secure and ensure container images comply with your organization's policies. It does this by verifying the security and provenance of builds created through {ProductName}.
+The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. By default, {ProductName} adds the Enterprise Contract as an integration test to each new application. The Enterprise Contract then keeps your software supply chain secure and ensures container images comply with your organization's policies. It does this by verifying the security and provenance of builds created through {ProductName}.
 
-{ProductName}'s build process uses the Tekton Chains to produce a signed in-toto attestation of the build pipeline. The Enterprise Contract then uses this attestation to verify the build's integrity and compliance with a set of policies. These policies include best practices and any organization-specific requirements.
+{ProductName}'s build process uses Tekton Chains to produce a signed in-toto attestation of the build pipeline. The Enterprise Contract then uses this attestation to verify the build's integrity and compliance with a set of policies. These policies include best practices and any organization-specific requirements.
+
+If you ever need to restore the default EC integration test to an application, or if you want to use a different configuration of the EC as an integration test, use the following procedure. 
 
 .Prerequisites
 
@@ -14,7 +16,7 @@ The Enterprise Contract (EC) is an artifact verifier and customizable policy che
 
 .Procedure
 
-. Open an existing application and go to the *Integration tests* tab.
+. In the {ProductName} UI, open an existing application and go to the *Integration tests* tab.
 . Select *Add integration test*.
 . In the *Integration test name* field, enter a name of your choosing.
 . In the *GitHub URL* field, enter *https://github.com/redhat-appstudio/build-definitions*
