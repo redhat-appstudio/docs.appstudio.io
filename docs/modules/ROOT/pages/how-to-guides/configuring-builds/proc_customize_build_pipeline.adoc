@@ -65,7 +65,7 @@ Example task:
 --
 
 +
-An example of custom task added to the pipeline which sends slack notification when the pipelinerun fails:
+An example of a custom task added to the pipeline that sends a slack notification when the `Pipelinerun` fails:
 +
 [source]
 --
@@ -91,13 +91,16 @@ An example of custom task added to the pipeline which sends slack notification w
       operator: in
       values: ["Failed"]
 --
-Note that in order for this task to work you need to create a secret in your namespace with at least one key where value is webhook URL for slack e.g. `oc create secret generic my-secret --from-literal dev-team=https://hooks.slack.com/services/XXX/XXXXXX`
 
-+
-NOTE: If you want to define a task directly in this file, rather than using `taskRef`, you can use `taskSpec`. Visit the documentation linked in the <<additional-resources>> section.
-
-+
 . Commit your changes to the repository of the component.
+
+[NOTE] 
+====
+* To use `slack-webhook-notification` task, you need to create a secret in your namespace with at least one key where the value is the webhook URL. For example, to create a secret for Slack, run `oc create secret generic my-secret --from-literal dev-team=https://hooks.slack.com/services/XXX/XXXXXX`
+
+* If you want to define a task directly in this file, rather than using `taskRef`, you can use `taskSpec`. Visit the documentation linked in the <<additional-resources>> section.
+
+====
 
 == Exchanging the build pipeline build task with higher memory limits
 
