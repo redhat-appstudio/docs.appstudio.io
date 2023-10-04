@@ -52,7 +52,7 @@ users:
 
 If any errors occur while creating your environment, complete the following steps: 
 
-. Make sure the token you provided in your `kubeconfig` is valid. If the token in your `kubeconfig` has expired, log in to your cluster and request a new token.
+. Make sure the token you provided in your `kubeconfig` file is valid. If the token in your `kubeconfig` file has expired, log in to your cluster and request a new token.
 . Verify that you entered the correct values in the correct places in your `kubeconfig` file. When reading the example file, you can easily mistake the namespace, `rhn-support-csears-dev`, for the username, `rhn-support-csears`, and vice versa.  
 . Confirm that your cluster can support another pod for deploying your application.
 . If you do not find any errors in your `kubeconfig` file, go to *Environments* in the {ProductName} UI, select the three dots next to your new environment, delete the failed environment, and create it again.
