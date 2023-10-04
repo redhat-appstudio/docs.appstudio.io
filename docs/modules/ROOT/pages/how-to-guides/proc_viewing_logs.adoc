@@ -49,11 +49,11 @@ To view logs for a particular Task:
 
 . Navigate to *Activity* > *Pipeline runs*.
 . Select a PipelineRun. You then have 2 options:
-.. Navigate to *Details*. In a graphic representation of a pipeline called *Pipeline run details* select a Task you need. A side panel will open that includes the *Logs* tab.
+** Navigate to *Details*. In a graphic representation of a pipeline called *Pipeline run details* select a Task you need. A side panel will open that includes the *Logs* tab.
 +
 OR
 +
-.. Navigate to the *Task runs* tab > Select a TaskRun you need > Navigate to the *Logs* tab.
+** Navigate to the *Task runs* tab > Select a TaskRun you need > Navigate to the *Logs* tab.
 
 == Viewing Task logs with the Tekton CLI
 
