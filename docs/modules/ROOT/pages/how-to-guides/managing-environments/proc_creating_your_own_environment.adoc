@@ -10,7 +10,7 @@ You can configure {ProductName} to deploy applications to your own cloud-hosted 
 
 To create your own environment, you first need to create a functional `kubeconfig` file. Then, using that file, you add the cluster as a new environment in the {ProductName} UI.
 
-. In your preferred text editor, create a `kubeconfig` file based on the following example:
+. In your preferred text editor, create a `kubeconfig` file locally based on the following example:
 
 +
 
