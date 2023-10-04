@@ -60,4 +60,4 @@ If any errors occur while creating your environment, complete the following step
 
 .Additional resources
 
-* If you have the rights in your cluster to assign the `cluster-admin` role to a Service Account, you can follow link:https://gist.github.com/jannfis/07095088c0b5a10681db3b48fd197641[these instructions] to create a `kubeconfig` with a token that doesn't expire.
+* If you have the read and write access rights in your cluster to assign the `cluster-admin` role to a Service Account, review the link:https://gist.github.com/jannfis/07095088c0b5a10681db3b48fd197641[BYOC step by step] document to create a `kubeconfig` with a token that doesn't expire.
