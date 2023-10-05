@@ -1,14 +1,14 @@
 = Creating your own environment 
 
-You can configure {ProductName} to deploy applications to your own cloud-hosted cluster, outside the default development environment. By using this option to bring your own cluster (BYOC), you can deploy your applications to an environment that meets your specific needs. And if you bring your own cluster, you can still access all the features and benefits of {ProductName}. 
+You can configure {ProductName} to deploy applications to your own cloud-hosted cluster, outside the default development environment. By using this option to bring your own cluster (BYOC), you can deploy your applications to a static environment that meets your specific needs. And if you bring your own cluster, you can still access all the features and benefits of {ProductName}. 
 
 .Prerequisites
 
-* You must have credentials for full read and write access to the namespace for your cluster.   
+* You must have credentials with full read and write access to the namespace for your cluster.   
 
 .Procedure
 
-To create your own environment, you first need to create a functional `kubeconfig` file. Then, using that file, you add the cluster as a new environment in the {ProductName} UI.
+To create your own static environment, you first need to create a functional `kubeconfig` file. Then, using that file, you add the cluster as a new environment in the {ProductName} UI.
 
 . In your preferred text editor, create a `kubeconfig` file locally based on the following example:
 
@@ -55,8 +55,8 @@ If any errors occur while creating your environment, complete the following step
 . Make sure the token you provided in your `kubeconfig` file is valid. If the token in your `kubeconfig` file has expired, log in to your cluster and request a new token.
 . Verify that you entered the correct values in the correct places in your `kubeconfig` file. When reading the example file, you can easily mistake the namespace, `rhn-support-csears-dev`, for the username, `rhn-support-csears`, and vice versa.  
 . Make sure that your cluster supports another Pod for deploying your application.
-. If you do not find any errors in your `kubeconfig` file, go to *Environments* in the {ProductName} UI, select the three dots next to your new environment, delete the failed environment, and create it again.
-. If that still does not work, try clearing the cache of your browser. If you are using Chrome, try deleting and creating the environment again using Incognito Mode. 
+. If you do not find any errors in your `kubeconfig` file, go to *Environments* in the {ProductName} UI, select the three dots next to the environment you created, select *Delete*, and then create a new environment.
+. If that still does not work, try clearing the cache of your browser. If you are using Chrome, try deleting and creating the environment again using an Incognito window. 
 
 .Additional resources
 
