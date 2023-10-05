@@ -19,22 +19,31 @@ To create your own static environment, you first need to create a functional `ku
 apiVersion: v1
 clusters:
 - cluster:
-    server: https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443
-  name: api-sandbox-m2-ll9k-p1-openshiftapps-com:6443
+    server: https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443 <1>
+  name: api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <2>
 contexts:
 - context:
-    cluster: api-sandbox-m2-ll9k-p1-openshiftapps-com:6443
-    namespace: rhn-support-csears-dev
-    user: rhn-support-csears/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443
-  name: rhn-support-csears-dev/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443/rhn-support-csears
-current-context: rhn-support-csears-dev/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443/rhn-support-csears
+    cluster: api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <3>
+    namespace: rhn-support-csears-dev <4>
+    user: rhn-support-csears/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <5>
+  name: rhn-support-csears-dev/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443/rhn-support-csears <6>
+current-context: rhn-support-csears-dev/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443/rhn-support-csears <7>
 kind: Config
 preferences: {}
 users:
-- name: rhn-support-csears/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443
+- name: rhn-support-csears/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <8>
   user:
-    token: sha256~<remainder of token omitted>
+    token: sha256~<remainder of token omitted> <9>
 --
+<1> The `server` parameter is the web address of the API server that you use to access your cluster through the CLI. In a web UI, you can find this address by requesting the CLI login command, or searching for the general cluster information. 
+<2> This `name` parameter is the cluster name. It is the same as the server address, only without `https://` at the beginning. 
+<3> This `cluster` parameter is also the cluster name.
+<4> This `namespace` parameter is the namespace of your cluster.
+<5> This `user` parameter is your cluster username followed by the cluster name.
+<6> This `name` parameter is the namespace of your cluster followed by the cluster name, followed by your username.
+<7> This `current-context` parameter should be the same as the `name` parameter before it.
+<8> This `name` parameter is your username followed by the cluster name. 
+<9> This SHA token is the token you use to login to your cluster through the CLI. In a web UI, you can find this token by requesting the CLI login command.
 
 +
 
