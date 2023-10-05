@@ -53,7 +53,7 @@ To view logs for a particular Task:
 +
 OR
 +
-** Navigate to the *Task runs* tab > Select a TaskRun you need > Navigate to the *Logs* tab.
+** Navigate to *Task runs* > Select a TaskRun you need > Navigate to *Logs*.
 
 == Viewing Task logs with the Tekton CLI
 
