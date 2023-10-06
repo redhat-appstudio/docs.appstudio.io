@@ -41,32 +41,66 @@ Example task:
 +
 [source]
 --
-name: example-task
-      params:
-      - name: example-param
-        value: “Example”
-      runAfter:
-      - build-container #You can be more specific by choosing another task
-      taskRef:
-        params:
-        - name: name
-          value: example-task
-        - name: bundle
-          value: <path to container image>
-        - name: kind
-          value: task
-        resolver: bundles
-      when:
-      - input: $(params.skip-checks)    #This references the pipeline parameters
-        operator: in
-        values:
-        - "false"
+  name: example-task
+  params:
+  - name: example-param
+    value: “Example”
+  runAfter:
+  - build-container #You can be more specific by choosing another task
+  taskRef:
+    params:
+    - name: name
+      value: example-task # metadata.name field of the Task
+    - name: bundle
+      value: quay.io/tekton-bundle-catalog/example-task-bundle:1.0
+      # For more details on tekton bundles, refer https://tekton.dev/docs/pipelines/pipelines/#tekton-bundles
+    - name: kind
+      value: task
+    resolver: bundles
+  when:
+  - input: $(params.skip-checks)    #This references the pipeline parameters
+    operator: in
+    values:
+    - "false"
 --
-+
-NOTE: If you want to define a task directly in this file, rather than using `taskRef`, you can use `taskSpec`. Visit the documentation linked in the <<additional-resources>> section.
 
 +
+An example of a custom task added to the pipeline that sends a slack notification when the `Pipelinerun` fails:
++
+[source]
+--
+  name: slack-webhook-notification
+  params:
+    - name: message
+      value: PipelineRun $(context.pipelineRun.name) failed
+    - name: secret-name
+      value: my-secret # name of secret in the your namespace which contains slack web-hook URL under key specified in 'key-name' parameter below
+    - name: key-name
+      value: dev-team
+  taskRef:
+    params:
+    - name: bundle
+      value: quay.io/redhat-appstudio-tekton-catalog/task-slack-webhook-notification:0.1
+    - name: name
+      value: slack-webhook-notification
+    - name: kind
+      value: Task
+    resolver: bundles
+  when:
+    - input: $(tasks.status)
+      operator: in
+      values: ["Failed"]
+--
+
 . Commit your changes to the repository of the component.
+
+[NOTE] 
+====
+* To use `slack-webhook-notification` task, you need to create a secret in your namespace with at least one key where the value is the webhook URL. For example, to create a secret for Slack, run `oc create secret generic my-secret --from-literal dev-team=https://hooks.slack.com/services/XXX/XXXXXX`
+
+* If you want to define a task directly in this file, rather than using `taskRef`, you can use `taskSpec`. Visit the documentation linked in the <<additional-resources>> section.
+
+====
 
 == Exchanging the build pipeline build task with higher memory limits
 
