@@ -9,12 +9,11 @@ You can access pod and Task logs with both the UI and CLI, and you can download 
 {ProductName} generates the following types of logs:
 
 * *Pod logs* show the health and status of a Kubernetes pod where your application is running. {ProductName} creates pod logs when it starts your application in a pod on an OpenShift cluster so you can see how it starts your application in real time.
-* *Task logs* are generated for all Tasks of a build pipeline. Both default and custom build pipelines have *Build* and *Test* PipelineRuns.
-+
-Logs for *Test* PipelineRuns log how a build is verified with an Enterprise Contract (EC) and they are the same for all pipelines. However, logs for *Build* PipelineRuns differ between default and custom build pipelines in the following ways:
-
-** Logs for default build pipelines log how {ProductName} clones a Git repository with your code or our sample code, builds container images with your application, checks the images, and generates a software bill of materials (SBOM).
-** Custom build pipelines have PipelineRuns that run on opening pull requests and on push to the Git repository, and logs for different PipelineRuns differ. On-push PipelineRuns clone a Git repo and build a container image with a component. On-pull-request PipelineRuns also run several advanced checks.
+* *Task logs* are generated for all Tasks of a build pipeline. Both default and custom build pipelines have *Build* and *Test* PipelineRuns:
+** Logs for *Test* PipelineRuns log how a build is verified with an Enterprise Contract (EC) and they are the same for all pipelines.
+** Logs for *Build* PipelineRuns differ between default and custom build pipelines in the following ways:
+*** *Build* PipelineRuns logs for default build pipelines log how {ProductName} clones a Git repository with your code or our sample code, builds container images with your application, checks the images, and generates a software bill of materials (SBOM).
+*** Custom build pipelines have *Build* PipelineRuns that run when a pull request is opened and when new changes are pushed to this PR, and logs for different PipelineRuns differ. On-push PipelineRuns clone a Git repo and build a container image with a component. On-pull-request PipelineRuns also run several advanced checks.
 
 == Viewing pod logs in the web UI
 
