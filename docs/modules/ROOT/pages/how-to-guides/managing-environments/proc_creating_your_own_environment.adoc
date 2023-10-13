@@ -1,31 +1,72 @@
 = Creating your own environment 
 
-Use {ProductName} to continuously build and test your application. Use your own cluster as your deployment environment. By using your own cluster outside Red Hat, you have more control over where your application is deployed, and you can ensure it meets your specific needs. If you bring your own cluster you can still access all the features and benefits of {ProductName}. 
+You can configure {ProductName} to deploy applications to your own cloud-hosted cluster, outside the default development environment. By using this option to bring your own cluster (BYOC), you can deploy your applications to a static environment that meets your specific needs. And if you bring your own cluster, you can still access all the features and benefits of {ProductName}. 
 
 .Prerequisites
 
-* You must have access to credentials with full read and write access to the namespace that you provided to {ProductName}.   
-* When you upload a `kubeconfig` file, it must include a credential with full read and write access to your provided namespace. 
-* The supplied `kubeconfig` file must use token-based authentication to connect to your cluster. Other mechanisms, such as certificate-based authentication, are not yet supported. 
-* The context in your `kubeconfig` file must point to the cluster you want to use at the time you upload the file. 
+* You must have credentials with full read and write access to the namespace for your cluster.   
 
-.Procedures
+.Procedure
 
-To create your own environment and upload your own `kubeconfig` file, complete the following steps in the {ProductName} UI: 
+To create your own static environment, you first need to create a functional `kubeconfig` file. Then, using that file, you add the cluster as a new environment in the {ProductName} UI.
 
-. Go to *Environments* > *Create Environment*. 
-. Complete all the required fields for *Create Environment*.  
+. In your preferred text editor, create a `kubeconfig` file locally based on the following example:
+
++
+
+[source]
+--
+apiVersion: v1
+clusters:
+- cluster:
+    server: https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443 <1>
+  name: api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <2>
+contexts:
+- context:
+    cluster: api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <3>
+    namespace: rhn-support-csears-dev <4>
+    user: rhn-support-csears/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <5>
+  name: rhn-support-csears-dev/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443/rhn-support-csears <6>
+current-context: rhn-support-csears-dev/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443/rhn-support-csears <7>
+kind: Config
+preferences: {}
+users:
+- name: rhn-support-csears/api-sandbox-m2-ll9k-p1-openshiftapps-com:6443 <8>
+  user:
+    token: sha256~<remainder of token omitted> <9>
+--
+<1> The `server` parameter is the web address of the API server that you use to access your cluster through the CLI. In a web UI, you can find this address by requesting the CLI login command, or searching for the general cluster information. 
+<2> This `name` parameter is the cluster name. It is the same as the server address, only without `https://` at the beginning. 
+<3> This `cluster` parameter is also the cluster name.
+<4> This `namespace` parameter is the namespace of your cluster.
+<5> This `user` parameter is your cluster username followed by the cluster name.
+<6> This `name` parameter is the namespace of your cluster followed by the cluster name, followed by your username.
+<7> This `current-context` parameter should be the same as the `name` parameter before it.
+<8> This `name` parameter is your username followed by the cluster name. 
+<9> This SHA token is the token you use to login to your cluster through the CLI. In a web UI, you can find this token by requesting the CLI login command.
+
++
+
+. In the {ProductName} UI, go to *Environments* > *Create Environment*. 
+. Enter a name for the new environment.  
 . Complete all the required fields for *Cluster information*: 
 .. For *Select cluster*, select that you are bringing your own cluster.  
 .. For *Cluster type*, select *Non-OpenShift* or *OpenShift*. 
-. Upload your `kubeconfig` file.
-. Attach the namespace to the cluster that you selected for this application.
+.. Upload your `kubeconfig` file, or paste its contents into the space provided.
+.. Specify the namespace for the cluster that you are using.
+. Select *Create environment*.
 . Confirm that your environment is created and is accessible under *Environments*. 
 
 .Troubleshooting 
 
-If there were any errors while creating your environment, complete the following steps: 
+If any errors occur while creating your environment, complete the following steps: 
 
-. Go to *Environment Card* > *Connection error*. 
-. Delete the failed environment. 
-. Create a new environment. Only include the sections of your `kubeconfig` file that relate to the target cluster and credentials. 
+. Make sure the token you provided in your `kubeconfig` file is valid. If the token in your `kubeconfig` file has expired, log in to your cluster and request a new token.
+. Make sure that you entered the correct values in the right places in your `kubeconfig` file. When  you read the example file, you might easily mistake the namespace, `rhn-support-csears-dev`, for the username, `rhn-support-csears`, and vice versa.  
+. Make sure that your cluster supports another Pod for deploying your application.
+. If you do not find any errors in your `kubeconfig` file, go to *Environments* in the {ProductName} UI, select the three dots next to the environment you created, select *Delete*, and then create a new environment.
+. If that still does not work, try clearing the cache of your browser. If you are using Chrome, try deleting and creating the environment again using an Incognito window. 
+
+.Additional resources
+
+* If you have the read and write access rights in your cluster to assign the `cluster-admin` role to a Service Account, review the link:https://gist.github.com/jannfis/07095088c0b5a10681db3b48fd197641[BYOC step by step] document to create a `kubeconfig` with a token that doesn't expire.
