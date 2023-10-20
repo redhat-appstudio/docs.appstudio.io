@@ -137,5 +137,5 @@ Example output:
 
 == Additional resources
 * Learn about the SLSA framework and xref:../concepts/slsa/con_slsa-conformity.adoc[how {ProductName} meets the requirements of SLSA Build Level 3].
-* Red Hat's Enterprise Contract (EC) is a powerful tool that you can also use to verify your SLSA provenance; visit link:https://enterprisecontract.dev/posts/introducing-the-enterprise-contract/[this page]  to learn how to use the EC CLI tool to verify your provenance.
+* Red Hat's Enterprise Contract (EC) is a powerful tool that you can also use to verify your SLSA provenance; visit link:https://enterprisecontract.dev/posts/introducing-the-enterprise-contract/[this page]  to learn how to use the EC CLI tool to verify your provenance. You will need the public key used by Tekton Chains, which is available as the *public-key* secret in the *openshift-pipelines* namespace and readable to all authenticated users.
 
