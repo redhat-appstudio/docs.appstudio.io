@@ -12,10 +12,10 @@ To create any custom test, complete the following steps:
 
 .Procedure with example
 
-To create a custom test that prints “Hello world!”, complete the following steps:
+To create a custom test that checks that your app serves the text “Hello world!”, complete the following steps:
 
 . In your preferred IDE, create a new `.yaml` file, with a name of your choosing.
-. Define a new Tekton pipeline. The following example is the beginning of a pipeline that prints “Hello world!”.
+. Define a new Tekton pipeline. The following example is the beginning of a pipeline that uses `curl` to check that the app serves the text “Hello world!”.
 
 +
 Example pipeline file:
@@ -29,12 +29,25 @@ metadata:
   name: example-pipeline
 spec:
   params:
-  - name: username
-    default: world 
-  tasks: 
+    - description: 'Snapshot of the application'
+      name: SNAPSHOT
+      default: '{"components": [{"name":"test-app", "containerImage": "quay.io/example/repo:latest"}]}'
+      type: string
+    - description: 'Namespace where the application is running'
+      name: NAMESPACE
+      default: "default"
+      type: string
+    - description: 'Expected output'
+      name: EXPECTED_OUTPUT
+      default: "Hello World!"
+      type: string
+  workspaces:
+  - name: cluster-credentials
+    optional: true
+  tasks:
 ----
 
-. In the `.pipeline.spec` path, declare a new task. For any valid task, the fields in the following example are all required, except `params`. 
+. In the `.pipeline.spec` path, declare a new task.
 
 +
 Example task declaration:
@@ -44,16 +57,70 @@ Example task declaration:
 ----
 tasks:
   - name: task-1
+    description: curl application endpoint, looking for certain text
     params:
-    - name: username
-      value: $(params.username)
+      - name: SNAPSHOT
+        value: $(params.SNAPSHOT)
+      - name: NAMESPACE
+        value: $(params.NAMESPACE)
+      - name: EXPECTED_OUTPUT
+        value: $(params.EXPECTED_OUTPUT)
+    workspaces:
+      - name: cluster-credentials
+        optional: true
     taskSpec:
       params:
-      - name: username
+      - name: SNAPSHOT
+      - name: NAMESPACE
+      - name: EXPECTED_OUTPUT
+      results:
+      - name: TEST_OUTPUT
+        description: Test output
+      workspaces:
+      - name: cluster-credentials
+        workspace: cluster-credentials
       steps:
-      - image: alpine:3.15
+      - image: registry.redhat.io/openshift4/ose-cli:latest
+        env:
+        - name: SNAPSHOT
+          value: $(params.SNAPSHOT)
+        - name: NAMESPACE
+          value: $(params.NAMESPACE)
+        - name: EXPECTED_OUTPUT
+          value: $(params.EXPECTED_OUTPUT)
         script: |
-          echo "hello $(params.username)"
+          dnf -y install jq
+
+          # Get credentials to the namespace where the app is deployed
+          export KUBECONFIG=$(workspaces.cluster-credentials.path)/kubeconfig
+
+          # Use credentials to get the route for the application endpoint
+          COMPONENT_NAME=$(echo -n ${SNAPSHOT} | jq -r .components[0].name)
+          ROUTE_NAME=$(oc get routes -l app.kubernetes.io/name="${COMPONENT_NAME}" -o name)
+          HOST=$(oc get "${ROUTE_NAME}" -o jsonpath={.spec.host} -n "${NAMESPACE}")
+          echo "Found target host ${HOST} for app ${APPLICATION_NAME}"
+
+          # Wait up to 5 minutes for the endpoint output to match the expected output
+          for _ in $(seq 1 60); do
+            echo "Checking http://${HOST}"
+            # Check the application endpoint
+            ENDPOINT_OUTPUT=$(curl -s http://${HOST})
+
+            if [[ "${ENDPOINT_OUTPUT}" == "${EXPECTED_OUTPUT}" ]]; then
+              RESULT="SUCCESS"
+              break
+            else
+              RESULT="FAILURE"
+            fi
+            sleep 5
+          done
+
+          echo -e "The endpoint outputs the following:\n ${ENDPOINT_OUTPUT}"
+          echo -e "Expected endpoint output:\n ${EXPECTED_OUTPUT}"
+
+          TEST_OUTPUT=$(jq -rc --arg date $(date +%s) --arg RESULT "${RESULT}" --null-input \
+            '{result: $RESULT, timestamp: $date, failures: 0, successes: 0, warnings: 0}')
+          echo -n "${TEST_OUTPUT}" | tee $(results.TEST_OUTPUT.path)
 
 ----
 
@@ -72,20 +139,87 @@ metadata:
   name: example-pipeline
 spec:
   params:
-  - name: username
-    default: world 
+    - description: 'Snapshot of the application'
+      name: SNAPSHOT
+      default: '{"components": [{"name":"test-app", "containerImage": "quay.io/example/repo:latest"}]}'
+      type: string
+    - description: 'Namespace where the application is running'
+      name: NAMESPACE
+      default: "default"
+      type: string
+    - description: 'Expected output'
+      name: EXPECTED_OUTPUT
+      default: "Hello World!"
+      type: string
+  workspaces:
+  - name: cluster-credentials
+    optional: true
   tasks:
-  - name: task-1
-    params:
-    - name: username
-      value: $(params.username)
-    taskSpec:
+    - name: task-1
+      description: curl application endpoint, looking for certain text
       params:
-      - name: username
-      steps:
-      - image: alpine:3.15
-        script: |
-          echo "Hello $(params.username)!" 
+        - name: SNAPSHOT
+          value: $(params.SNAPSHOT)
+        - name: NAMESPACE
+          value: $(params.NAMESPACE)
+        - name: EXPECTED_OUTPUT
+          value: $(params.EXPECTED_OUTPUT)
+      workspaces:
+        - name: cluster-credentials
+          optional: true
+      taskSpec:
+        params:
+        - name: SNAPSHOT
+        - name: NAMESPACE
+        - name: EXPECTED_OUTPUT
+        results:
+        - name: TEST_OUTPUT
+          description: Test output
+        workspaces:
+        - name: cluster-credentials
+          workspace: cluster-credentials
+        steps:
+        - image: registry.redhat.io/openshift4/ose-cli:latest
+          env:
+          - name: SNAPSHOT
+            value: $(params.SNAPSHOT)
+          - name: NAMESPACE
+            value: $(params.NAMESPACE)
+          - name: EXPECTED_OUTPUT
+            value: $(params.EXPECTED_OUTPUT)
+          script: |
+            dnf -y install jq
+
+            # Get credentials to the namespace where the app is deployed
+            export KUBECONFIG=$(workspaces.cluster-credentials.path)/kubeconfig
+
+            # Use credentials to get the route for the application endpoint
+            COMPONENT_NAME=$(echo -n ${SNAPSHOT} | jq -r .components[0].name)
+            ROUTE_NAME=$(oc get routes -l app.kubernetes.io/name="${COMPONENT_NAME}" -o name)
+            HOST=$(oc get "${ROUTE_NAME}" -o jsonpath={.spec.host} -n "${NAMESPACE}")
+            echo "Found target host ${HOST} for app ${APPLICATION_NAME}"
+
+            # Wait up to 5 minutes for the endpoint output to match the expected output
+            for _ in $(seq 1 60); do
+              echo "Checking http://${HOST}"
+              # Check the application endpoint
+              ENDPOINT_OUTPUT=$(curl -s http://${HOST})
+
+              if [[ "${ENDPOINT_OUTPUT}" == "${EXPECTED_OUTPUT}" ]]; then
+                RESULT="SUCCESS"
+                break
+              else
+                RESULT="FAILURE"
+              fi
+              sleep 5
+            done
+
+            echo -e "The endpoint outputs the following:\n ${ENDPOINT_OUTPUT}"
+            echo -e "Expected endpoint output:\n ${EXPECTED_OUTPUT}"
+
+            TEST_OUTPUT=$(jq -rc --arg date $(date +%s) --arg RESULT "${RESULT}" --null-input \
+              '{result: $RESULT, timestamp: $date, failures: 0, successes: 0, warnings: 0}')
+            echo -n "${TEST_OUTPUT}" | tee $(results.TEST_OUTPUT.path)
 ----
 
 . Add your new custom test as an integration test in {ProductName}.
@@ -93,12 +227,16 @@ spec:
 
 .Data injected into the PipelineRun of the integration test
 
-When you create a custom integration test, {ProductName} automatically adds certain parameters and labels to the PipelineRun of the integration test. This section explains what those parameters and labels are, and how they can help you.
+When you create a custom integration test, {ProductName} automatically adds certain parameters, workspaces, and labels to the PipelineRun of the integration test. This section explains what those parameters, workspaces, and labels are, and how they can help you.
 
 Parameters:
 
 * *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot JSON string].
-* *`NAMESPACE`*:  indicates which namespace {ProductName} uses for temporary deployment, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. This parameter can help you query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods. 
+* *`NAMESPACE`*:  indicates which namespace {ProductName} uses for temporary deployment, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. This parameter can help you query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods.
+
+Workspaces:
+
+* *`cluster-credentials`*: contains the connection credentials for the *Environment* containing the temporary deployment of your app, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. These credentials enable you to query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods.
 
 Labels:
 
