@@ -225,6 +225,8 @@ spec:
 . Add your new custom test as an integration test in {ProductName}.
 .. For additional instructions on adding an integration test, see this document: xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test].
 
+NOTE: This example test requires a temporary deployment. To use the example file, when adding it as an integration test in the {ProductName} UI, make sure to select the *development* option in the *Environment* field.  
+
 .Data injected into the PipelineRun of the integration test
 
 When you create a custom integration test, {ProductName} automatically adds certain parameters, workspaces, and labels to the PipelineRun of the integration test. This section explains what those parameters, workspaces, and labels are, and how they can help you.
