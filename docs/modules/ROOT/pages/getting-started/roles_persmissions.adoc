@@ -1,21 +1,46 @@
 = Permissions and roles
 
-As a workspace owner, you can https://placeholder.com[invite] one or more collaborators to your workspace by adding their user ID, such as an external SSO ID. After https://placeholder.com[adding a user to a workspace], you assign them a specific role that determines the actions they can take in a workspace.
+As a workspace owner, you can add a collaborator to your workspace with their username and assign them a specific role that determines the actions they can take in that workspace.
 
-The roles available for a workspace, from least access to most access, are:
+The roles available for a workspace, from least to most access, are the following:
 
-* *Contributor*: Ideal for users who actively push to your workspace.
+* *Contributor*: For users who actively push code to your workspace but who don't need to manage workspace configuration.
 
-* *Maintainer*: Ideal for users who need to manage the workspace without access to sensitive actions like managing security or deleting a workspace.
+* *Maintainer*: For users who need to manage the workspace without access to sensitive actions like managing security.
 
-* *Owner*: Ideal for users who need full access to the workspace, including sensitive and destructive actions like managing security or deleting a workspace.
+* *Owner*: For users who need full access to the workspace, including sensitive actions like managing security.
 
-NOTE: By default, the role for newly invited collaborators is *Contributor* but you can upgrade it to *Maintainer* or *Owner*.
+NOTE: By default, the role for newly invited collaborators is *Contributor*, but you can change this.
+
+== Adding a user to your workspace
+
+.Prerequisites
+
+* The user you want to add must be logged in to {ProductName}.
+
+.Procedure
+
+. From the {ProductName} left navigation menu, select **User Access**.
+. Under **Grant user access**, click **Grant access**, or click **Actions**, then **Grant access**.
+. From the **Grant access to workspace** page, enter the username of the teammate you want to give workspace access to.
+. Under **Assign role**, choose one of the following roles for your new workspace user:
+* **contributor**
+* **maintainer**
+* **owner**
+. Click **Grant access**.
+
+.Verification
+A message displays that reads, "You invited the user `_username_` to collaborate on the `_workspace_name_` workspace."
+
+== Editing user workspace access
+
+. From the {ProductName} left navigation menu, select **User Access**.
 
 == Permissions for each role
 
-The role assigned to a user determines the permissions they have within a workspace, with the Owner role assigning all permissions.
+The role assigned to a user determines the permissions they have within a workspace. Users with the **Owner** role can assign permissions. 
 
+NOTE: Only a {ProductName} administrator can delete a workspace.
 
 |===
 |Permissions for |Action |Contributor |Maintainer |Owner
@@ -226,6 +251,3 @@ The role assigned to a user determines the permissions they have within a worksp
 
 |===
 
-== Additional resources
-
-* https://placeholder.com[Managing members of a project]
