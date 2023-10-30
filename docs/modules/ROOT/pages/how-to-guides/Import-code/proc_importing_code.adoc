@@ -123,9 +123,10 @@ In the **Build & deploy configuration** section, look over these fields:
 
 When you’re satisfied with your component configuration settings, click **Create application**. 
 
-[NOTE]
+[NOTES]
 ====
-After you create your application, you can adjust your configuration settings anytime you want from the **Application** view.
+* After you create your application, you can adjust your configuration settings anytime from the **Application** view.
+* From the **Secrets** page, you can add a build or deployment secret to keep your data private. For more information about secrets, see link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds/[Creating secrets for your builds].
 ====
 
 == Resolving issues with importing code
