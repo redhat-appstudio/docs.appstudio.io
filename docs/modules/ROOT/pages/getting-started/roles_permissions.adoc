@@ -20,7 +20,7 @@ NOTE: By default, the role for newly invited collaborators is *Contributor*, but
 
 .Prerequisites
 
-* The user you want to add must be logged in to {ProductName}.
+* The user you want to add must have a valid {ProductName} login.
 
 .Procedure
 
