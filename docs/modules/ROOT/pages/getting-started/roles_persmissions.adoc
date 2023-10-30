@@ -1,11 +1,15 @@
 = Permissions and roles
 
 As a workspace owner, you can add a collaborator to your workspace with their username and assign them a specific role that determines the actions they can take in that workspace.
+As a workspace owner, you can add a collaborator to your workspace with their username and assign them a specific role that determines the actions they can take in that workspace.
 
+The roles available for a workspace, from least to most access, are the following:
 The roles available for a workspace, from least to most access, are the following:
 
 * *Contributor*: For users who actively push code to your workspace but who don't need to manage workspace configuration.
+* *Contributor*: For users who actively push code to your workspace but who don't need to manage workspace configuration.
 
+* *Maintainer*: For users who need to manage the workspace without access to sensitive actions like managing security.
 * *Maintainer*: For users who need to manage the workspace without access to sensitive actions like managing security.
 
 * *Owner*: For users who need full access to the workspace, including sensitive actions like managing security.
@@ -35,11 +39,18 @@ A message displays that reads, "You invited the user `_username_` to collaborate
 == Editing user workspace access
 
 . From the {ProductName} left navigation menu, select **User Access**.
+. Next to the user whose access you want to edit, click the three vertical dots. 
+. Select **Edit access**. 
+. In **Assign role**, select the user's new role. 
+* To view the permissions for each role, click **Show list**. 
+. Click **Save changes**. 
 
 == Permissions for each role
 
 The role assigned to a user determines the permissions they have within a workspace. Users with the **Owner** role can assign permissions. 
+The role assigned to a user determines the permissions they have within a workspace. Users with the **Owner** role can assign permissions. 
 
+NOTE: Only a {ProductName} administrator can delete a workspace.
 NOTE: Only a {ProductName} administrator can delete a workspace.
 
 |===
