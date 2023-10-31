@@ -1,17 +1,9 @@
 = Permissions and roles
 
-As a workspace owner, you can add a collaborator to your workspace with their username and assign them a specific role that determines the actions they can take in that workspace.
-As a workspace owner, you can add a collaborator to your workspace with their username and assign them a specific role that determines the actions they can take in that workspace.
-
-The roles available for a workspace, from least to most access, are the following:
-The roles available for a workspace, from least to most access, are the following:
+As a workspace owner, you can add a collaborator to your workspace with their username and assign them a specific role that determines the actions they can take in that workspace. The roles available for a workspace, from least to most access, are the following:
 
 * *Contributor*: For users who actively push code to your workspace but who don't need to manage workspace configuration.
-* *Contributor*: For users who actively push code to your workspace but who don't need to manage workspace configuration.
-
 * *Maintainer*: For users who need to manage the workspace without access to sensitive actions like managing security.
-* *Maintainer*: For users who need to manage the workspace without access to sensitive actions like managing security.
-
 * *Owner*: For users who need full access to the workspace, including sensitive actions like managing security.
 
 NOTE: By default, the role for newly invited collaborators is *Contributor*, but you can change this.
@@ -28,9 +20,9 @@ NOTE: By default, the role for newly invited collaborators is *Contributor*, but
 . Under **Grant user access**, click **Grant access**, or click **Actions**, then **Grant access**.
 . From the **Grant access to workspace** page, enter the username of the teammate you want to give workspace access to.
 . Under **Assign role**, choose one of the following roles for your new workspace user:
-* **contributor**
-* **maintainer**
-* **owner**
+* **Contributor**
+* **Maintainer**
+* **Owner**
 . Click **Grant access**.
 
 .Verification
@@ -48,10 +40,8 @@ A message displays that reads, "You invited the user `_username_` to collaborate
 == Permissions for each role
 
 The role assigned to a user determines the permissions they have within a workspace. Users with the **Owner** role can assign permissions. 
-The role assigned to a user determines the permissions they have within a workspace. Users with the **Owner** role can assign permissions. 
 
-NOTE: Only a {ProductName} administrator can delete a workspace.
-NOTE: Only a {ProductName} administrator can delete a workspace.
+NOTE: Only an {ProductName} administrator can delete a workspace.
 
 |===
 |Permissions for |Action |Contributor |Maintainer |Owner
