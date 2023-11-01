@@ -1,0 +1,97 @@
+= Preventing redundant rebuilds
+
+By default, if an application uses the upgraded build pipeline, {ProductName} rebuilds the whole application again whenever its repository receives a pull request (PR). This behavior helps you identify any issues the PR may cause before merging it. However, if your repository contains multiple components, and you make a PR to change files relevant to only one of those components, then rebuilding the entire application is inefficient and time-consuming.  
+
+Fortunately, you can customize an upgraded build pipeline, to choose which components {ProductName} builds. Specifically, you can edit the `on-cel-expression` annotation in the `/.tekton/<name of component>-on-pull-request.yaml` file.  
+
+To further understand the value of this feature, consider the following example. Suppose you have two container images, Image A and Image B, that {ProductName} builds using an upgraded build pipeline. And let’s say that the source code for both images is in a repository called my_repo, with the following simple structure:
+
+*my_repo*
+----
+Root
+|__ ImageA
+|__ ImageB
+----
+
+What if you want to update Image A? You would make a pull request to `my_repo`. And by default, that PR would cause {ProductName} to rebuild both Image A and Image B. However, you can configure {ProductName} so that, when someone creates a PR for `my_repo`, and that PR changes only files relevant to Image A, then {ProductName} only rebuilds Image A. This way, you can avoid a redundant rebuild of Image B.
+
+.Procedure
+
+To prevent redundant rebuilds of the components of an application, complete the following steps.
+
+. Using your preferred IDE, navigate to each component's `/.tekton` directory, and open its `<name of component>-on-pull-request.yaml` file. Find the `on-cel-expression` annotation in that file. 
+. In each `<name of component>-on-pull-request.yaml` file, set the value of the `on-cel-expression` annotation as the path to the source code of that component.
++
+[WARNING]
+====
+Misconfiguring this value can cause builds to fail or start at the wrong time.
+====
+
+. Commit these changes to your repository.
+. Allow {ProductName} to rebuild your whole application one more time. 
+
+.Example annotations
+
+The following example files use `on-cel-expression` to prevent redundant rebuilds.
+
+*my_repo/ImageA/.tekton/ImageA-on-pull-request.yaml*
+
+[source]
+--
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    build.appstudio.openshift.io/repo: https://github.com/<username>/new?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/pull_request_number: '{{pull_request_number}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
+      == "main" && ( "./ImageA/***".pathChanged() || ".tekton/new-pull-request.yaml".pathChanged() <1> 
+      ) 
+--
+
+<1> `on-cel-expression` annotation for Image A
+
+*my_repo/ImageB/.tekton/ImageB-on-pull-request.yaml*
+
+[source]
+--
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    build.appstudio.openshift.io/repo: https://github.com/<username>/new?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/pull_request_number: '{{pull_request_number}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
+      == "main" && ( "./ImageB/***".pathChanged() || ".tekton/new-pull-request.yaml".pathChanged() <1> 
+      ) 
+--
+
+<1> `on-cel-expression` annotation for Image B
+
+.Verification
+Using the my_repo example, to verify that you have prevented redundant rebuilds: 
+
+. Open a PR for the repository of your application modifying a file in my_repo/ImageA. 
+. Allow {ProductName} to rebuild your component.
+. Check the logs for `build-container`. They should only refer to Image A you specified with `on-cel-expression`.
+
+.Troubleshooting
+
+If {ProductName} continues to rebuild your whole application for each new PR:
+
+* Make sure you entered the right paths as the values for `on-cel-expression`.
+* Make sure you merged the commits that change `on-cel-expression`.
+
+If builds are failing to start:
+
+* Use `git revert` to restore your pipeline definitions to their original state.
+
+If builds are starting at the wrong time:
+
+* For any component whose builds are starting at the wrong time, ensure that its `on-cel-expression` excludes all paths in the repo that are not associated with that component.
