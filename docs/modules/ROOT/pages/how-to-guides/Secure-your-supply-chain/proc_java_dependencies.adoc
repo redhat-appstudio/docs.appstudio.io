@@ -123,10 +123,11 @@ spec:
 
 === Setting up with explicit Quay.io configuration 
 
-If you want to specify where the rebuilt artfiacts are stored, you must use the Quay.io configuration to configure your JVM Build Service. You must also provision a secret to allow the JVM Build Service to push to the repository.
+If you want to specify where the rebuilt artifacts are stored, you must use the Quay.io configuration to configure your JVM Build Service. You must also provision a secret to allow the JVM Build Service to push to the repository.
 
 .Procedure 
 
+. In the RHTAP UI create an image pull secret for the quay.io repository using the page under the 'Secrets' tab. This can be called anything you like.
 . Create a file, for example, `config.yaml`.
 . In the `config.yaml` file, create a *JBSConfig* resource with the following data:
 
@@ -139,11 +140,13 @@ metadata:
   name: jvm-build-config
 spec:
   enableRebuilds: "true" <1>
-  host: quay.io <2>
-  owner: OrgID <3>
-  repository: artifact-deployments <4>
+  registry:
+   host: quay.io <2>
+   owner: OrgID <3>
+   repository: artifact-deployments <4>
+   secretName: my-secret <5>
   mavenBaseLocations:
-    maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/" <5>
+    maven-repository-300-jboss: "https://repository.jboss.org/nexus/content/groups/public/" <6>
     maven-repository-301-gradleplugins: "https://plugins.gradle.org/m2"
     maven-repository-302-confluent: "https://packages.confluent.io/maven"
 
@@ -152,86 +155,11 @@ spec:
 <2> The URL of the registry that holds the images of your rebuild dependencies.
 <3> The organization ID.
 <4> The repository to store the images in.
-<5> List any additional Maven repositories here.
+<5> The name of the secret we created in the UI.
+<6> List any additional Maven repositories here.
 
 . While logged into the build namespace, run `kubectl apply -f config.yaml`.
-. Add the configuration to set up the Quay.io credentials to be able to push to the repository. To store credentials in AWS Secrets Manager, the JVM
-Build Service uses the https://github.com/redhat-appstudio/service-provider-integration-operator[Service Provider Integration Operator]. 
-. To upload the secret first, run a command to get the name of the `SPIAccessToken` that you need to update. Run the following command:
 
-----
-kubectl get spiaccesstokenbindings.appstudio.redhat.com jvm-build-image-secrets -o yaml`
-----
-
-The output should look something like this:
-[source,yaml]
-----
-apiVersion: appstudio.redhat.com/v1beta1
-kind: SPIAccessTokenBinding
-metadata:
-  creationTimestamp: "2023-05-11T00:23:00Z"
-  finalizers:
-  - spi.appstudio.redhat.com/linked-objects
-  generation: 1
-  labels:
-    spi.appstudio.redhat.com/linked-access-token: generated-spi-access-token-px5w8
-  name: jvm-build-image-secrets
-  namespace: sdouglas1-tenant
-  ownerReferences:
-  - apiVersion: jvmbuildservice.io/v1alpha1
-    kind: JBSConfig
-    name: jvm-build-config
-    uid: b0210099-d116-4742-9cff-a521e9bbe61b
-  resourceVersion: "287987482"
-  uid: 2763469b-9340-4a83-8489-a283f3505c5d
-spec:
-  lifetime: "-1"
-  permissions:
-    required:
-    - area: registry
-      type: rw
-  repoUrl: https://quay.io/sdouglas/artifact-deployments
-  secret:
-    fields: {}
-    name: jvm-build-image-secrets
-    type: kubernetes.io/dockerconfigjson
-status:
-  linkedAccessTokenName: generated-spi-access-token-px5w8 <1>
-  phase: Injected
-  syncedObjectRef:
-    apiVersion: v1
-    kind: Secret
-    name: jvm-build-image-secrets
-  uploadUrl: https://spi-oauth-spi-system.apps.stone-prd-m01.84db.p1.openshiftapps.com/token/sdouglas1-tenant/generated-spi-access-token-px5w8
-----
-<1> This is the name of the APIAccessToken we need to upload the secret
-
-. Record the name of the `linkedAccessTokenName`. In this case, `generated-spi-access-token-px5w8`. This is referenced as 
- $ACCESS_TOKEN in the examples below.
-
-==== Creating a secret with specific configuration 
-
-Create a secret with specific configuration that uploads to AWS Secrets Manager. You need a quay.io username and password. The best way to get a username and password is to log in,
-create a robot account, and then record the username and password. For the purposes
-of the examples below, the username and password are referred to as $QUAY_USERNAME and $QUAY_PASSWORD.
-
-.Procedure 
-
-. Create a secret with the following command:
-
-+
-----
-kubectl create secret generic jvm-build-service-upload --from-literal=userName=$QUAY_USERNAME --from-literal=tokenData=$QUAY_PASSWORD --from-literal=providerUrl=quay.io --from-literal=spiTokenName=$ACCESS_TOKEN
-----
-
-. Add a special label to the secret so that the SPI knows to store it in AWS Secrets Manager:
-
-+
-----
-kubectl label secret jvm-build-service-upload spi.appstudio.redhat.com/upload-secret=token
-----
-
-After you complete these steps, the secret should disappear, and the system is ready to use.
 
 == Examining the system state
 
