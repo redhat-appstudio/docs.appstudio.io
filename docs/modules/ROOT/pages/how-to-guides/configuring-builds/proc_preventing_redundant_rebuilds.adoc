@@ -13,22 +13,25 @@ To prevent redundant rebuilds of a component, complete the following steps.
 . Using your preferred IDE, in the repository of your component, open the  `/.tekton/<name of component>-on-pull-request.yaml` file and find the`on-cel-expression` annotation. 
 +
 Example:
++
 ----
 pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
       == "main" && ( "my-component/***".pathChanged() || ".tekton/my-component-sample-pull-request.yaml".pathChanged()
       || "root-docker/Dockerfile".pathChanged() )
 ----
-
++
 . Set the value as the path or paths that you want to trigger rebuilds. PRs with changes to files in those paths will cause {ProductName} to rebuild the component.
 +
 Example:
++
+----
 pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
       == "main" && ( "my-component/context/***".pathChanged() || ".tekton/my-component-pull-request.yaml".pathChanged()
       || "root-docker/Dockerfile".pathChanged() )
-
+----
++
 WARNING: Misconfiguring this value can prevent builds from starting or cause them to start at the wrong time.
-
-
++
 . Commit this change to your repository.
 . Allow {ProductName} to rebuild your component. 
 
