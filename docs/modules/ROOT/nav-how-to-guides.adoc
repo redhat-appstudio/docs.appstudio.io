@@ -6,6 +6,7 @@
 *** xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[Creating secrets for your builds]
 *** xref:how-to-guides/proc_hermetic-builds.adoc[Enabling hermetic builds]
 *** xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching package manager dependencies for hermetic build]
+*** xref:how-to-guides/configuring-builds/proc_preventing_redundant_rebuilds.adoc[Preventing redundant rebuilds]
 ** Testing your application
 *** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} tests]
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level tests]
