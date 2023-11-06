@@ -39,7 +39,7 @@ WARNING: Misconfiguring this value can prevent builds from starting or cause the
 To verify that you have prevented redundant rebuilds: 
 
 . Open a PR that modifies the component that you want {ProductName} to rebuild. 
-. Allow {ProductName} to rebuild your component.
+. Wait for {ProductName} to rebuild your component.
 . Check the PipelineRuns page in {ProductName}. There should be only one new PipelineRun with the type “Build.” Check its logs for the `build-container` task. They should only refer to the component you specified with `on-cel-expression`.
 
 .Troubleshooting
