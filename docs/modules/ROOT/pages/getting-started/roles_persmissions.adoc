@@ -1,231 +1,253 @@
 = Permissions and roles
 
-As a workspace owner, you can https://placeholder.com[invite] one or more collaborators to your workspace by adding their user ID, such as an external SSO ID. After https://placeholder.com[adding a user to a workspace], you assign them a specific role that determines the actions they can take in a workspace.
+== Getting started 
 
-The roles available for a workspace, from least access to most access, are:
+When the administrators at {ProductName} create a workspace for you, you automatically have the role of *Admin*. 
 
-* *Contributor*: Ideal for users who actively push to your workspace.
+== Types of roles
 
-* *Maintainer*: Ideal for users who need to manage the workspace without access to sensitive actions like managing security or deleting a workspace.
+Invite other users to collaborate in your workspace by entering their {ProductName} username. You can assign one of the following roles to a collaborator:
 
-* *Owner*: Ideal for users who need full access to the workspace, including sensitive and destructive actions like managing security or deleting a workspace.
+* *Contributor*: For users who regularly push to your workspace
+* *Maintainer*: For users who need to manage the workspace but who don't need access to sensitive actions like managing security or deleting a workspace
+* *Admin*: For users who need full access to the workspace and who need to perform sensitive actions like managing security or deleting a workspace
 
-NOTE: By default, the role for newly invited collaborators is *Contributor* but you can upgrade it to *Maintainer* or *Owner*.
+== Managing users 
 
-== Permissions for each role
+To begin adding, editing, or removing users from a workspace, complete the following steps:
 
-The role assigned to a user determines the permissions they have within a workspace, with the Owner role assigning all permissions.
+. In the side bar, select *Workspaces*. 
+. Select the tab *Access*. 
 
+=== Adding a user to a workspace
 
-|===
-|Permissions for |Action |Contributor |Maintainer |Owner
+. In *Find by username*, enter the {ProductName} username that you want to grant access to. 
+. Select *Grant Access*. 
+. In *Assign role*, select either *Contributor*, *Maintainer*, or *Admin*. 
+* To view the permissions for each role, select *Show list*. 
+. Select *Save*. 
 
-.4+|Workspace
-|View
-^|✔️
-^|✔️
-^|✔️
+=== Removing a user from a workspace
+. Select the three dots next to the user that you want to remove. 
+. Select *Remove access*.
+. To confirm, select *Remove*. 
 
-|Create
-|
-|
-|
-|Update
+=== Editing the access of a user
+. Select the three dots next to the user that you want to edit. 
+. Select *Edit access*. 
+. In *Assign roles*, change the drop-down to the new role that you want. 
+* To view the permissions for each role, select *Show list*. 
+. Select *Save changes*. 
 
-|
-|
-|
-|Delete
-|
+== Permissions by role
 
-|
-|
-.4+|Applications
-|View
-^|✔️
+The following table shows the actions that each type of collaborator can perform: 
 
-^|✔️
-^|✔️
-|Create
-|
-^|✔️
-
-^|✔️
-|Update
-|
-^|✔️
-^|✔️
-
-|Delete
-|
-|
-^|✔️
-.4+|Component
-
-|View
-^|✔️
-^|✔️
-^|✔️
-|Create
-
-|
-^|✔️
-^|✔️
-|Update
-|
-
-^|✔️
-^|✔️
-|
-|
-|
-
-^|✔️
-.4+|Environment
-|View
-^|✔️
-^|✔️
-
-^|✔️
-|Create
-|
-|
-^|✔️
-
-|Update
-|
-|
-^|✔️
-|Delete
-
-|
-|
-^|✔️
-.4+|IntegrationTestScenario
-|View
-
-^|✔️
-^|✔️
-^|✔️
-|Create
-|
-
-^|✔️
-^|✔️
-|Update
-|
-^|✔️
-
-^|✔️
-|Delete
-|
-^|✔️
-^|✔️
-
-.4+|EnterpriseContract
-|View
-^|✔️
-^|✔️
-^|✔️
-
-|Create
-|
-|
-^|✔️
-|Update
-
-|
-|
-^|✔️
-|Delete
-|
-
-|
-^|✔️
-.4+|ReleaseStrategy
-|View
-^|✔️
-
-^|✔️
-^|✔️
-|Create
-|
-|
-
-^|✔️
-|Update
-|
-|
-^|✔️
-
-|Delete
-|
-|
-^|✔️
-.4+|ReleasePlanAdmission
-
-|View
-^|✔️
-^|✔️
-^|✔️
-|Create
-
-|
-^|✔️
-^|✔️
-|Update
-|
-
-^|✔️
-^|✔️
-|Delete
-|
-^|✔️
-
-^|✔️
-.4+|User
-|View
-^|✔️
-^|✔️
-
-^|✔️
-|Create
-|
-^|✔️
-^|✔️
-
-|Update
-|
-^|✔️
-^|✔️
-|Delete
-
-|
-^|✔️
-^|✔️
-.4+|User Group
-|View
-
-^|✔️
-^|✔️
-^|✔️
-|Create
-|
-
-|
-^|✔️
-|Update
-|
-^|✔️
-
-^|✔️
-|Delete
-|
-^|✔️
-^|✔️
+.Permissions for each type of collaborator
 
 |===
+|Action |Contributor |Maintainer |Admin
 
-== Additional resources
+|*Application:*
 
-* https://placeholder.com[Managing members of a project]
+View an application
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create an application
+|
+|
+^.^|✔️
+
+|Update an application
+|
+^.^|✔️
+^.^|✔️
+
+|Delete an application
+|
+|
+^.^|✔️
+
+|*Component:*
+
+View a component
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create a component
+|
+^.^|✔️
+^.^|✔️
+
+|Update a component
+|
+^.^|✔️
+^.^|✔️
+
+|Delete a component
+|
+|
+^.^|✔️
+
+|*Environment:*
+
+View an environment
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create an environment
+|
+^.^|✔️
+^.^|✔️
+
+|Update an environment
+|
+^.^|✔️
+^.^|✔️
+
+|Delete an environment
+|
+^.^|✔️
+^.^|✔️
+
+|*Pipeline run:*
+
+View pipeline run
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create pipeline run
+^.^|✔️
+^.^|✔️
+^.^|✔️
+
+|Update pipeline run
+|
+^.^|✔️
+^.^|✔️
+
+|Delete pipeline run 
+|
+^.^|✔️
+^.^|✔️
+
+|*IntegrationTestScenario:*
+
+View IntegrationTestScenario
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create IntegrationTestScenario
+|
+^.^|✔️
+^.^|✔️
+
+|Update IntegrationTestScenario
+|
+^.^|✔️
+^.^|✔️
+
+|Delete IntegrationTestScenario
+|
+^.^|✔️
+^.^|✔️
+
+|*Enterprise Contract:* 
+
+View Enterprise Contract
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create Enterprise Contract
+|
+|
+|
+
+|Update Enterprise Contract
+|
+|
+^.^|✔️
+
+|Delete Enterprise Contract
+|
+|
+^.^|✔️
+
+|*Release strategy:*
+
+View Release strategy
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create Release strategy
+|
+^.^|✔️
+^.^|✔️
+
+|Update Release strategy
+|
+^.^|✔️
+^.^|✔️
+|Delete Release strategy
+|
+^.^|✔️
+^.^|✔️
+
+|*Release Admission Plan:*
+View Release Admission Plan
+
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Create Release Admission Plan
+|
+^.^|✔️
+^.^|✔️
+
+|Update Release Admission Plan
+|
+^.^|✔️
+^.^|✔️
+
+|Delete Release Admission Plan
+|
+^.^|✔️
+^.^|✔️
+
+|*User:*
+
+View a user
+^.>|✔️
+^.>|✔️
+^.>|✔️
+
+|Add a user to a workspace
+|
+^.^|✔️
+^.^|✔️
+
+|Update a user
+|
+^.^|✔️
+^.^|✔️
+
+|Delete a user from a workspace
+|
+^.^|✔️
+^.^|✔️
+
+|===
+
