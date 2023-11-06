@@ -20,6 +20,9 @@
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect-slsa-provenance.adoc[Downloading your SLSA provenance]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps in the CLI]
 ** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
+** xref:how-to-guides/con_release_application.adoc[Releasing an application]
+*** xref:how-to-guides/proc_release_plan.adoc[Creating a `releasePlan` object]
+** xref:how-to-guides/proc_managed_services_onboarding.adoc[Managed services team onboarding]
 ** xref:how-to-guides/proc_delete_application.adoc[Deleting an application]
 
 
@@ -31,6 +34,4 @@ Commenting these out per HACDOCS-425 and -414
 
 ////
 Commenting out this xref for now because Burr said this page is currently unsupported. --Christian (csears@redhat.com), 2/16/2023
-** xref:cli/proc_release_application.adoc[Releasing an application]
-** xref:how-to-guides/proc_managed_services_onboarding.adoc[CLI: Managed services team onboarding]
 ////
