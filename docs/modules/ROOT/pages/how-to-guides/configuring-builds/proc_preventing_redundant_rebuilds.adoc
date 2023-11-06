@@ -33,7 +33,7 @@ pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_
 WARNING: Misconfiguring this value can prevent builds from starting or cause them to start at the wrong time.
 +
 . Commit the changes.
-. Allow {ProductName} to rebuild your component. 
+. Wait for {ProductName} to rebuild your component. 
 
 .Verification
 To verify that you have prevented redundant rebuilds: 
