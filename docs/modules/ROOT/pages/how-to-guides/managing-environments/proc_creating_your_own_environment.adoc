@@ -56,6 +56,7 @@ users:
 .. Specify the namespace for the cluster that you are using.
 . Select *Create environment*.
 . Confirm that your environment is created and is accessible under *Environments*. 
+. To deploy your application to the new environment, rebuild your application.
 
 .Troubleshooting 
 
