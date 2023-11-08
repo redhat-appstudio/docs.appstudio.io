@@ -1,0 +1,84 @@
+= Managing applications in secure development environment
+
+This feature enables you to copy a selected application to a different workspace, where you can define a different set of collaborators. This is beneficial for working on secure fixes without broadcasting those changes to all team members in the original application.
+
+Key capabilities of this feature include:
+
+* **Clone affected application:** Cloning affected applications into a private workspace, enabling developers to tackle security issues without exposing sensitive information.
+
+* **Re-create application with limited visibility:** Re-creating applications while minimizing the awareness of their existence, ensuring a secure environment for working on security fixes.
+
+
+== Cloning applications to a dedicated or all workspaces
+You can clone applications to a dedicated workspace to address security vulnerabilities, test new features, and enhance the application without disrupting the production environment. 
+
+.**Prerequisite**
+
+* You have the maintainer role for the application you are working with.
+* You have access to App Studio.
+* You have downloaded RHTAP link:https://github.com/redhat-appstudio/rhtap-cli/releases[pre-built CLI].
+
+
+.**Procedure**
+
+. Log in to the original workspace where the application was previously being developed using the link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/getting_started_in_cli/[`oc` CLI] tool.
+. To clone the application from one workspace to another, run the following command:
+
++
+[source,bash]
+----
+./rhtap export application <name_of_your_application> --from <source_tenant_workspace> --to <target_tenant_workspace>
+----
+
+NOTE: To show the command usage information, run: `rhtap export application --help`.
+
+== Cloning applications to a secure workspace
+Clone an application to a secure workspace for addressing embargoed issues. Cloning an application involves replicating the application's code and configuration into a dedicated secure workspace, ensuring the sensitive information remains isolated and protected.
+
+.**Prerequisite**
+
+* You are the maintainer of the application in the original workspace where the embargoed issue was identified.
+
+* You have downloaded RHTAP link:https://github.com/redhat-appstudio/rhtap-cli/releases[pre-built CLI].
+
+* You have created a corresponding private mirror repository for any components that contain embargoed information.
+
+* You have a desired destination workspace created where you want to clone your application.
+
+
+.**Procedure**
+
+. Optional: Create a link:https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository[Private Mirror] of the corresponding repository if any components within the application contain embargoed information. This step is crucial to safeguard sensitive data and prevent unauthorized access. 
+
++
+NOTE: Creating a private fork of the public link:https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository[GitHub repository] is not possible.
+
+. link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/get-started/[Submit a request] for a new workspace to work on the embargoed issue. This workspace will serve as the secure environment for cloning the affected application.
+
+. Log in to the original workspace where the application was previously being developed using the `oc` CLI tool.
+
+. To clone the application from the original workspace to the secure workspace, run the following command:
+
++
+[source,bash]
+----
+./rhtap export application build  --from <original-tenant-workspace> --to <secure-workspace> --as-prebuilt-images --skip <impacted component>
+----
+
++
+NOTE: Ensure that you have excluded the impacted component from which you have created a private mirror in step 1.
+
+. Confirm that the YAML file has been generated under the link:https://github.com/redhat-appstudio/rhtap-cli/tree/main/data/20231003121403[`./rhtap/data` directory]. This file contains the necessary information for importing the application into the new workspace.
+
+. Log in to the newly created secure workspace using the `oc` CLI tool.
+
+. Apply the generated YAML file to the new workspace by using the following command:
+
++
+[source,bash]
+----
+oc apply -f <path-to-yaml>
+----
+
+. Within the RHTAP UI, import the impacted component into the same application that the user has just imported. This ensures that the application is fully functional in the secure workspace.
+
