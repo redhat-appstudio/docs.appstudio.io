@@ -4,17 +4,17 @@
 
 As a user, you have the right to understand where and how you enter personal and sensitive data, and when your data gets published to GitHub or Quay. 
 
-== Data in Quay is public 
+== Data in GitHub repositories might be public
 
-If you use a public GitHub repository as a component’s source, {ProductName} publishes the container image it builds to a public Quay repository. 
+When you create an application, {ProductName} generates a _public_ Git repository that stores a Kubernetes YAML file with configuration instructions for your application's components. These instructions contain a reference to the container image built from the source code for those components. 
 
-*Note:* There is no functionality to use a private Quay repository. The artifacts {ProductName} builds are public and visible to anyone who is viewing the Quay repository. 
+*Note:* {ProductName} cannot store application configuration instructions in a private GitOps repository. The artifacts created by {ProductName} are public and visible to anyone who is viewing the GitOps repository.
 
-== Data in GitHub repositories is public
+== Data in Quay repositories might be public 
 
-When you create an application, {ProductName} stores the link to your GitHub repository, branch, and folder in a GitOps repository managed by {ProductName}. {ProductName} uses that link when it pulls code from your GitHub repository. If you use a personal repo or personal fork from a public project, these Github repository URLs contain your personal Git username. 
+* If you use a public GitHub repository as a component’s source, {ProductName} publishes the container image it builds to a public Quay repository.
 
-*Note:* There is no functionality to store the application configuration in a private GitOps repository. The artifacts created by {ProductName} are public and visible to anyone who is viewing the GitOps repository.
+* If you use a private GitHub repository as a component’s source, {ProductName} publishes the container image it builds to a private Quay repository.
 
 == Secrets for sensitive data are available
 
