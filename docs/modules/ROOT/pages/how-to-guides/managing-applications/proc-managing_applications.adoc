@@ -62,7 +62,7 @@ NOTE: Creating a private fork of the public link:https://docs.github.com/en/repo
 +
 [source,bash]
 ----
-./rhtap export application build  --from <original-tenant-workspace> --to <secure-workspace> --as-prebuilt-images --skip <impacted component>
+./rhtap export application <name_of_your_application>  --from <original-tenant-workspace> --to <secure-workspace> --as-prebuilt-images --skip <impacted component>
 ----
 
 +
