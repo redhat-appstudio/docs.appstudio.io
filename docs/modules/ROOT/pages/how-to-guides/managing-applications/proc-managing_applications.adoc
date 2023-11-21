@@ -1,4 +1,4 @@
-= Managing applications in secure development environment
+= Managing applications in a secure development environment
 
 This feature enables you to copy a selected application to a different workspace, where you can define a different set of collaborators. This is beneficial for working on secure fixes without broadcasting those changes to all team members in the original application.
 
@@ -9,7 +9,7 @@ Key capabilities of this feature include:
 * **Re-create application with limited visibility:** Re-creating applications while minimizing the awareness of their existence, ensuring a secure environment for working on security fixes.
 
 
-== Cloning applications to a dedicated or all workspaces
+== Cloning applications to a dedicated workspace
 You can clone applications to a dedicated workspace to address security vulnerabilities, test new features, and enhance the application without disrupting the production environment. 
 
 .**Prerequisite**
@@ -17,6 +17,7 @@ You can clone applications to a dedicated workspace to address security vulnerab
 * You have the maintainer role for the application you are working with.
 * You have access to App Studio.
 * You have downloaded RHTAP link:https://github.com/redhat-appstudio/rhtap-cli/releases[pre-built CLI].
+* You have a desired destination workspace created where you want to clone your application.
 
 
 .**Procedure**
@@ -33,7 +34,7 @@ You can clone applications to a dedicated workspace to address security vulnerab
 NOTE: To show the command usage information, run: `rhtap export application --help`.
 
 == Cloning applications to a secure workspace
-Clone an application to a secure workspace for addressing embargoed issues. Cloning an application involves replicating the application's code and configuration into a dedicated secure workspace, ensuring the sensitive information remains isolated and protected.
+Clone an application to a secure workspace for addressing embargoed issues. Cloning an application involves replicating the application's code and configuration into a dedicated secure workspace, ensuring that sensitive information remains isolated and protected.
 
 .**Prerequisite**
 
@@ -53,7 +54,7 @@ Clone an application to a secure workspace for addressing embargoed issues. Clon
 +
 NOTE: Creating a private fork of the public link:https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository[GitHub repository] is not possible.
 
-. link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/get-started/[Submit a request] for a new workspace to work on the embargoed issue. This workspace will serve as the secure environment for cloning the affected application.
+. link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/get-started/[Submit a request] for a new workspace to work on the embargoed issue. This workspace will serve as a secure environment for cloning the affected application.
 
 . Log in to the original workspace where the application was previously being developed using the `oc` CLI tool.
 
