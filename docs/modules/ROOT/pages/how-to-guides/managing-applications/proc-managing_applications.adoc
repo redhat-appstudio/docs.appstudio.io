@@ -48,7 +48,7 @@ oc apply -f ./data/<path-to-yaml>
 
 . Within the RHTAP UI, in the private workspace, import the private mirror as a new component in the application that was just created by the `oc` step above.
 
-At this point, you should have a clone of your application in the new private workspace with all of its components mirrored from the origin workspace, except the impacted component which is bound to the new private git mirror repository.
+At this point, you should have a clone of your application in the new private workspace, with all of its components mirrored from the origin workspace, except the impacted component, which is now linked to the new private Git mirror repository.
 
 == Preparing the security fix
 
