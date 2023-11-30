@@ -83,4 +83,4 @@ At this point, you should have a clone of your application in the new private wo
 . In your team's normal workspace (not the private workspace), use the UI to watch the progress of the `Release`. When completed, your fix is live and available to your customers.
 . Cherry-pick the commit(s) from your private mirror back to the main Git repository used by your team for normal development.
 
-WARN: Be sure to apply the patch(es) from your private mirror to your the git repository that your team normally uses for managing development. If you do not do this, then subsequent releases from your team will cause security regressions.
+IMPORTANT: Ensure to apply the patch(es) from your private mirror to the Git repository that your team normally uses for managing development. Failure to do so results in security regressions in subsequent releases from your team.
