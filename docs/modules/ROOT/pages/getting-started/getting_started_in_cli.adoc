@@ -26,7 +26,7 @@ To verify that `oc login` worked correctly, complete the following steps:
 
 == Switching workspaces
 
-In order to use the CLI tool with a workspace other than your default personal user workspace, append `/workspaces/<workspace-name>` to the AppStudio API url used in your `oc login` command.
+To use the CLI tool with a workspace other than your default personal workspace, append `/workspaces/<workspace-name>` to the AppStudio API url used in your `oc login` command in step 6.
 
 == oc commands for {ProductName}
 
