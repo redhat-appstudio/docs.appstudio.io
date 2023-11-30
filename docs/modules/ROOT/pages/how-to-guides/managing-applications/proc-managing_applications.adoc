@@ -75,7 +75,7 @@ At this point, you should have a clone of your application in the new private wo
 
 . In the private workspace, use the UI to identify the pullspec of the image bearing the fix, pinned to digest.
 . In your team's normal workspace (not the private workspace), use the CLI to identify a `Snapshot` that you want to use as a basis for your new release. A common choice is "the most recently released Snapshot", which you can find by picking through your history of Releases sorted by creation date to find the relevant Snapshot identifier.
-. Use `oc` to extract that Snapshot to a local yaml file with `oc get snapshots <that snapshot id> -o yaml > snapshot.yaml`
+. Use `oc` to extract the Snapshot that you want to use as a basis for your new release to a local yaml file with `oc get snapshots <that snapshot id> -o yaml > snapshot.yaml`
 . Edit the extracted file to construct a new `Snapshot` that replaces the impacted components pullspec with the pullspec of the image bearing the fix, pinned to digest. You can discard all annotations and labels and should give the Snapshot a new `name`.
 . Create that new Snapshot in the sytem with `oc apply -f snapshot.yaml`.
 . Review your integration test pipelines to confirm that the `Snapshot` is valid and can be released.
