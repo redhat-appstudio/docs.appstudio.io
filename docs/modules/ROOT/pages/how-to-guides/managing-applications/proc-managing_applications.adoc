@@ -58,7 +58,7 @@ At this point, you should have a clone of your application in the new private wo
 
 .**Procedure**
 
-. Verify that pull requests to your private mirror create pipelineruns in the private workspace, and that integration tests run correctly.
+. Verify that pull requests to your private mirror create PipelineRuns in the private workspace and that integration tests run correctly.
 . Prepare the fix to your security issue as a pull request against your private mirror.
 . Invite reviewers from your security department or select members from your team to review the patch and confirm that it fixes the embargoed security issue, by link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/getting-started/get-started/#adding-collaborators-to-your-workspace[granting them collaborator rights in your workspace].
 . When you are satisfied that the fix is ready, wait until the embargo disclosure time before releasing your fix.
