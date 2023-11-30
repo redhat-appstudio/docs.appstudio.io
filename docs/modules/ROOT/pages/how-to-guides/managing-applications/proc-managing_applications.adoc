@@ -81,7 +81,6 @@ At this point, you should have a clone of your application in the new private wo
 . Watch your integration test pipelines confirm the `Snapshot` as valid and releasable.
 . Create a `Release` resource referencing that `Snapshot`. Follow a similar procedure as above. Export the old `Release` as a basis. Modify it to refer to the new `Snapshot`, etc.
 . In your team's normal workspace (not the private workspace), use the UI to watch the progress of the `Release`. When completed, your fix is live and available to your customers.
-. When it completes, your fix is now live and available to your customers.
 . Cherry pick the commit(s) from your private mirror back to the main git repository used by your team for normal development.
 
 WARN: Be sure to apply the patch(es) from your private mirror to your the git repository that your team normally uses for managing development. If you do not do this, then subsequent releases from your team will cause security regressions.
