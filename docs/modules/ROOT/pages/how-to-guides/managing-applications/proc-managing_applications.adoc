@@ -79,7 +79,7 @@ At this point, you should have a clone of your application in the new private wo
 . Edit the extracted file to construct a new `Snapshot` that replaces the impacted components pullspec with the pullspec of the image bearing the fix, pinned to digest. You can discard all annotations and labels and should give the Snapshot a new `name`.
 . Create that new Snapshot in the system with `oc apply -f snapshot.yaml`.
 . Review your integration test pipelines to confirm that the `Snapshot` is valid and can be released.
-. Create a `Release` resource referencing that `Snapshot`. Follow a similar procedure as above. Export the old `Release` as a basis. Modify it to refer to the new `Snapshot`, etc.
+. Create a `Release` resource referencing the specified `Snapshot`. Follow a similar procedure as outlined above. Export the existing `Release` as a starting point. Modify it to reference the new `Snapshot` and make any necessary adjustments.
 . In your team's normal workspace (not the private workspace), use the UI to watch the progress of the `Release`. When completed, your fix is live and available to your customers.
 . Cherry-pick the commit(s) from your private mirror back to the main Git repository used by your team for normal development.
 
