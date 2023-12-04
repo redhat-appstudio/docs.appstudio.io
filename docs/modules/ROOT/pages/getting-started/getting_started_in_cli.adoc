@@ -14,15 +14,19 @@ To log in to {ProductName} by using the CLI, complete the following steps:
 . Select the checkbox next to *I agree to the Terms and Conditions*.
 . Select *Get started with OpenShift Developer Sandbox*.
 . In the webpage banner, select *Proxy login command*.
-. Click the *copy icon* to copy the command and your unique token. 
-. Open your terminal and paste the command that you copied in the previous step. This command runs `oc login --token=[your token]`. 
+. Click the *copy icon* to copy the command and your unique token.
+. Open your terminal and paste the command that you copied in the previous step. This command runs `oc login --token=[your token] [appstudio api url]`.
 
 .Verification
 
 To verify that `oc login` worked correctly, complete the following steps:
 
 . Run `cd ~/.kube`.
-. Run `ls` and verify that there is a file named `config`. 
+. Run `ls` and verify that there is a file named `config`.
+
+== Switching workspaces
+
+To use the CLI tool with a workspace other than your default personal workspace, append `/workspaces/<workspace-name>` to the AppStudio API url used in your `oc login` command in step 6.
 
 == oc commands for {ProductName}
 

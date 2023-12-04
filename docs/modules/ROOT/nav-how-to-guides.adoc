@@ -14,7 +14,11 @@
 *** xref:how-to-guides/testing_applications/proc_creating_custom_test.adoc[Creating a custom integration test]
 ** Managing environments
 *** xref:how-to-guides/managing-environments/con_overview_of_environments.adoc[Overview of {ProductName} environments]
-*** xref:how-to-guides//managing-environments/proc_creating_your_own_environment.adoc[Creating your own environment]
+*** xref:how-to-guides/managing-environments/proc_creating_your_own_environment.adoc[Creating your own environment]
+** Managing applications
+*** xref:how-to-guides/managing-applications/proc-managing_applications.adoc[Managing a security fix]
+** Managing workspaces
+*** xref:how-to-guides/managing-workspaces/proc-creating_a_team_workspace.adoc[Creating a team workspace]
 ** Securing your supply chain
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect_sbom.adoc[Inspecting SBOMs]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect-slsa-provenance.adoc[Downloading your SLSA provenance]
