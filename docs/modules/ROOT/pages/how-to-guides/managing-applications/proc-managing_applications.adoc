@@ -9,7 +9,7 @@ Key steps include:
 * **Release the fix:** Releasing the build from your private workspace and "upstreaming" your patch from your private git mirror back to your team's normal development repo.
 
 == Cloning applications to a private workspace
-Cloning an application involves replicating the application's code and configuration into a dedicated private workspace, ensuring the sensitive information remains isolated and protected.
+Cloning an application involves replicating the application's code and configuration into a dedicated private workspace, ensuring that sensitive information remains isolated and protected.
 
 .**Prerequisite**
 
