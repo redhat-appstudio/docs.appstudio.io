@@ -1,0 +1,115 @@
+= Viewing logs 
+
+{ProductName} generates logs when it builds, checks, and deploys the components of your application. Reading logs can be your first step to understand why the build or checks failed.
+
+You can access pod and Task logs with both the UI and CLI, and you can download these logs to your local machine. {ProductName} stores logs for the 10 most recent PipelineRuns that are executed in the namespace. However, you can also start a new build pipeline to generate a new set of logs.
+
+== Types of logs
+
+{ProductName} generates the following types of logs:
+
+* *Pod logs* show the health and status of a Kubernetes pod where your application is running. {ProductName} creates pod logs when it starts your application in a pod on an OpenShift cluster so you can see how it starts your application in real time.
+* *Task logs* are generated for all Tasks of a build pipeline. Both default and custom build pipelines have *Build* and *Test* PipelineRuns:
+** Logs for *Test* PipelineRuns log how a build is verified with an Enterprise Contract (EC) and they are the same for all pipelines.
+** Logs for *Build* PipelineRuns differ between default and custom build pipelines in the following ways:
+*** *Build* PipelineRuns logs for default build pipelines log how {ProductName} clones a Git repository with your code or our sample code, builds container images with your application, checks the images, and generates a software bill of materials (SBOM).
+*** Custom build pipelines have *Build* PipelineRuns that run when a pull request is opened and when new changes are pushed to this PR, and logs for different PipelineRuns differ. On-push PipelineRuns clone a Git repo and build a container image with a component. On-pull-request PipelineRuns also run several advanced checks.
+
+== Viewing pod logs in the web UI
+
+.Prerequisites
+
+You have created an application in {ProductName}.   
+
+.Procedure
+
+To view pod logs for a component, complete the following steps:
+
+* Navigate to *Components* > *View pod logs*.
+* A pop-up window enables you to view pod logs in the UI or download them to your machine by selecting *Download*.
+
+== Viewing Task logs in the web UI
+
+In the UI, you can either view all Task logs on one screen, or each Task log separately, with other Task details.
+
+.Prerequisites
+
+You have created an application in {ProductName}.
+
+.Procedure
+
+To view all Task logs displayed together on one screen:
+
+. Navigate to *Activity* > *Pipeline runs*.
+. Select a PipelineRun.
+. Navigate to *Logs*.
+
+To view logs for a particular Task:
+
+. Navigate to *Activity* > *Pipeline runs*.
+. Select a PipelineRun. You then have 2 options:
+** Navigate to *Details*. In a graphic representation of a pipeline called *Pipeline run details* select a Task you need. A side panel will open that includes the *Logs* tab.
++
+OR
++
+** Navigate to *Task runs* > Select a TaskRun you need > Navigate to *Logs*.
+
+== Viewing Task logs with the Tekton CLI
+
+.Prerequisites
+
+* You have installed the link:https://tekton.dev/docs/cli[Tekton CLI].
+* You have created an application in {ProductName}.
+
+.Procedure
+
+To view Task logs with the Tekton CLI:
+
+. List the existing PipelineRuns by running: 
++
+[source]
+--
+tkn pr list
+--
+
+. Copy the name of a PipelineRun you need logs for.
+. Access the logs for a particular PipelineRun by running:
++
+[source]
+--
+tkn pr logs <pipelinerun-name>
+--
+
+[NOTE]
+====
+In the Tekton CLI you can use `__pr__` as a shortcut for the PipelineRun commands. 
+====
+
+== Troubleshooting
+
+{ProductName} enables you to view logs for the 10 most recent PipelineRuns executed in the namespace. When logs aren't available any longer, you see the following message instead of logs:
+
+[source]
+--
+Logs are no longer accessible for <task-name>.
+--
+
+You can start a new build pipeline for your components and {ProductName} will generate a new set of logs.
+
+== Privacy notice
+
+{ProductName} stores pod logs on an OpenShift cluster until pods are pruned.
+
+For PipelineRuns and TaskRuns, we forward logs data to several locations:
+
+* Logs are stored on an OpenShift cluster and in its persistent storage volumes until pods are pruned. On the cluster, we store logs for the 10 most recent PipelineRuns executed in the namespace.
+* Logs are sent to Amazon Relational Database Service (Amazon RDS). We store Tekton Results there that are a data source for logs, so you can access logs after they are pruned from the cluster. These logs are not automatically deleted.
++
+[NOTE]
+====
+Deleting an application or a component will not delete its logs from the cluster or RDS. However, deleting a workspace will delete these logs.
+====
+
+* Logs are sent to Amazon Simple Storage Service (Amazon S3), Amazon CloudWatch, and Splunk, where we store them according to our data retention policy. These logs are for internal Red Hat usage, for support and security purposes. They are not pruned or deleted when a workspace is deleted.
+
+Logs data is also part of our back ups that we create for disaster recovery purposes.

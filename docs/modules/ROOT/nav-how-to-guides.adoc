@@ -24,6 +24,7 @@
 *** xref:how-to-guides/Secure-your-supply-chain/proc_inspect-slsa-provenance.adoc[Downloading your SLSA provenance]
 *** xref:how-to-guides/Secure-your-supply-chain/proc_java_dependencies.adoc[Configuring dependencies rebuild for Java apps in the CLI]
 ** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
+** xref:how-to-guides/proc_viewing_logs.adoc[Viewing logs]
 ** xref:how-to-guides/proc_delete_application.adoc[Deleting an application]
 
 
