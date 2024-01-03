@@ -30,4 +30,4 @@ Integration tests ensure that all build components are able to work together at 
 
 {ProductName} runs integration tests after it successfully builds the components of an application. As part of the build process, {ProductName} creates an image for each component and stores them in a Quay.io repository. Images of all the components are then compiled into a snapshot of the application. {ProductName} tests the snapshot against user-defined IntegrationTestScenarios, which, again, refer to a GitHub repository. 
 
-
+You can also use {ProductName} integration tests to facilitate integration with third-party testing services. See the xref:how-to-guides/testing_applications/proc_testing-in-testing-farm.adoc[testing in Testing Farm] guide for an example.
