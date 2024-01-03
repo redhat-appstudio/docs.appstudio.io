@@ -1,0 +1,51 @@
+= Adding an integration test
+
+link:https://docs.testing-farm.io/[Testing Farm] is a third-party test service that can be used as a test execution back-end for {ProductName}. This document guides you through an example of how to trigger Testing Farm tests from your {ProductName} *Integration tests*.
+
+.Prerequisites
+
+* You have created an application in {ProductName}.
+* You have a Testing Farm API key, which can be acquired by following the link:https://docs.testing-farm.io/Testing%20Farm/0.1/onboarding.html[Testing Farm onboarding guide].
+* You have have or are ready to create a git repository with link:https://fmf.readthedocs.io/[fmf] files suitable for use with the link:https://tmt.readthedocs.io/[tmt] testing tool. This is the testing technology used by Testing Farm under the hood. If you don't have a fmf tests already prepared, you can use our tmt link:https://github.com/ralphbean/tmt-hello-world[hello world repository].
+
+.Procedure
+
+You need to perform two major steps. Upload your Testing Farm API key, and register a *Integration test* to send requests to the Testing Farm API. Complete the following steps in the {ProductName} console:
+
+.Procedure - Upload your Testing Farm API key
+
+Follow similar instructions as in the xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[Creating secrets for your builds] guide.
+
+. In {ProductName}, from the left navigation menu, select **Secrets**.
+. From the **Secrets** page, click **Add secret**.
+. From the **Add secret** page, choose **Build**.
+. Select secret type **Key/value secret**
+. For **Secret name**, enter `testing-farm-secret`.
+. Under **Key/value secret**, expand **Key/value 1**, then enter the key name `testing-farm-token`.
+NOTE: Be sure that the secret name is `testing-farm-secret` and the key name is `testing-farm-token`. The link:https://github.com/ralphbean/testing-farm-tekton/blob/main/tasks/testing-farm.yaml[tekton task] expects the secret and key name to be named these strings exactly.
+. For **Upload the file with value for your key or paste its contents**, paste the value of your token into the space under **Upload**.
+. Optional: Under **Labels**, add a label to tag or provide more context for your secret.
+. Click **Add secret**.
+
+.Procedure - Registering the Integration Test
+
+. Open an existing application and go to the *Integration tests* tab.
+. Select *Add integration test*.
+. In the *Integration test name* field, enter a name of your choosing to reflect your tests. The name `testing-farm` might be suitable.
+. In the *GitHub URL* field, enter `https://github.com/ralphbean/testing-farm-tekton`, which is a git repository containing a tekton pipeline and task that can send requests to the Testing Farm API.
+. In the *Path in repository* field, enter `pipelines/testing-farm.yaml`.
+. Expand the *Parameters* field.
+. Select *Add parameter*. For the *Name* field, enter `GIT_URL`. For the *Value* field, enter the url to the git repository that contains your *fmf* files. If you do not have any, try using our tmt link:https://github.com/ralphbean/tmt-hello-world[hello world repository] to try it out.
+. Optional: Select *Add parameter*. For the *Name* field, enter `COMPOSE`. For the *Value* field, enter a valid Testing Farm compose identifier. Try `Fedora-39`.
+. Optional: If you do not want the test to prevent the application from being deployed, then select *Mark as optional for release*.
+. Select *Add integration test*.
+. Start a new build for any component you want to test.
+.. For components using the default build pipeline, go to the *Components* tab, select the three dots next to the name of the component, and select *Start new build*.
+.. For components with an upgraded build pipeline, make a commit to their GitHub repository.
+
+.Verification
+When the new build is finished:
+
+. Go to the *Integration tests* tab and select the highlighted name of your test.
+. Go to the *Pipeline runs* tab of that test and select the most recent run.
+. You should be able to find the testing-farm URLs in the logs.
