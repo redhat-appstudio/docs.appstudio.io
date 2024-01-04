@@ -41,7 +41,7 @@ NOTE: Be sure that the secret name is `testing-farm-secret` and the key name is 
 . Select *Add integration test*.
 . Start a new build for any component you want to test.
 .. For components using the default build pipeline, go to the *Components* tab, select the three dots next to the name of the component, and select *Start new build*.
-.. For components with an upgraded build pipeline, make a commit to their GitHub repository.
+.. For components with an upgraded, custom build pipeline, make a commit to their GitHub repository.
 
 .Verification
 When the new build is finished:
