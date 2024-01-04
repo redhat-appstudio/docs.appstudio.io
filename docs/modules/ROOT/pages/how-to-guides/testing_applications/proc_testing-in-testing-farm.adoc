@@ -10,7 +10,7 @@ link:https://docs.testing-farm.io/[Testing Farm] is a third-party test service t
 
 .Procedure
 
-You need to perform two major steps. Upload your Testing Farm API key, and register a *Integration test* to send requests to the Testing Farm API. Complete the following steps in the {ProductName} console:
+You need to perform two major steps. Upload your Testing Farm API key, and register an *Integration test* to send requests to the Testing Farm API. Complete the following steps in the {ProductName} console:
 
 .Procedure - Upload your Testing Farm API key
 
