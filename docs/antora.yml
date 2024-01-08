@@ -25,7 +25,7 @@ asciidoc:
     experimental: ""
 
   # Product content attributes
-    ProductName: App Studio
+    ProductName: Konflux
     context: app
     ProductShortName: ''
     ProductRelease: ''
