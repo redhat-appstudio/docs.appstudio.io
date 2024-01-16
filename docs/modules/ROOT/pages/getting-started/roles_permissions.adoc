@@ -16,7 +16,7 @@ NOTE: By default, the role for newly invited collaborators is *Contributor*, but
 
 .Procedure
 
-. From the {ProductName} left navigation menu, select **User Access**.
+. From the {ProductName} left navigation menu, select link:https://console.redhat.com/preview/application-pipeline/access[User Access].
 . Under **Grant user access**, click **Grant access**, or click **Actions**, then **Grant access**.
 . From the **Grant access to workspace** page, enter the username of the teammate you want to give workspace access to.
 . Under **Assign role**, choose one of the following roles for your new workspace user:
@@ -30,7 +30,7 @@ A message displays that reads, "You invited the user `_username_` to collaborate
 
 == Editing user workspace access
 
-. From the {ProductName} left navigation menu, select **User Access**.
+. From the {ProductName} left navigation menu, select link:https://console.redhat.com/preview/application-pipeline/access[User Access].
 . Next to the user whose access you want to edit, click the three vertical dots. 
 . Select **Edit access**. 
 . In **Assign role**, select the user's new role. 
