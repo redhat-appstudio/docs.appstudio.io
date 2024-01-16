@@ -22,6 +22,8 @@ Product security tests in {ProductName} ensure a product is secure and keep your
 * Vulnerability scanning via Clair
 * Anti-virus scanning via ClamAV
 * Code scanning via SAST tools
++
+** xref:how-to-guides/testing_applications/enable_snyk_check_for_a_product.adoc[Enabling a Snyk task for a product]
 
 For {ProductName} to perform our predefined product security tests on a given component, you also must xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrade its build pipeline].
 
