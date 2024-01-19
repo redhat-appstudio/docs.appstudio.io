@@ -16,6 +16,7 @@ To define the relationships between components in an application, complete the f
 . In the *Component relationships* window, select one component from the *Select a component* drop-down menu.
 . Select *Nudges* or *Is nudged by*, depending on the relationship you wish to define.
 
++
 [NOTE]
 ====
 Component A nudges Component B (or Component B is nudged by Component A) if Component B contains a reference by image digest to a build of Component A. 
