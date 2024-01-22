@@ -1,6 +1,6 @@
 = Adding an integration test
 
-You can add an integration test to ensure that individual components correctly integrate to form a whole application. {ProductName} runs integration tests on the container images of components before it deploys those images.     
+In {ProductName}, you can add integration tests to verify that the individual components of your application integrate correctly, forming a complete and functional application. {ProductName} runs these integration tests on the container images of components before their deployment.
 
 .Prerequisites
 
@@ -18,7 +18,9 @@ Complete the following steps in the {ProductName} console:
 . Optional: If you need to deploy your application as part of the test, use the drop-down menu in the *Environment* field to select *development*. {ProductName} then deploys your application to a temporary clone of that environment during testing.
 +
 WARNING: Without specifying an Environment, an integration test can only do static testing. To make application endpoints available for testing, you must deploy your application to an ephemeral environment.
-. Optional: If you do not want the test to prevent the application from being deployed, then select *Mark as optional for release*.
+. Optional: To allow the integration tests to fail without impacting the deployment and release process of your application, you can choose to select *Mark as optional for release*.
++
+NOTE: By default, all integration test scenarios are mandatory and must pass. A failing integration test marks the application snapshot as failed, preventing its deployment and release. However,  if you have selected *Mark as optional for release*, a failure in this test won't hinder the deployment and release of the application snapshot.
 . Select *Add integration test*.
 . Start a new build for any component you want to test.
 .. For components using the default build pipeline, go to the *Components* tab, select the three dots next to the name of the component, and select *Start new build*.
