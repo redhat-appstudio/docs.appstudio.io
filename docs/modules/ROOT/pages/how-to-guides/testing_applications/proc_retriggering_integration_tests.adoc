@@ -33,6 +33,7 @@ integration-pipelinerun-jfrdb   4 seconds ago   ---        Running
 
 +
 [source]
+----
 $ tkn pipelinerun describe integration-pipelinerun-jfrdb
 
 [Expected labels in the output]
