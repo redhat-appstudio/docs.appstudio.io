@@ -13,6 +13,7 @@
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level tests]
 *** xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test]
 *** xref:how-to-guides/testing_applications/proc_creating_custom_test.adoc[Creating a custom integration test]
+*** xref:how-to-guides/testing_applications/proc_retriggering_integration_tests.adoc[Retriggering integration tests]
 ** Managing environments
 *** xref:how-to-guides/managing-environments/con_overview_of_environments.adoc[Overview of {ProductName} environments]
 *** xref:how-to-guides/managing-environments/proc_creating_your_own_environment.adoc[Creating your own environment]
