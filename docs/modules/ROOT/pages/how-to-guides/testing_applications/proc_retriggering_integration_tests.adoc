@@ -11,18 +11,27 @@ Integration test scenarios for a given snapshot can be re-triggered by adding a 
 == Procedure
 . Identify the IntegrationTestScenario that needs to be rerun.  For a given snapshot, you can only rerun one IntegrationTestScenario.
 . Label the snapshot with `test.appstudio.openshift.io/run`, assigning the scenario name you wish to rerun as its value.
++
 [source]
+----
 $ kubectl label [snapshot name] test.appstudio.openshift.io/run=[scenario name]
+----
 
 . The tests are re-triggered automatically.  Once they are re-triggered, the system removes the label, allowing you to apply a new label for a different scenario if you wish to test multiple scenarios.
+
++
 [source]
+----
 $ tkn pipelinerun list
 
 [Example Output]
 NAME                            STARTED         DURATION   STATUS
 integration-pipelinerun-jfrdb   4 seconds ago   ---        Running
+----
 
 . To verify the tests, run `tkn pipelinerun describe [pipelinerun]` and ensure that the labels `appstudio.openshift.io/snapshot` and `test.appstudio.openshift.io/scenario` reference the correct snapshot and scenario.
+
++
 [source]
 $ tkn pipelinerun describe integration-pipelinerun-jfrdb
 
@@ -36,3 +45,4 @@ Labels:
 ...
  test.appstudio.openshift.io/test=component
 ...
+----
