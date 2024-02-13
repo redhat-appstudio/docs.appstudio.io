@@ -4,6 +4,7 @@
 *** xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading to a custom build pipeline]
 *** xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[Customizing the pipeline] 
 *** xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[Creating secrets for your builds]
+*** xref:how-to-guides/configuring-builds/proc_configuration_as_code.adoc[Configuratoin as Code]
 *** xref:how-to-guides/proc_hermetic-builds.adoc[Enabling hermetic builds]
 *** xref:how-to-guides/proc_prefetching-dependencies-to-support-hermetic-build.adoc[Prefetching package manager dependencies for hermetic build]
 *** xref:how-to-guides/configuring-builds/proc_defining_component_relationships.adoc[Defining component relationships]
