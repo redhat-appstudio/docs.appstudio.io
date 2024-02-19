@@ -1,0 +1,12 @@
+.Troubleshooting
+
+ifdef::troubleshooting_builds[]
+
+If your build fails, be sure to look at your logs:
+
+In {ProductName}, from the *Applications* view, select the application build you want to troubleshoot, then from the resulting *Overview* page, select the *Activity* tab. From there, under *Activity By*, select *Pipeline runs*. From the *Name* column, select the build whose logs you want to check, then from the resulting *Pipeline run details* view, do one of the following:
+
+* Select the *Logs* tab.
+* Alternatively, you can click *build-container*. When the right panel opens, select the *Logs* tab to see a partial view of the log for that build.
+
+endif::troubleshooting_builds[]

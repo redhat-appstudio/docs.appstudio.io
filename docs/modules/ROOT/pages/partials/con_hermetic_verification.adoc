@@ -1,16 +1,33 @@
 .Verification
 
-. On your application, go to the *Activity > Pipeline runs* tab.
+* From the {ProductName} *Applications* view, go to *Activity > Latest commits*.
+* From the {ProductName} *Applications* view, go to *Activity > Pipeline runs*.
 
 ifdef::myfunctionone[]
 
-. Go to the pipeline run with *Type* as *Build* and confirm the `build-container` stage displays a green check mark indicating that the build process has successfully fetched all the dependencies.
+** Look at the pipeline run with *Build* in the *Type* column and confirm that the `build-container` stage displays a green checkmark. This indicates that the build process successfully fetched all dependencies.
 
 endif::[]
 
 ifdef::myfunctiontwo[]
 
-. For a pipeline run with *Type* as *Build* and confirm the `pre-fetch dependencies` stage displays a green check mark indicating that the build process has successfully pre-fetched all the dependencies.
+* Go to the pipeline run with *Build* in the *Type* column and confirm that the `pre-fetch dependencies` stage displays a green checkmark. This indicates that the build process successfully fetched all dependencies.
+
+endif::[]
+
+ifdef::prefetch[]
+
+* From the {ProductName} *Applications* view, go to *Activity > Pipeline runs*.
+** Go to the pipeline run with *Build* in the *Type* column and confirm that the `pre-fetch dependencies` stage displays a green checkmark. This indicates that the build process successfully fetched all dependencies.
+* From the {ProductName} *Applications* view, go to *Activity > Latest commits*.
+
+endif::[]
+
+ifdef::enable[]
+
+* From the {ProductName} *Applications* view, go to *Activity > Pipeline runs*.
+** Look at the pipeline run with *Build* in the *Type* column and confirm that the `build-container` stage displays a green checkmark. This indicates that the build process successfully fetched all dependencies.
+* From the {ProductName} *Applications* view, go to *Activity > Latest commits*.
 
 endif::[]
 
