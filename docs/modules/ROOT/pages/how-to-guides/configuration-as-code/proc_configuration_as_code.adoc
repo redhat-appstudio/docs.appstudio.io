@@ -42,13 +42,13 @@ Create a file structure as follows:
 └── README.md
 ----
 
-NOTE: You can omit `component-variant-b` if you only wish to define a single component.  This was included for illustration. 
+NOTE: You can omit `component-b` if you only wish to define a single component.  This was included for illustration. 
 
 In this file structure, you will find:
 . `base`: which is a directory housing your base component yaml and a kustomize to point to the base.
-. `overlay`: which contains one or more applicatoin variants, useful when defining multiple different applications.
-. `overlay/application-a-base`: a base which defines one or more component overrides, one per component in the application and a base for your application.
-. `overlay/application-a-X`: An override for your application and an application specific patches for your component(s).
+. `overlay`: which contains one or more application variants, useful when defining multiple different applications.
+. `overlay/application-a/base`: a base which defines one or more component overrides, one per component in the application and a base for your application.
+. `overlay/application-a/v1-overlay`: An override for your application and an application specific patches for your component(s).
 
 == Create a Base for your Components
 If you are creating more than one component, its likely that your components will share some, if not most, of their configuration. These default or global values can be defined in the Base component and overridden on a case-by-case basis in your Component overlays.  
@@ -78,7 +78,7 @@ spec:
         revision: defaultBranch
 ----
 
-NOTE: This will create a component with a custom build pipeline.  If you wish to use the default build, omit the `image.redhat.com/generate: "true"` annotation.
+NOTE: This will create a component with a custom build pipeline.  If you wish to use the default build, omit the `build.appstudio.openshift.io/request: configure-pac` annotation.
 
 === Creating your Base Kustomization
 
