@@ -1,0 +1,276 @@
+= Releasing your Application to Red Hat Services in App-Interface
+
+If you are going to deliver a new application, built in Konflux, through App-Interface and have already gone through the link:https://gitlab.cee.redhat.com/app-sre/contract/-/blob/master/content/service/service_onboarding_flow.md[Onboarding Flow]  _or_ if you're migrating a build formerly on App-Interface Build to Konflux for Builds and delivering via App-Interface - this guide should help you set up ReleasePlans, ReleasePlanAdmissions, and Registry Access.
+
+Key steps include:
+
+. **Ensuring you meet Prerequisites:** Appropriately engaging with App-SRE and onboarding your build and CI to Konflux
+. **Creating a ReleasePlanAdmission and Constraints:** Engage with Release Engineering by Creating a ReleasePlanAdmission and Constraints file
+. **Creating a ReleasePlan:** Create a ReleasePlan to reference your newly-created ReleasePlanAdmission
+. **Verifying your Release:** Observe a release and check the results in-registry
+. **Updating your app.yaml:** Correctly configure your App-Interface `app.yaml` to use the appropriate pull secret to your new repo
+
+NOTE: We will use `example-tenant` as the namespace name, `example-application` as the application name, and `example-component-#` as component names in this document. You should be able to follow this workflow by replacing those values with your own Konflux cluster namespace, application name, and component names.
+
+== Prerequisites
+
+This document assumes that you are doing one of the following:
+
+* Have an existing application defined in App-Interface that is built in App-Interface's pipelines and you intend to migrate the build to Konflux and continue to deploy the service through App-Interface
+* Have engaged with App-SRE through the link:https://gitlab.cee.redhat.com/app-sre/contract/-/blob/master/content/service/service_onboarding_flow.md[Onboarding Flow] and are building your service through Konflux and deploying through App-Interface
+
+This document also assumes you've already onboarded your component's build to Konflux, enabled the appropriate Enterprise Contract, and enabled any additional IntegrationTestScenarios!
+
+== Create a ReleasePlanAdmission and Constraints
+
+Once your application is built and ready to release-to-registry - you can start working with Release Engineering to onboard your ReleasePlanAdmission and Constraints to the link:https://gitlab.cee.redhat.com/releng/rhtap-release-data[Release Data] repository.
+
+=== Setup
+
+First, you'll want to create a fork of the link:https://gitlab.cee.redhat.com/releng/rhtap-release-data[Release Data] repository and clone it locally.  
+
+With your repository prepared, its time to add your ReleasePlanAdmission.  This ReleasePlanAdmission will configure your built Application components to release repositories in the `redhat-services-prod` Quay repository.  
+
+Create a folder in `config/MS/ReleasePlanAdmission` for `example-tenant`, then create your ReleasePlanAdmission file - in this case we'll call it `example-application-services-prod.yaml` to indicate that it releases to prod.  
+
+=== ReleasePlanAdmission
+
+In `config/MS/ReleasePlanAdmission/example-tenant/example-application-services-prod.yaml`, create this RPA:
+[source,yaml]
+----
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: "true"
+  name: example-application-services-prod
+  namespace: example-tenant
+spec:
+  applications:
+    - example-application
+  origin: example-template
+  policy: app-interface-standard
+  data:
+    images:
+      addGitShaTag: "true"
+      defaultTag: latest
+      floatingTags: "1.0"
+    mapping:
+      components:
+        - name: example-component-1
+          repository: "quay.io/redhat-services-prod/example-tenant/example-component-1"
+        - name: example-component-2
+          repository: "quay.io/redhat-services-prod/example-tenant/example-component-2"
+    pyxis:
+      secret: pyxis-prod-secret
+      server: production
+    sign:
+      configMapName: hacbs-signing-pipeline-config-redhatrelease2
+  pipeline:
+    pipelineRef:
+      resolver: git
+      params:
+        - name: url
+          value: "https://github.com/redhat-appstudio/release-service-catalog.git"
+        - name: revision
+          value: production
+        - name: pathInRepo
+          value: "pipelines/rh-push-to-external-registry/rh-push-to-external-registry.yaml"
+    serviceAccountName: release-app-interface-prod
+    timeout: "4h0m0s"
+----
+
+=== Constraints
+
+Next, we'll create a constraint for our ReleasePlanAdmission.  This is defined in `constraints/MS/` and must have the same name as the folder where you defined your ReleasePlanAdmission.  
+
+In our case, we'll define `constraints/MS/example-tenant.yaml` as follows:
+[source,yaml]
+----
+---
+properties:
+  spec:
+    properties:
+      origin:
+        type: string
+        pattern: example-tenant
+      policy:
+        pattern: app-interface-standard
+      serviceAccount:
+        pattern: release-app-interface-prod
+      data:
+        properties:
+          mapping:
+            properties:
+              components:
+                type: array
+                items:
+                  properties:
+                    repository:
+                      type: string
+                      pattern: quay.io/redhat-services-prod/example-tenant/example-component
+      pipeline:
+        properties:
+          pipelineRef:
+            properties:
+              resolver:
+                pattern: git
+              params:
+                items:
+                  oneOf:
+                    - properties:
+                        name:
+                          pattern: url
+                        value:
+                          pattern: https://github.com/redhat-appstudio/release-service-catalog.git
+                    - properties:
+                        name:
+                          pattern: revision
+                        value:
+                          pattern: production
+                    - properties:
+                        name:
+                          pattern: pathInRepo
+                        value:
+                          pattern: pipelines/rh-push-to-external-registry/rh-push-to-external-registry.yaml
+          serviceAccountName:
+            pattern: release-app-interface-prod
+----
+
+=== Updating `CODEOWNERS`
+
+Finally, we need to update the `CODEOWNERS` file at the repository root to define an owner for your ReleasePlanAdmission.  In our case, we will add a pointer to our newly-defined folder and our GitLab Username alongside the rhtap-releng team:
+
+[source,yaml]
+----
+...
+/config/OP/ReleasePlanAdmission/example-tenant/*.yaml @gurnben @releng/rhtap-releng
+...
+----
+
+=== Contributing your Changes
+
+Once you've done the above, push your changes to your fork of the Release Data repository and open an MR against the original link:https://gitlab.cee.redhat.com/releng/rhtap-release-data[Release Data] repository, describing your changes. The repository has CI for linting and validation.  Maintainers from Release Engineering will automatically be notified and engage with you in link:https://redhat.enterprise.slack.com/archives/C031USXS2FJ[#forum-konflux-release] or in the MR itself!  
+
+== Create a ReleasePlan
+
+Next, you can create a ReleasePlan, which will land in your project's namespace on the Konflux clusters and trigger the ReleasePlanAdmission that you created in the previous step once changes to your application pass all required tests.  
+
+=== Setup
+
+The ReleasePlan resides within your namespace and under your control, so we will contribute it to the link:https://github.com/redhat-appstudio/tenants-config[tenants-config] repository.  
+
+As with before, fork the link:https://github.com/redhat-appstudio/tenants-config[tenants-config] repository and clone your fork locally.  
+
+=== Creating your ReleasePlan
+
+All resources stored in `cluster/stone-prd-rh01/<your-namespace>` are delivered to your namespace on the Production Konflux cluster via OpenShift GitOps. Since we want a new ReleasePlan delivered to the cluster in our namespace, we'll define it in that directory!
+
+First, create a directory for your project if one does not already exist.  In our case we would create `cluster/stone-prd-rh01/example-tenant`.  
+
+Next, within that directory, we will create a ReleasePlan, `cluster/stone-prd-rh01/example-tenant/release-plan.yaml` as follows:
+
+[source,yaml]
+----
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlan
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: 'true'
+    release.appstudio.openshift.io/standing-attribution: 'true'
+  name: example-application-releaseplan
+spec:
+  application: example-application
+  target: rhtap-releng-tenant
+----
+
+This ReleasePlan references our application by name (`example-application`) and sets the target to the target namespace in which our ReleasePlanAdmission was defined: `rhtap-releng-tenant` (managed by Release Engineering).  
+
+Next, we should create a `cluster/stone-prd-rh01/example-tenant/kustomization.yaml` in the same directory to allow us to expand the defined resources in the future as follows:
+
+[source,yaml]
+----
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - release-plan.yaml
+namespace: example-tenant
+----
+
+=== Building Manifests
+
+All content defined in `tenants-config` must be built by running `build-manifests.sh` before you commit and push changes - this should create a new file(s) in the `auto-generated` folder that looks like your ReleasePlan!  
+
+=== Contributing your Changes
+
+Make sure to add the above files then commit and push your changes!  `git status` is helpful here (take it from me, I miss the auto-generated file a _lot_).  
+
+Open a PR from your fork to the main link:https://github.com/redhat-appstudio/tenants-config[tenants-config] repository and the Konflux Release team will automatically be notified and may follow up in PR or in link:https://redhat.enterprise.slack.com/archives/C031USXS2FJ[#forum-konflux-release] - they can also be contacted in that Slack Channel!  
+
+== Verify your Release
+
+NOTE: If you don't already have your CLI configured to access the Konflux Cluster, you can optionally set it up by following xref:getting-started/getting_started_in_cli.adoc[Getting started with CLI].  We recommend CLI access for this step, but you can simply skip the CLI sections if you do not wish to set up access.  
+
+Once your ReleasePlanAdmission and ReleasePlan are in place, you should see the ReleasePlan your namespace. If you have CLI access, you can check this by running `oc get releaseplan` which should show your ReleaesPlan:
+
+[source,bash]
+----
+NAME                                APPLICATION             TARGET
+example-application-releaseplan     example-application     rhtap-releng-tenant
+----
+
+You can verify that this ReleasePlan works by merging a change to a Component repository, thus triggering a build->snapshot->test->release process _or_ you can manually create a Release object that references an existing snapshot.  
+
+=== Verify through a Change
+
+If you don't have CLI access or don't wish to make a manual release, you can simply trigger a change in a component which passes all tests and will cause a release to be generated. We recommend you accomplish this by making a no-op change to your Dockerfile/Containerfile.
+
+=== Verify through Manual Release
+
+If you wish to verify your ReleasePlan and ReleasePlanAdmission via a manual release, you first need to choose a snapshot to release.  
+
+With CLI access to the Konflux cluster, run `oc get snapshots --sort-by=.metadata.creationTimestamp` to get snapshots sorted by age.  Select your snapshot, and use it as the snapshot value in your Release object!  
+
+You'll want to create a `release.yaml` file locally and `oc apply -f` that file.  In our example, releasing the snapshot `example-application-2fr9g` will look like:
+
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Release
+metadata:
+  name: example-application-manual-release
+  namespace: example-tenant
+spec:
+  releasePlan: example-application-releaseplan
+  snapshot: example-application-2fr9g
+----
+
+=== Watching your Release
+
+You can watch a created release under the `Releases` tab in the UI or by running `oc get releases` in the CLI.  If this Release fails, it may be a configuration error, we recommend contacting link:https://redhat.enterprise.slack.com/archives/C031USXS2FJ[#forum-konflux-release] for support with failed releases!
+
+=== Getting access to your released container
+
+Once the release succeeds, the component container(s) should be published to the repository defined in your ReleasePlanAdmission, in our case`quay.io/redhat-services-prod/example-tenant/example-component-1`.  
+
+The ReleaseEngineering and Konflux Release teams can help you get access to your repositories in link:https://redhat.enterprise.slack.com/archives/C031USXS2FJ[#forum-konflux-release], however the App-SRE service account leveraged by App-Interface will have access without intervention.  
+
+== Update your app.yaml
+
+Now that your Application's Components are released to the `redhat-services-prod` registry, you can leverage them in your App in App-Interface. 
+
+In your `app.yaml`, where you would typically include authentication to the app-sre quay repository, instead include the following:
+
+[source,yaml]
+----
+authentication:
+  image:
+    path: app-sre/quay/redhat-services-prod-pull
+    field: all
+----
+
+This will provide your application on the service cluster access to your container image(s) published to `redhat-services-prod`.  
+
+NOTE: If you are migrating from App-Interface Build to Konflux for builds, you should verify your image in `redhat-services-prod` before making the authentication and image reference change in a single MR.  
