@@ -257,20 +257,10 @@ Once the release succeeds, the component container(s) should be published to the
 
 The ReleaseEngineering and Konflux Release teams can help you get access to your repositories in link:https://redhat.enterprise.slack.com/archives/C031USXS2FJ[#forum-konflux-release], however the App-SRE service account leveraged by App-Interface will have access without intervention.  
 
-== Update your app.yaml
+== Update your App-Interface Configuration
 
-Now that your Application's Components are released to the `redhat-services-prod` registry, you can leverage them in your App in App-Interface. 
+Now that your Application's Components are released to the `redhat-services-prod` registry, you can leverage them in your Application in App-Interface. 
 
-In your `app.yaml`, where you would typically include authentication to the app-sre quay repository, instead include the following:
+The steps for this migration can be found in the app-interface documentation link:https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/FAQ.md?ref_type=heads#migration-to-konflux[here]!
 
-[source,yaml]
-----
-authentication:
-  image:
-    path: app-sre/quay/redhat-services-prod-pull
-    field: all
-----
-
-This will provide your application on the service cluster access to your container image(s) published to `redhat-services-prod`.  
-
-NOTE: If you are migrating from App-Interface Build to Konflux for builds, you should verify your image in `redhat-services-prod` before making the authentication and image reference change in a single MR.  
+NOTE: If you are migrating from App-Interface Build to Konflux for builds, you should verify your image in `redhat-services-prod` before making changes in app-interface.
