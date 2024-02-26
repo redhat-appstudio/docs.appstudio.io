@@ -8,7 +8,7 @@ Key steps include:
 . **Creating a ReleasePlanAdmission and Constraints:** Engage with Release Engineering by Creating a ReleasePlanAdmission and Constraints file
 . **Creating a ReleasePlan:** Create a ReleasePlan to reference your newly-created ReleasePlanAdmission
 . **Verifying your Release:** Observe a release and check the results in-registry
-. **Updating your app.yaml:** Correctly configure your App-Interface `app.yaml` to use the appropriate pull secret to your new repo
+. ** Update your App-Interface Configuration:** Correctly configure your Application in app-interface to reference your new image.  
 
 NOTE: We will use `example-tenant` as the namespace name, `example-application` as the application name, and `example-component-#` as component names in this document. You should be able to follow this workflow by replacing those values with your own Konflux cluster namespace, application name, and component names.
 
