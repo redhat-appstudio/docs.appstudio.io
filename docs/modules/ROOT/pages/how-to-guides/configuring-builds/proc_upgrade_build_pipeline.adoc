@@ -27,7 +27,7 @@ If you want to restrict the GitHub application’s access to certain repositorie
 
 . Returning to the “Manage build pipelines” page in {ProductName}, for any component whose build pipeline you would like to upgrade, select *Send pull request*.  
 . Select *Merge in GitHub*.
-. In GitHub, merge the pull request from the “red-hat-trusted-app-pipeline” bot.
+. In GitHub, merge the pull request from the “red-hat-konflux” bot.
 . Let {ProductName} complete another PipelineRun for the newly-upgraded build pipeline.
  
 .Verification
