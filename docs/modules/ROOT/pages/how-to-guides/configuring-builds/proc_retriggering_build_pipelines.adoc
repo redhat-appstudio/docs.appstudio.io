@@ -8,7 +8,7 @@ See also xref:how-to-guides/testing_applications/proc_retriggering_integration_t
 
 .**Prerequisite**
 
-- You have a build pipelinerun on a pull request that has failed and you want to re-run the build without pushing a new commit.
+- You have a build pipeline run on a pull request that has failed, and you want to re-run the build without pushing a new commit.
 
 .**Procedure**
 
