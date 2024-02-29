@@ -44,7 +44,7 @@ The pipeline run should resume in the *Activity* > *Pipeline runs* tab.
 
 .**Procedure**
 
-. Identify the *Component* whose pipeline needs to be rerun.
+. Identify the *Component* whose pipeline requires rerun.
 . Annotate the *Component* with `build.appstudio.openshift.io/request: trigger-pac-build`.
 +
 [source]
