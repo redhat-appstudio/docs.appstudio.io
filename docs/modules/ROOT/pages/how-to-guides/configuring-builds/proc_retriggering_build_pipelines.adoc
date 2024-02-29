@@ -29,7 +29,7 @@ NOTE: For additional options, refer to the link:https://pipelinesascode.com/docs
 In the console, complete the following steps to retrigger the build pipeline:
 
 . Navigate to the *Activity* > *Pipeline runs* tab.
-. Identify the pipelinerun that you want to retrigger.
+. Identify the pipeline run that you want to retrigger.
 . Select the three dots on the right side of the table.
 . Select the *Rerun* action.
 
