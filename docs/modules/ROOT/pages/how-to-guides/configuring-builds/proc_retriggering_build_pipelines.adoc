@@ -4,7 +4,7 @@ Occasionally, your build pipeline may fail unexpectedly, necessitating a retrigg
 
 See also xref:how-to-guides/testing_applications/proc_retriggering_integration_tests.adoc[Retriggering integration tests].
 
-== Retriggering a pre-merge build on a pull request
+== Retriggering a Pre-merge build on a pull request
 
 .**Prerequisite**
 
