@@ -39,7 +39,7 @@ The pipeline run should resume in the *Activity* > *Pipeline runs* tab.
 
 .**Prerequisite**
 
-- You have already merged a pull request, but the build failed and you want to retrigger it.
+- You have already merged a pull request, but the subsequent build failed, prompting a need for retriggering.
 - You have CLI access to {ProductName}. For information on obtaining CLI access, refer to  xref:../../getting-started/getting_started_in_cli.adoc[Getting started in CLI]
 
 .**Procedure**
