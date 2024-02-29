@@ -22,7 +22,7 @@ NOTE: For additional options, refer to the link:https://pipelinesascode.com/docs
 
 .**Prerequisite**
 
-- You have already merged a pull request, but the build failed and you want to retrigger it.
+- You have already merged a pull request, but the subsequent build failed, prompting a need for retriggering.
 
 .**Procedure**
 
