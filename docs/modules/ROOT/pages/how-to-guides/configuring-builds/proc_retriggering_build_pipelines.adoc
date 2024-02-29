@@ -16,7 +16,7 @@ See also xref:how-to-guides/testing_applications/proc_retriggering_integration_t
 
 You should see the pipelinerun start executing in the UI and in the pull request.
 
-NOTE: See the link:https://pipelinesascode.com/docs/guide/running/#gitops-command-on-pull-or-merge-request[pipelinesascode documentation] for more options.
+NOTE: For additional options, refer to the link:https://pipelinesascode.com/docs/guide/running/#gitops-command-on-pull-or-merge-request[pipelinesascode documentation].
 
 == Retriggering a post-merge build from your main branch from the UI
 
