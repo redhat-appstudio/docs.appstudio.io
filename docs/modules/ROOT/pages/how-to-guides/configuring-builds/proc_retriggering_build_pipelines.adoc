@@ -35,7 +35,7 @@ In the console, complete the following steps to retrigger the build pipeline:
 
 You should see the pipelinerun start executing back in the *Activity* > *Pipeline runs* tab.
 
-== Retriggering a post-merge build from your main branch from the API
+== Retriggering a Post-merge build from your main branch from the API
 
 .**Prerequisite**
 
