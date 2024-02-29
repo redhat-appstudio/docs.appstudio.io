@@ -12,7 +12,7 @@ See also xref:how-to-guides/testing_applications/proc_retriggering_integration_t
 
 .**Procedure**
 
-. Add a comment to the pull request with the text `/retest` which will trigger a new build.
+. Add a comment to the pull request with the text `/retest` to trigger a new build.
 
 You should see the pipelinerun start executing in the UI and in the pull request.
 
