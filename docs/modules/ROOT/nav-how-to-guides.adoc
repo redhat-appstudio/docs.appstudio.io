@@ -2,7 +2,7 @@
 ** xref:how-to-guides/Import-code/proc_importing_code.adoc[Importing and configuring code]
 ** Configuring your builds
 *** xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading to a custom build pipeline]
-*** xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[Customizing the pipeline] 
+*** xref:how-to-guides/configuring-builds/proc_customize_build_pipeline.adoc[Customizing the pipeline]
 *** xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[Creating secrets for your builds]
 *** xref:how-to-guides/configuration-as-code/proc_configuration_as_code.adoc[Configuration as Code]
 *** xref:how-to-guides/proc_hermetic-builds.adoc[Enabling hermetic builds]
@@ -30,12 +30,13 @@
 ** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
 ** xref:how-to-guides/con_release_application.adoc[Releasing an application]
 *** xref:how-to-guides/proc_release_plan.adoc[Creating a `releasePlan` object]
+*** xref:how-to-guides/proc_release_advisory.adoc[Releasing with an advisory]
 ** xref:how-to-guides/proc_managed_services_onboarding.adoc[Managed services team onboarding]
 ** xref:how-to-guides/proc_delete_application.adoc[Deleting an application]
 
 
 ////
-Commenting these out per HACDOCS-425 and -414 
+Commenting these out per HACDOCS-425 and -414
 ** xref:how-to-guides/proc_creating_static_environment.adoc[Web UI: Creating a static environment]
 ** xref:how-to-guides/configuring_renovatebot.adoc[Web UI: Configuring RenovateBot].
 ////
