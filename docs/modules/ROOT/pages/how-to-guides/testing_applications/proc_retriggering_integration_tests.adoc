@@ -14,7 +14,7 @@ Integration test scenarios for a given snapshot can be re-triggered by adding a 
 +
 [source]
 ----
-$ kubectl label [snapshot name] test.appstudio.openshift.io/run=[scenario name]
+$ kubectl label snapshot [snapshot name] test.appstudio.openshift.io/run=[scenario name]
 ----
 
 . The tests are re-triggered automatically.  Once they are re-triggered, the system removes the label, allowing you to apply a new label for a different scenario if you wish to test multiple scenarios.
