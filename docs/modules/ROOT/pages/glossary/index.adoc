@@ -86,9 +86,6 @@ A set of compute resources that you can use to develop, test, and stage your app
 **Supply-chain Levels for Software Artifacts (SLSA)** +
 A link:https://slsa.dev/[security framework] that helps prevent tampering by securing the packages and infrastructure of customers’ projects.
 
-**task** +
-One or more steps that run container images. Each container image performs a piece of construction work.
-
 **TaskRun** +
 A process that executes a task on a cluster with inputs, outputs, and execution parameters. The system creates a TaskRun on its own, or as a part of a PipelineRun for each task in a pipeline.
 
@@ -101,5 +98,8 @@ A mechanism to secure the software supply chain by recording events in a user-de
 **Tekton integration testing** +
 A process that uses Tekton tasks to support the setup and execution of dynamic application tests against container images.
 
+**Tekton task** +
+One or more steps that run container images. Each container image performs a piece of construction work.
+
 **workspace** +
-A storage volume that a task requires at runtime to receive input or provide output.
+A technology framework that brings together all of the applications, tools, and resources teammates need to work and collaborate securely, while unifying and enhancing application delivery and access control.
