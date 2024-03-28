@@ -6,7 +6,7 @@ However, there are three reasons you might want to upgrade your build pipeline t
 
 * Customize: Upgrading the build pipeline enables you to tailor the build process that {ProductName} uses for the components of your application, to better meet your specific needs.
 * Reinforce security: When you upgrade, {ProductName} adds a variety of security checks and scans on your pipeline that get run on each build.  
-* Continuous integration: Upgraded build pipelines automatically rebuild your components every time a new commit is merged into the main branch of their repositories.
+* Continuous integration: Upgraded build pipelines automatically rebuild your components every time a new commit is added to a pull request or merged into the configured branch of their repositories.
 
 .Prerequisites
 
@@ -37,6 +37,17 @@ Confirm that most of the build pipeline tasks that {ProductName} previously skip
 . Go to *Activity > Pipeline runs*. 
 . Select the most recent *PipelineRun*. 
 . View the build pipeline tasks and scroll down to view the vulnerabilities scan, which summarizes the results of the `clair-scan`. 
+
+.Continuous Integration
+
+After upgrading the build pipeline, PipelineRuns will be started to build and test commits in pull requests. The status of the completed PipelineRuns will be visible in the pull requests.
+
+[NOTE]
+====
+{ProductName} sets an expiration date for images produced from pull request commits. The produced images will be deleted from
+quay.io after five days. In order to prevent an image reference from becoming invalid, the image should either be copied to an external
+location or the pull request should be merged, triggering a new image build without an expiration set.
+====
 
 .Updates
 
