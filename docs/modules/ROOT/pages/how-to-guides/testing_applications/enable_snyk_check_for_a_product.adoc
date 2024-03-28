@@ -29,31 +29,6 @@ You should also include the name of your secret in the *snyk-secret* pipeline pa
 ... From the *Secret name* drop-down menu, select *snyk-secret*.
 ... Paste your Snyk token into the *Upload the file with value for your key or paste its contents* field.
 ... Click *Add secret* to save it.
-. Update your `.tekton` YAML files to specify your Snyk secret.
-.. From your GitHub repository, update the `pull-request.yaml` files in your `.tekton` directory; for example: link:https://github.com/sonam1412/devfile-sample-python-basic/blob/main/.tekton/devfile-sample-python-basic-iea1-pull-request.yaml[devfile-sample-python-basic/.tekton/devfile-sample-python-basic-rhq8-pull-request.yaml]
-.. Add new lines to the code in your YAML files to include *snyk-secret*, as shown in the following example:
-+ 
-.Example
-+
-[source,yaml]
---
-    - default: "false"
-      description: Execute the build with network isolation
-      name: hermetic
-      type: string
-    - default: ""
-      description: Build dependencies to be prefetched by Cachi2
-      name: prefetch-input
-      type: string
-    - default: "false"
-      description: Java build
-      name: java
-      type: string
-    - default: "snyk-secret"
-      description: Snyk Token Secret Name
-      name: snyk-secret
-      type: string
---
 
 You've enabled the Snyk task for your build pipeline.
 
