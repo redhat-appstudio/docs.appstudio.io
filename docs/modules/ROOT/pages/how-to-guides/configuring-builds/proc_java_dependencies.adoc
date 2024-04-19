@@ -1,12 +1,12 @@
 = Configuring dependencies rebuild for Java applications
 
-For Java applications in {ProductName}, you can configure the Java Virtual Machine (JVM) build service either with the dependencies rebuild feature enabled or with that feature disabled.
+For Java application Components in {ProductName}, you can configure the Java Virtual Machine (JVM) build service either with the dependencies rebuild feature enabled or with that feature disabled.
 
 == JVM Build Service overview
 
 The Java Virtual Machine Build Service (JBS or JVM Build Service) is a controller that rebuilds Java and other JVM Language based dependencies from source.
 
-The Java ecosystem uses a binary distribution model, where binary jar files are downloaded from central repositories, such as Maven Central. This distribution model means that the only way to ensure an application is completely built from source is to rebuild all its component libraries from source in a trusted environment. Due to the Java ecosystem, you would need to manually rebuild the component libraries.
+The Java ecosystem uses a binary distribution model, where binary jar files are downloaded from central repositories, such as Maven Central. This distribution model means that the only way to ensure a Component is completely built from source is to rebuild all its component libraries from source in a trusted environment. Due to the Java ecosystem, you would need to manually rebuild the component libraries.
 
 The Java binary distribution model relies on dependencies with unknown provenance maintained by external communities. This means that you can't be sure who uploaded these artifacts or the build environment, so you can't be sure of their flaws or vulnerabilities. The only way to know that you're building from clean, logical code in a secure environment is to build from source code.
 
@@ -16,19 +16,19 @@ JBS automates this process as much as possible, making it much less time-consumi
 
 When using the JVM Build Service, the user workflow is as follows:
 
-* The system builds your application by using community dependencies.
+* The system builds your Component by using community dependencies.
 
-* The JVM Build Service analyzes your application and determines which dependencies the system needs to rebuild.
+* The JVM Build Service analyzes your Component and determines which dependencies the system needs to rebuild.
 
-* The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your application before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
+* The JVM Build Service generates `ArtifactBuild` objects to represent each artifact in your Component before determining to which repository the artifacts belong. The JVM Build Service tags from which systems the artifacts derive.
 
 * The system analyzes the repository and uses the results to find a build strategy. For example, if the system cannot find the JDK version to use, the system uses all versions to determine the most effective version to use.
 
 * The system attempts to build all the dependencies and stores them in container images in an image registry, and `quay.io` is the default.
 
-* When the system has completed all its builds, you can rebuild your application.
+* When the system has completed all its builds, you can rebuild your Component.
 
-* If all the builds are successful, your application's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
+* If all the builds are successful, your Component's SBOM displays that none of the dependencies came from third-party repositories. However, you may need to troubleshoot when some dependencies fail to build.
 
 == Setup
 
@@ -402,7 +402,7 @@ additionalDownloads: <5>
 
 You must configure your repository by creating a Kubernetes JBSConfig custom resource to ensure that your namespace uses the JVM build service. When this ConfigMap is present, the build service operator configures the necessary support infrastructure in a workspace. To speed up the build process and reduce the load on Maven Central, this currently creates an artifact cache that caches Maven objects.
 
-When building an application, the system redirects all requests by using this artifact cache. By default this proxies to maven central, however, you can configure other repositories. The repositories configured in your project will not be used,
+When building a Component, the system redirects all requests by using this artifact cache. By default this proxies to maven central, however, you can configure other repositories. The repositories configured in your project will not be used,
 which allows the namespace administrator to control where dependencies come from.
 
 .*Procedure*
