@@ -33,17 +33,6 @@ spec:
       name: SNAPSHOT
       default: '{"components": [{"name":"test-app", "containerImage": "quay.io/example/repo:latest"}]}'
       type: string
-    - description: 'Namespace where the application is running'
-      name: NAMESPACE
-      default: "default"
-      type: string
-    - description: 'Expected output'
-      name: EXPECTED_OUTPUT
-      default: "Hello World!"
-      type: string
-  workspaces:
-  - name: cluster-credentials
-    optional: true
   tasks:
 ----
 
@@ -57,69 +46,32 @@ Example task declaration:
 ----
 tasks:
   - name: task-1
-    description: curl application endpoint, looking for certain text
+    description: Placeholder task that prints the Snapshot and outputs standard TEST_OUTPUT
     params:
       - name: SNAPSHOT
         value: $(params.SNAPSHOT)
-      - name: NAMESPACE
-        value: $(params.NAMESPACE)
-      - name: EXPECTED_OUTPUT
-        value: $(params.EXPECTED_OUTPUT)
-    workspaces:
-      - name: cluster-credentials
-        optional: true
     taskSpec:
       params:
       - name: SNAPSHOT
-      - name: NAMESPACE
-      - name: EXPECTED_OUTPUT
       results:
       - name: TEST_OUTPUT
         description: Test output
-      workspaces:
-      - name: cluster-credentials
-        workspace: cluster-credentials
       steps:
       - image: registry.redhat.io/openshift4/ose-cli:latest
         env:
         - name: SNAPSHOT
           value: $(params.SNAPSHOT)
-        - name: NAMESPACE
-          value: $(params.NAMESPACE)
-        - name: EXPECTED_OUTPUT
-          value: $(params.EXPECTED_OUTPUT)
         script: |
           dnf -y install jq
 
-          # Get credentials to the namespace where the app is deployed
-          export KUBECONFIG=$(workspaces.cluster-credentials.path)/kubeconfig
+          echo -e "Example test task for the Snapshot:\n ${SNAPSHOT}"
+          // Run custom tests for the given Snapshot here
+          // After the tests finish, record the overall result in the RESULT variable
+          RESULT="SUCCESS"
 
-          # Use credentials to get the route for the application endpoint
-          COMPONENT_NAME=$(echo -n ${SNAPSHOT} | jq -r .components[0].name)
-          ROUTE_NAME=$(oc get routes -l app.kubernetes.io/name="${COMPONENT_NAME}" -o name)
-          HOST=$(oc get "${ROUTE_NAME}" -o jsonpath={.spec.host} -n "${NAMESPACE}")
-          echo "Found target host ${HOST} for app ${APPLICATION_NAME}"
-
-          # Wait up to 5 minutes for the endpoint output to match the expected output
-          for _ in $(seq 1 60); do
-            echo "Checking http://${HOST}"
-            # Check the application endpoint
-            ENDPOINT_OUTPUT=$(curl -s http://${HOST})
-
-            if [[ "${ENDPOINT_OUTPUT}" == "${EXPECTED_OUTPUT}" ]]; then
-              RESULT="SUCCESS"
-              break
-            else
-              RESULT="FAILURE"
-            fi
-            sleep 5
-          done
-
-          echo -e "The endpoint outputs the following:\n ${ENDPOINT_OUTPUT}"
-          echo -e "Expected endpoint output:\n ${EXPECTED_OUTPUT}"
-
+          // Output the standardized TEST_OUTPUT result in JSON form
           TEST_OUTPUT=$(jq -rc --arg date $(date +%s) --arg RESULT "${RESULT}" --null-input \
-            '{result: $RESULT, timestamp: $date, failures: 0, successes: 0, warnings: 0}')
+            '{result: $RESULT, timestamp: $date, failures: 0, successes: 1, warnings: 0}')
           echo -n "${TEST_OUTPUT}" | tee $(results.TEST_OUTPUT.path)
 
 ----
@@ -156,76 +108,36 @@ spec:
     optional: true
   tasks:
     - name: task-1
-      description: curl application endpoint, looking for certain text
+      description: Placeholder task that prints the Snapshot and outputs standard TEST_OUTPUT
       params:
         - name: SNAPSHOT
           value: $(params.SNAPSHOT)
-        - name: NAMESPACE
-          value: $(params.NAMESPACE)
-        - name: EXPECTED_OUTPUT
-          value: $(params.EXPECTED_OUTPUT)
-      workspaces:
-        - name: cluster-credentials
-          optional: true
       taskSpec:
         params:
         - name: SNAPSHOT
-        - name: NAMESPACE
-        - name: EXPECTED_OUTPUT
         results:
         - name: TEST_OUTPUT
           description: Test output
-        workspaces:
-        - name: cluster-credentials
-          workspace: cluster-credentials
         steps:
         - image: registry.redhat.io/openshift4/ose-cli:latest
           env:
           - name: SNAPSHOT
             value: $(params.SNAPSHOT)
-          - name: NAMESPACE
-            value: $(params.NAMESPACE)
-          - name: EXPECTED_OUTPUT
-            value: $(params.EXPECTED_OUTPUT)
           script: |
             dnf -y install jq
+            echo -e "Example test task for the Snapshot:\n ${SNAPSHOT}"
+            // Run custom tests for the given Snapshot here
+            // After the tests finish, record the overall result in the RESULT variable
+            RESULT="SUCCESS"
 
-            # Get credentials to the namespace where the app is deployed
-            export KUBECONFIG=$(workspaces.cluster-credentials.path)/kubeconfig
-
-            # Use credentials to get the route for the application endpoint
-            COMPONENT_NAME=$(echo -n ${SNAPSHOT} | jq -r .components[0].name)
-            ROUTE_NAME=$(oc get routes -l app.kubernetes.io/name="${COMPONENT_NAME}" -o name)
-            HOST=$(oc get "${ROUTE_NAME}" -o jsonpath={.spec.host} -n "${NAMESPACE}")
-            echo "Found target host ${HOST} for app ${APPLICATION_NAME}"
-
-            # Wait up to 5 minutes for the endpoint output to match the expected output
-            for _ in $(seq 1 60); do
-              echo "Checking http://${HOST}"
-              # Check the application endpoint
-              ENDPOINT_OUTPUT=$(curl -s http://${HOST})
-
-              if [[ "${ENDPOINT_OUTPUT}" == "${EXPECTED_OUTPUT}" ]]; then
-                RESULT="SUCCESS"
-                break
-              else
-                RESULT="FAILURE"
-              fi
-              sleep 5
-            done
-
-            echo -e "The endpoint outputs the following:\n ${ENDPOINT_OUTPUT}"
-            echo -e "Expected endpoint output:\n ${EXPECTED_OUTPUT}"
-
+            // Output the standardized TEST_OUTPUT result in JSON form
             TEST_OUTPUT=$(jq -rc --arg date $(date +%s) --arg RESULT "${RESULT}" --null-input \
-              '{result: $RESULT, timestamp: $date, failures: 0, successes: 0, warnings: 0}')
+              '{result: $RESULT, timestamp: $date, failures: 0, successes: 1, warnings: 0}')
             echo -n "${TEST_OUTPUT}" | tee $(results.TEST_OUTPUT.path)
 ----
 
 . Add your new custom test as an integration test in {ProductName}.
 .. For additional instructions on adding an integration test, see this document: xref:how-to-guides/testing_applications/proc_adding_an_integration_test.adoc[Adding an integration test].
-
-NOTE: This example test requires a temporary deployment. To use the example file, when adding it as an integration test in the {ProductName} UI, make sure to select the *development* option in the *Environment* field.  
 
 .Data injected into the PipelineRun of the integration test
 
@@ -234,11 +146,6 @@ When you create a custom integration test, {ProductName} automatically adds cert
 Parameters:
 
 * *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot JSON string].
-* *`NAMESPACE`*:  indicates which namespace {ProductName} uses for temporary deployment, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. This parameter can help you query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods.
-
-Workspaces:
-
-* *`cluster-credentials`*: contains the connection credentials for the *Environment* containing the temporary deployment of your app, but only if your integration test specifies that {ProductName} should deploy the snapshot to an ephemeral environment during testing. These credentials enable you to query Kubernetes resources that are deployed in the test environment, such as routes, deployments, and pods.
 
 Labels:
 
