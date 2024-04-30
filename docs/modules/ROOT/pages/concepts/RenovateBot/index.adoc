@@ -11,5 +11,5 @@ To create pull requests in target source code repositories Renovate bot has to h
 
  * GiLab. Create a link:https://docs.renovatebot.com/modules/platform/gitlab/#authentication[Personal Access Token] for the bot account.  Add PAT using link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds/[
 Creating secrets for your builds]  The secret has to have such labels:
-  - `appstudio.redhat.com/credentials: scm`,
+  - `appstudio.redhat.com/credentials: scm`
   - `appstudio.redhat.com/scm.host: gitlab.myhost.com`
