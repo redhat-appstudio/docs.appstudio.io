@@ -163,7 +163,7 @@ And this is how you should upload it to Konflux:
 [start=2]
 . Go to the GitHub repo of your component.
 . In each .yaml file within the .tekton directory, under `params`, locate the parameter named `output-image`:
-.. Change it to relflect your new repository. For example: `quay.io/my-new-quay-repo/my-app:on-pr-{\{revision}}` for the `pull-request` pipeline, and `quay.io/my-new-quay-repo/my-app:{\{revision}}` for the `push` pipeline. This distinction helps identify which images originate from a Pull Request and which do not.
+.. Change it to reflect your new repository. For example: `quay.io/my-new-quay-repo/my-app:on-pr-{\{revision}}` for the `pull-request` pipeline, and `quay.io/my-new-quay-repo/my-app:{\{revision}}` for the `push` pipeline. This distinction helps identify which images originate from a Pull Request and which do not.
 
 == Verification
 
@@ -195,5 +195,5 @@ If you experience any issues with your customized pipeline, try the following so
 ** Complete the steps for xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrading the build pipeline] of that component again.
 
 == Additional resources [[additional-resources]]
-* Visit the Tekton documentation that explainins link:https://tekton.dev/docs/pipelines/taskruns/#specifying-the-target-task[how to use `taskSpec`] in a task declaration.
+* Visit the Tekton documentation that explains link:https://tekton.dev/docs/pipelines/taskruns/#specifying-the-target-task[how to use `taskSpec`] in a task declaration.
 
