@@ -129,7 +129,7 @@ By default, all pipelines push the images to the `quay.io/redhat-user-workloads`
 .. Follow Quay's link:https://docs.quay.io/glossary/robot-accounts.html[documentation] to create a robot account for your repository.
 .. Give push access to your repository to the robot account.
 .. Retrieve the `.dockercfg` from the "Docker Configuration" menu on your robot account credentials page.
-.. Follow the steps to link:proc_creating-secrets-for-your-builds.adoc[create a secret for your build] as an "Image Pull Secret".
+.. Follow the steps to xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[create a secret for your build] as an "Image Pull Secret".
 
 [NOTE] 
 ====
