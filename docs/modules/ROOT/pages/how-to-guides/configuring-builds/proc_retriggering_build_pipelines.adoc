@@ -27,7 +27,9 @@ NOTE: For additional options, refer to the link:https://pipelinesascode.com/docs
 .**Procedure**
 
 . Navigate to the latest commit on your branch in the GitHub UI.
-. Comment `/test` on the commit.
+. Comment 
+* `/test` , `/test <pipelinerun_name>`
+* `/retest` , `/retest <pipelinerun_name>`  on the commit.
 
 The pipeline run should resume in the *Activity* > *Pipeline runs* tab.
 
