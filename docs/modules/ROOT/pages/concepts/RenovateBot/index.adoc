@@ -5,7 +5,7 @@ RenovateBot is a service that detects dependencies in your build pipeline and th
 RenovateBot monitors Tekton bundle references and makes sure that they're up to date. When new versions of the Tekton bundles are available, RenovateBot creates a pull request with the updated references. This gives you time to review, change, and incorporate the new bundles.
 
 == Authentication and authorization
-To create pull requests in target source code repositories Renovate bot has to have proper credentials.
+To create pull requests in the target source code repositories Renovate bot must have appropriate credentials.
 
  * GitHub Application - Requires `Red Hat Konflux` GitHub App to be installed in the source code repository.
 
