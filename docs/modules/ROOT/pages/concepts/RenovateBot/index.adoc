@@ -7,7 +7,7 @@ RenovateBot monitors Tekton bundle references and makes sure that they're up to 
 == Authentication and authorization
 To create pull requests in the target source code repositories Renovate bot must have appropriate credentials.
 
- * GitHub Application - Requires `Red Hat Konflux` GitHub App to be installed in the source code repository.
+ * **GitHub Application** - Requires `Red Hat Konflux` GitHub App to be installed in the source code repository.
 
  * GiLab. Create a link:https://docs.renovatebot.com/modules/platform/gitlab/#authentication[Personal Access Token] for the bot account.  Add PAT using link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds/[
 Creating secrets for your builds]  The secret has to have such labels:
