@@ -4,7 +4,7 @@ As a workspace owner, you can add a collaborator to your workspace with their us
 
 * *Contributor*: For users who actively push code to your workspace but who don't need to manage workspace configuration.
 * *Maintainer*: For users who need to manage the workspace without access to sensitive actions like managing security.
-* *Owner*: For users who need full access to the workspace, including sensitive actions like managing security.
+* *Admin*: For users who need full access to the workspace, including sensitive actions like managing security.
 
 NOTE: By default, the role for newly invited collaborators is *Contributor*, but you can change this.
 
@@ -22,7 +22,7 @@ NOTE: By default, the role for newly invited collaborators is *Contributor*, but
 . Under **Assign role**, choose one of the following roles for your new workspace user:
 * **Contributor**
 * **Maintainer**
-* **Owner**
+* **Admin**
 . Click **Grant access**.
 
 .Verification
@@ -39,12 +39,12 @@ A message displays that reads, "You invited the user `_username_` to collaborate
 
 == Permissions for each role
 
-The role assigned to a user determines the permissions they have within a workspace. Users with the **Owner** role can assign permissions. 
+The role assigned to a user determines the permissions they have within a workspace. Users with the **Admin** role can assign permissions. 
 
 NOTE: Only an {ProductName} administrator can delete a workspace.
 
 |===
-|Permissions for |Action |Contributor |Maintainer |Owner
+|Permissions for |Action |Contributor |Maintainer |Admin
 
 .4+|Workspace
 |View
