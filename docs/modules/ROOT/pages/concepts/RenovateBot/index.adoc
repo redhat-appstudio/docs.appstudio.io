@@ -10,6 +10,6 @@ To create pull requests in the target source code repositories Renovate bot must
  * **GitHub Application** - Requires `Red Hat Konflux` GitHub App to be installed in the source code repository.
 
  * **GiLab application**. Create a link:https://docs.renovatebot.com/modules/platform/gitlab/#authentication[Personal Access Token] (PAT) for the Renovate bot account.  Add PAT using link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds/[
-Creating secrets for your builds].  The secret should have labels, for example:
+Creating secrets for your builds].  The secret must have the following labels:
   - `appstudio.redhat.com/credentials: scm`
-  - `appstudio.redhat.com/scm.host: gitlab.myhost.com`
+  - `appstudio.redhat.com/scm.host: <your_domain_name>` - For example, appstudio.redhat.com/scm.host: gitlab.myhost.com
