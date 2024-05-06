@@ -119,6 +119,52 @@ To exchange the build task with a memory limit of 6 GB, complete the following s
 .. Under `.taskRef.params`, set `name` to `buildah-6gb`.
 .. Under `.taskRef.params`, set `bundle` to `quay.io/redhat-appstudio-tekton-catalog/task-buildah-6gb:0.1`.
 
+== Bring your own Quay repository to the build pipeline
+
+By default, all pipelines push the images to the `quay.io/redhat-user-workloads` repository. It is not mandatory to use this Quay repo, so if you want to use your own Quay repo to control user permissions, you can do this by updating the `output-image` parameter in the pipelines.
+
+.Procedure
+
+. You need a secret to push images to your Quay repo. 
+.. Follow Quay's link:https://docs.quay.io/glossary/robot-accounts.html[documentation] to create a robot account for your repository.
+.. Give push access to your repository to the robot account.
+.. Retrieve the `.dockercfg` from the "Docker Configuration" menu on your robot account credentials page.
+.. Follow the steps to xref:how-to-guides/configuring-builds/proc_creating-secrets-for-your-builds.adoc[create a secret for your build] as an "Image Pull Secret".
+
+[NOTE] 
+====
+You need to delete the `"auths": {` and one `}` at the end of the docker config file for the secret to work, pending the resolution of https://issues.redhat.com/browse/KFLUXBUGS-1160[KFLUXBUGS-1160] bug. 
+
+For example, this is how you get the file from Quay:
+[source, json]
+----
+{
+  "auths": {
+    "quay.io": {
+      "auth": "example",
+      "email": "example"
+    }
+  }
+}
+----
+
+And this is how you should upload it to Konflux:
+[source, json]
+----
+{
+  "quay.io": {
+    "auth": "example",
+    "email": "example"
+  }
+}
+----
+====
+
+[start=2]
+. Go to the GitHub repo of your component.
+. In each .yaml file within the .tekton directory, under `params`, locate the parameter named `output-image`:
+.. Change it to reflect your new repository. For example: `quay.io/my-new-quay-repo/my-app:on-pr-{\{revision}}` for the `pull-request` pipeline, and `quay.io/my-new-quay-repo/my-app:{\{revision}}` for the `push` pipeline. This distinction helps identify which images originate from a Pull Request and which do not.
+
 == Verification
 
 When you commit changes to these `.yaml` files in your repository, {ProductName} automatically triggers a new build. Wait for {ProductName} to complete the new build, then verify your changes have been made by following these steps:
@@ -149,5 +195,5 @@ If you experience any issues with your customized pipeline, try the following so
 ** Complete the steps for xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[upgrading the build pipeline] of that component again.
 
 == Additional resources [[additional-resources]]
-* Visit the Tekton documentation that explainins link:https://tekton.dev/docs/pipelines/taskruns/#specifying-the-target-task[how to use `taskSpec`] in a task declaration.
+* Visit the Tekton documentation that explains link:https://tekton.dev/docs/pipelines/taskruns/#specifying-the-target-task[how to use `taskSpec`] in a task declaration.
 

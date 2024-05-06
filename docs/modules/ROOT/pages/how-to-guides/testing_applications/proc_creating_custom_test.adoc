@@ -145,7 +145,7 @@ When you create a custom integration test, {ProductName} automatically adds cert
 
 Parameters:
 
-* *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/redhat-appstudio/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot JSON string].
+* *`SNAPSHOT`*: contains the xref:../../glossary/index.adoc#_snapshot[snapshot] of the whole application as a JSON string. This JSON string provides useful information about the test, such as which components {ProductName} is testing, and what git repository and commit {ProductName} is using to build those components. For information about snapshot JSON string, see link:https://github.com/konflux-ci/integration-examples/blob/main/examples/snapshot_json_string_example[an example snapshot JSON string].
 
 Labels:
 
