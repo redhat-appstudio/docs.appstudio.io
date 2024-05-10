@@ -103,9 +103,6 @@ spec:
       name: EXPECTED_OUTPUT
       default: "Hello World!"
       type: string
-  workspaces:
-  - name: cluster-credentials
-    optional: true
   tasks:
     - name: task-1
       description: Placeholder task that prints the Snapshot and outputs standard TEST_OUTPUT
@@ -141,7 +138,7 @@ spec:
 
 .Data injected into the PipelineRun of the integration test
 
-When you create a custom integration test, {ProductName} automatically adds certain parameters, workspaces, and labels to the PipelineRun of the integration test. This section explains what those parameters, workspaces, and labels are, and how they can help you.
+When you create a custom integration test, {ProductName} automatically adds certain parameters and labels to the PipelineRun of the integration test. This section explains what those parameters and labels are, and how they can help you.
 
 Parameters:
 
