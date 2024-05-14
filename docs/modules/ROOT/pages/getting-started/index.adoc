@@ -1,0 +1,18 @@
+= Getting started with {ProductName}
+{ProductName} is a multitenant, continuous integration and continuous delivery (CI/CD) project with an emphasis on secure supply chain features.
+
+== Getting access
+
+In order to get access to a specific instance of {ProductName}, you need to contact the Platform Engineers and request the creation of a Workspace on your behalf. This Workspace will correspond to a Kubernetes namespace where all of your builds will run. 
+
+
+=== Adding collaborators to your workspace
+You may additionally request that the Platform Engineer can grant other {ProductName} users access to your namespace.
+
+Instead of granting users access to your Workspace, you may want to request the creation of a new shared Workspace to allow collaboration between multiple users separate from each of your individual Workspaces.
+
+[IMPORTANT]
+====
+Sharing access to your Workspace with other users will grant access to resources according to the xref:getting-started/roles_permissions.adoc[roles and permissions].
+====
+

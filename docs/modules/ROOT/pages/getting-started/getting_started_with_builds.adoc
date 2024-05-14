@@ -1,0 +1,75 @@
+= Getting started with builds
+
+Once you have access to a {ProductName} instance, you can start exploring building content with the pipelines.
+
+== Creating your first application
+We provide Tekton Pipelines that make it easy to configure git repositories to build and validate images using xref:glossary/index.adoc#_pipelines_as_code[Pipelines as Code]. To begin, click *Create an application*. 
+
+TODO: Change this around. Most of this can be removed, but we can potentially inject content from xref:Import-code/proc_importing_code.adoc[importing code] here.
+
+=== Importing the code from your repository
+. Scroll to *Bring in your own code*. 
+. In *Git repository URL*, paste the URL that you copied previously.
+. Enter a specific branch, tag or commit if desired.
+. Click *Import code*.
+
+[NOTE] 
+====
+If you are trying to import code from a private repository, you need to either xref:how-to-guides/Import-code/proc_importing_code.adoc#importing-code-from-private-repo[sign in or provide a token].
+====
+
+[#Reviewing and configuring]
+=== Reviewing and configuring
+We now scan your Git repository for source code and detect your runtime and other configuration settings for you to review. You have the option to use our default build pipeline or to customize the pipeline. Select the Dockerfile runtime if it is not selected for you. 
+
+Complete the following steps to finish:
+
+. In *Application details*, enter a name for your app.
+. In *Component name*, enter a name for your component. 
+. Provide the path to the build context directory and Dockerfile as needed.
+. Flip the toggle from *Default build pipeline* to *Custom build pipeline*.
+. Scroll to the end of the page and click *Create application*.
+
+TODO: add link to process for approving the Application in the git org/repo
+TODO: consider for differences in the flow between GitHub and GitLab
+
+== Advanced options
+
+=== Adding more components 
+Because your application can run on one or more components, you might want to add more. The additional source code that you add can either be from the _same_ repository that you used when you created your application, or a _different_ Git repository. Remember, we call source code _components_.
+
+In the *Overview* tab, select *Add component*. Follow the process in <<How to fork a sample>> to add any additional components. 
+
+=== Custom build pipeline
+Custom build pipelines are pipelines as code, in your component's repository. With custom build pipelines, pull requests and commits to your main branch automatically rebuild according to the Tekon pipelines pushed to your Git repository. 
+
+These pipelines are yours to customize to modify your build pipeline. You can change the tasks that are included, control when those tasks update to newer versions by merging PRs from the {ProductName} application, and accept any changes to the pipeline when you're ready for them.
+
+If you onboarded a component with the *Default build pipeline*, you can change to the custom build pipeline by clicking *Manage build pipelines* from the *Overview* page. For more information on this topic, go to xref:how-to-guides/configuring-builds/proc_upgrade_build_pipeline.adoc[Upgrading your build pipeline].
+
+=== Viewing your activity 
+You can view your latest commits, as well as your pipeline runs. 
+
+==== Viewing your latest commits
+Since you have permissions to commit to the Git repo. We like to focus on commits, rather than pipelines, so that it’s easy to correlate a developer's work with what’s going on in the system. 
+
+To view your recent commits, go to the *Activity* tab and click *Latest commits*. 
+
+==== Viewing your pipeline runs
+You can also view your activity by pipeline runs. A pipeline run is a collection of TaskRuns that are arranged in a specific order of execution. 
+
+To view your pipeline runs, go to the *Activity*, click *Pipeline runs*, and then select one of the hyperlinks in *Name*. In the previous view, you can see tasks that you can run based on the pipeline definition while the image is being inspected. You can also click an individual task to see its details. 
+
+=== Managing compliance with Enterprise Contract 
+The Enterprise Contract (EC) is an artifact verifier and customizable policy checker. You can use EC to keep your software supply chain secure and to ensure that container images comply with your organization’s policies. 
+
+For more information about EC, refer to xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract].
+
+=== Examining your SBOM
+A software bill of materials (SBOM) is a list of all the software libraries that a component uses. You can run 'cosign' in your command line interface (CLI) to inspect the image SBOM.
+
+For more information on this topic, go to xref:how-to-guides/inspect-supply-chain-metadata/proc_inspect_sbom.adoc[Inspecting SBOMs].
+
+
+== What's next 
+To keep exploring {ProductName}, we recommend going to xref:how-to-guides/Import-code/proc_importing_code.adoc[Importing and configuring code].
