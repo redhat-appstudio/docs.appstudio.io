@@ -13,8 +13,6 @@
   },
   "engines": {
     "node": "18"
-  },
-  "dependencies": {
-    "npx": "^10.2.2"
   }
 }
+  
