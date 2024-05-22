@@ -40,13 +40,22 @@ You can also specify additional custom tags by using *ADDITIONAL_TAGS* array par
 ----
 ...
 - name: apply-tags
-      params:
-      - name: IMAGE
-        value: $(tasks.build-container.results.IMAGE_URL)
-      - name: ADDITIONAL_TAGS
-        value: ["tag1", "tag2"]
-      runAfter:
-      - build-container
+  params:
+  - name: IMAGE
+    value: $(tasks.build-container.results.IMAGE_URL)
+  - name: ADDITIONAL_TAGS
+    value: ["tag1", "tag2"]
+  runAfter:
+  - build-container
+  taskRef:
+    params:
+    - name: name
+      value: apply-tags
+    - name: bundle
+      value: quay.io/redhat-appstudio-tekton-catalog/task-apply-tags:0.1
+    - name: kind
+      value: task
+    resolver: bundles
 ...
 ----
 
@@ -54,16 +63,10 @@ The array parameter ADDITIONAL_TAGS can also be specified differently:
 
 ----
 ...
-- name: apply-tags
-      params:
-      - name: IMAGE
-        value: $(tasks.build-container.results.IMAGE_URL)
-      - name: ADDITIONAL_TAGS
-        value:
-          - tag1
-          - tag2
-      runAfter:
-      - build-container
+  - name: ADDITIONAL_TAGS
+    value:
+      - tag1
+      - tag2
 ...
 ----
 
@@ -73,14 +76,8 @@ The provided tags can also be based on dynamic variables that are provided by Pi
 
 ----
 ...
-- name: apply-tags
-      params:
-      - name: IMAGE
-        value: $(tasks.build-container.results.IMAGE_URL)
-      - name: ADDITIONAL_TAGS
-        value: ["pull-request-{{pull_request_number}}", "from-branch-{{source_branch}}", "{{target_branch}}"]
-      runAfter:
-      - build-container
+  - name: ADDITIONAL_TAGS
+    value: ["pull-request-{{pull_request_number}}", "from-branch-{{source_branch}}", "{{target_branch}}"]
 ...
 ----
 
