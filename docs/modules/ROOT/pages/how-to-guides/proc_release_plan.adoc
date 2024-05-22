@@ -56,4 +56,7 @@ $ oc apply -f ReleasePlan.yaml -n dev
 . Review the Release plan object that you just added. Using the Release plan tab, you can update or delete the selected Release plan object.
 
 .Next steps
-link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_managed_services_onboarding.adoc/[Managed services team onboarding]
+
+https://github.com/redhat-appstudio/docs.appstudio.io/blob/main/docs/modules/ROOT/pages/how-to-guides/proc_managed_services_onboarding.adoc
+
+link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_managed_services_onboarding/[Managed services team onboarding]
