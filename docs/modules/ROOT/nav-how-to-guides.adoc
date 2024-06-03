@@ -31,6 +31,7 @@
 ** xref:how-to-guides/proc_managing-compliance-with-the-enterprise-contract.adoc[Managing compliance with the Enterprise Contract]
 ** xref:how-to-guides/con_release_application.adoc[Releasing an application]
 *** xref:how-to-guides/proc_release_plan.adoc[Creating a `releasePlan` object]
+*** xref:how-to-guides/proc_manually_triggering_a_release_plan.adoc[Manually Releasing a Snapshot]
 ** xref:how-to-guides/proc_managed_services_onboarding.adoc[Managed services team onboarding]
 ** xref:how-to-guides/proc_delete_application.adoc[Deleting an application]
 ** xref:how-to-guides/proc_multiversion.adoc[Managing multiple software versions]
