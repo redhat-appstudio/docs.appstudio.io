@@ -16,7 +16,7 @@ Key steps include:
 
 .**Procedure**
 
-. As in xref:getting-started/get-started.adoc[Getting started], visit https://console.redhat.com/preview/hac/application-pipeline[{ProductName}].
+. As in xref:getting-started/get-started.adoc[Getting started], visit https://console.redhat.com/preview/application-pipeline[{ProductName}].
 . When prompted to login, select the link to register for a new account.
 . Follow the account creation steps.
 
@@ -24,7 +24,7 @@ NOTE: For the login name, choose a name that reflects the identity of your team.
 
 NOTE: For the email address, choose an address that you can access. Use a team mailing list, or a modified form of your personal email like `<your_username>+<team_name>@<domain>.com`.
 
-. Once the account is created, use it to log in to https://console.redhat.com/preview/hac/application-pipeline[{ProductName}].
+. Once the account is created, use it to log in to https://console.redhat.com/preview/application-pipeline[{ProductName}].
 . As in xref:getting-started/get-started.adoc[Getting started], join the waitlist.
 . Once approved, visit the link:https://console.redhat.com/preview/application-pipeline/access[User Access] section of the user interface to grant the xref:getting-started/roles_permissions.adoc[admin role] to your normal user identity.
 . link:https://www.redhat.com/wapps/ugc/sso/logout[Log out] and log back in as your normal user identity, and confirm you have access to the team workspace via the workspace switcher.
