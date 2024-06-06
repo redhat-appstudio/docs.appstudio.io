@@ -8,6 +8,10 @@ including SQL injection, cross-site scripting (XSS), and code injection attack v
 > NOTE: You can run a Snyk task only if you have a Snyk token stored in a namespace secret. 
 You should also include the name of your secret in the *snyk-secret* pipeline parameter.
 
+== Prerequisites
+- You have CLI access to the specific OpenShift cluster. For information on obtaining CLI access, refer to  xref:../../getting-started/getting_started_in_cli.adoc[Getting started in CLI]
+- You have an up-to-date kubectl binary. Alternatively, the `oc` binary is also compatible.
+
 == Enabling a Snyk task
 
 . Register for a Snyk account or log in at https://app.snyk.io/.
@@ -20,15 +24,12 @@ You should also include the name of your secret in the *snyk-secret* pipeline pa
 .. Toggle *Disabled* to *Enabled*.
 .. Click *Save* changes.
 . Add your new secret to your workspace.
-.. Log in to the link:https://console.redhat.com/preview/application-pipeline[Red Hat Hybrid Cloud Console {ProductName} Overview page].
-.. From the left menu, click *Secrets*.
-.. Click *Add secret*.
-.. The *Add secret* page displays options for your new secret. Specify the following:
-... For *Secret for*, select *Build*.
-... From the *Secret type* drop-down menu, choose *Key/value secret*.
-... From the *Secret name* drop-down menu, select *snyk-secret*.
-... Paste your Snyk token into the *Upload the file with value for your key or paste its contents* field.
-... Click *Add secret* to save it.
+.. Log into your OpenShift cluster and execute the following command:
++
+[source]
+----
+$ kubectl create secret generic snyk-secret --from-literal=snyk_token=[YOUR_SNYK_TOKEN]
+----
 
 You've enabled the Snyk task for your build pipeline.
 
