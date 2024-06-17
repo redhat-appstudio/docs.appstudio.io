@@ -1,6 +1,8 @@
 = Creating an override snapshot
 
-In {ProductName}, integration service provides the users with the ability to reset their component's Global Candidate List to a desired state with a manually created `override` snapshot which can then be a candidate for further promotion (release) if it passes all integration tests subsequently. 
+In {ProductName}, the integration service provides users with the ability to reset their component's Global Candidate List to a desired state with a manually created `override` snapshot which can then be a candidate for further promotion (release) if it passes all integration tests.
+
+You can xref:how-to-guides/testing_applications/proc_creating_override_snapshot.adoc[create an override snapshot] and provide a valid container image for a component to reset the component's Global Candidate List.
 
 == Prerequisites
 - You have CLI access to the specific OpenShift cluster. For information on obtaining CLI access, refer to  xref:../../getting-started/getting_started_in_cli.adoc[Getting started in CLI]
@@ -10,7 +12,7 @@ In {ProductName}, integration service provides the users with the ability to res
 == Procedures
 To create an `override` snapshot, complete the following steps:
 
-. Identify the application and component that needs to be updated
+. Identify the application and component that needs to be updated.
 . In your preferred IDE, create an `override` snapshot in a `.yaml` file.
 +
 Example snapshot.yaml file::
@@ -61,7 +63,7 @@ type: AddedToGlobalCandidateList
 
 . Browse to the component you are updating and select the **Component details** tab. The updated container image is shown under **Image** column.
 
-. Check component `.Spec.ContainerImage` by the following command:
+. Check component's `.Spec.ContainerImage` by the following command:
 +
 [source,terminal]
 ----
