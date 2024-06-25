@@ -10,6 +10,7 @@
 *** xref:how-to-guides/configuring-builds/proc_defining_component_relationships.adoc[Defining component relationships]
 *** xref:how-to-guides/configuring-builds/proc_preventing_redundant_rebuilds.adoc[Preventing redundant rebuilds]
 *** xref:how-to-guides/configuring-builds/proc_custom-tags.adoc[Using custom tags]
+*** xref:how-to-guides/configuring-builds/proc_entitlement_subscription.adoc[Using Red Hat entitlement subscription]
 ** Testing your application
 *** xref:how-to-guides/testing_applications/con_test-overview.adoc[Overview of {ProductName} tests]
 *** xref:how-to-guides/testing_applications/surface-level_tests.adoc[Surface-level tests]
