@@ -119,7 +119,7 @@ components:
 commands:
   - id: build-image
     apply:
-      component: image-build"
+      component: image-build
 ----
 <1> Indicates to {ProductName} that the component being build is an FBC component. It is a required parameter since auto-detection does not work to identify FBC components.
 <2> Specifies the Dockerfile as defined earlier.
