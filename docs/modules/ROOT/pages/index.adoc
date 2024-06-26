@@ -6,7 +6,7 @@ Enter {ProductName} – your one stop shop for building, testing, and deploying 
 
 *Give us a few clicks, and we’ll get you started in a few minutes.*
 
-_We’re secure_: We provide support for https://slsa.dev/spec/v1.0/levels[SLSA Level 3] compliance to help you spot critical vulnerabilities. You can rest assured that our strong protections against tampering and threats can help keep you and your applications safe. 
+_We’re secure_: We provide support for https://slsa.dev/spec/v1.0/levels[SLSA Level 3] compliance to help you spot critical vulnerabilities. You can rest assured that our strong protections against tampering and threats can help keep your applications safe.
 
 _We’re fast_: We help you import, containerize, and deploy your applications in minutes. 
 
