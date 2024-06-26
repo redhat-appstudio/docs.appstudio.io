@@ -1,0 +1,56 @@
+= Manually Triggering a ReleasePlan
+
+This document covers the process to manually trigger a ReleasePlan for a given Snapshot of an Application when using Konflux. Common use cases include re-releasing a snapshot that failed to release due to a now-resolved condition or in the case that a ReleasePlan is not automatically triggered on every Snapshot intentionally to enforce manual releases (see: Releases to Production Registries that happen infrequently).  
+
+.*Prerequisites*
+
+* A Konflux workspace with an Application with complete Snapshots, a valid ReleasePlan, and a valid ReleasePlanAdmission
+* CLI Access to the Konflux Instance and Namespace that houses the Application and resources
+* A minimum of Maintainer access to the Workspace/Namespace that houses the Application and ReleasePlan
+* [Optional] Contributor (Viewer) access to the Release Engineering namespace that houses the ReleasePlanAdmission for the Application in question
+
+.*Procedures*
+
+. Create a `Release.yaml` object locally
+
++
+*Example `Release.yaml` object*
+
++
+[source,yaml]
+----
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    pac.test.appstudio.openshift.io/event-type: push
+  name: <my-application-name>-manual-release-<unique-identifier> <.>
+  namespace: <application-workspace> <.>
+spec:
+  gracePeriodDays: 7 <.>
+  releasePlan: <release-plan> <.>
+  snapshot: <snapshot-name> <.>
+----
+
++
+<.> The name of the release object - set to something identifiable and unique.
+<.> The namespace that houses the Application you're planning to release.
+<.> The number of days the Release object should be preserved.
+<.> The name of the ReleasePlan that should be used.
+<.> The name of the Snapshot to Release.
+
+. In the development workspace, apply the `Release.yaml` file and add the resource to your cluster by running the following command:
+
++
+[source,shell]
+----
+$ oc apply -f Release.yaml
+----
+
+.*Verification*
+
+. On the Trusted Application Pipeline console, select the *Release* tab under the Application.
+. You should see a Release object matching the name you configured.  If you have access to the Release Engineering namespace, you should be able to see the PipelineRun for the Release. 
+
+.Next steps
+link:https://redhat-appstudio.github.io/docs.appstudio.io/Documentation/main/how-to-guides/proc_managed_services_onboarding.adoc/[Managed services team onboarding]
