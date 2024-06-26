@@ -2,7 +2,7 @@
 {ProductName} is a multitenant, software-as-a-service (SaaS)-based continuous integration and continuous delivery (CI/CD) service with an emphasis on secure supply chain features.
 
 == Signing up
-. Go to https://console.redhat.com/preview/hac/application-pipeline[{ProductName}]. 
+. Go to https://console.redhat.com/preview/application-pipeline[{ProductName}].
 . Click *Join waitlist*. 
 
 == Creating your first application
