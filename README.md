@@ -1,4 +1,4 @@
-<h1 style="color:orange";>Deprecated Document Notice</h1>
+<h1 style="color🍊";>Deprecated Document Notice</h1>
     <h3 style="color:orange";>The documentation you are viewing is deprecated. For the latest updates on Konflux,
       review the <a href="https://konflux-ci.dev/docs/" target="_blank">Konflux documentation</a>.</h3>
   </div>
