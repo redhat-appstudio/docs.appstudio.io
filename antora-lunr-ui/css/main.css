@@ -141,33 +141,37 @@ aside.toc.sidebar {
     visibility: visible;
 }
 
-
 .banner {
-    width: 100%;
-    background-color: #f44336;
-    /* Red background */
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    animation: slideDown 0.5s ease-in-out;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    animation: slide-in 1s ease-out;
+    position: relative;
+    /* Ensure the banner does not overlap other elements */
+    margin: 10px 0;
+    /* Add some space between the navbar and the banner */
 }
 
-.banner a {
-    color: #ffc107;
-    /* Amber link color */
-    font-weight: bold;
-    text-decoration: none;
+.banner-title {
+    font-size: 24px;
+    margin: 0;
 }
 
-@keyframes slideDown {
+.banner-message {
+    font-size: 18px;
+    margin: 10px 0 0;
+}
+
+@keyframes slide-in {
     from {
         transform: translateY(-100%);
+        opacity: 0;
     }
 
     to {
         transform: translateY(0);
+        opacity: 1;
     }
 }
