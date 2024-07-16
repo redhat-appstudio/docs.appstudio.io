@@ -140,3 +140,34 @@ aside.toc.sidebar {
 .popup:hover .popuptext {
     visibility: visible;
 }
+
+
+.banner {
+    width: 100%;
+    background-color: #f44336;
+    /* Red background */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-in-out;
+}
+
+.banner a {
+    color: #ffc107;
+    /* Amber link color */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
