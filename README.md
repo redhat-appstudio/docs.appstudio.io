@@ -2,7 +2,41 @@
     <h1 class="banner-title">Deprecated Document Notice</h1>
     <h3 class="banner-message">The documentation you are viewing is deprecated. For the latest updates on Konflux,
       review the <a href="https://konflux-ci.dev/docs/" target="_blank">Konflux documentation</a>.</h3>
-  </div>
+</div>
+<style>
+  .navbar {
+    z-index: 10; /* Ensure the navbar is above other elements */
+    position: relative;
+  }
+  .banner {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    animation: slide-in 1s ease-out;
+    position: relative; /* Ensure the banner does not overlap other elements */
+    margin: 10px 0; /* Add some space between the navbar and the banner */
+  }
+  .banner-title {
+    font-size: 24px;
+    margin: 0;
+  }
+  .banner-message {
+    font-size: 18px;
+    margin: 10px 0 0;
+  }
+  @keyframes slide-in {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
 
 # App Studio documentation
 
