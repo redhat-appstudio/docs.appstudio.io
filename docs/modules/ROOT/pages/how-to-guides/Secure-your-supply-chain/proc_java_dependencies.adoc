@@ -115,7 +115,7 @@ kind: JBSConfig
 metadata:
   name: jvm-build-config
 spec:
-  enableRebuilds: "true"
+  enableRebuilds: true
 ----
 
 . Run `kubectl apply -f config.yaml`
@@ -139,7 +139,7 @@ kind: JBSConfig
 metadata:
   name: jvm-build-config
 spec:
-  enableRebuilds: "true" <1>
+  enableRebuilds: true <1>
   registry:
    host: quay.io <2>
    owner: OrgID <3>
